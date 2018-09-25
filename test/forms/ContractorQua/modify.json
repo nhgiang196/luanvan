@@ -1,0 +1,7 @@
+[
+    {
+        "name":"eventStart_IdCard",
+        "type":"string",
+        "regex" :""
+    }
+]

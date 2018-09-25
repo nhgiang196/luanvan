@@ -1,0 +1,19 @@
+{
+  "name": "Beling",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "mongoose":"3.8.4",
+    "date-utils":"*",
+    "socket.io":"0.9.16",
+      "request":"2.27.0",
+      "winston":"0.7.3",
+      "string":"1.7.0",
+      "express-mongoose":"0.1.0"
+  }
+
+}

@@ -1,0 +1,92 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li ul {
+        display: none;
+        border: 1px solid #000000;
+        margin-left: -3px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+    <legend>
+        <h3>{{'WasteItemQuery'|translate}}</h3>
+    </legend>
+    <div class="col-sm-12 form-group">
+        <div class="form-group search-table">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'ItemCode'|translate}}</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="ItemCode" ng-model="item_code">
+                </div>
+                <label class="col-sm-2 control-label">{{'MethodName'|translate}}</label>
+                <div class="col-sm-3">
+                    <select style="width:100%" ui-select2 name="MethodDescription" ng-model="method_id" >
+                        <option value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="m in method_list" value="{{m.MethodID}}"> {{m.MethodDescription}} </option>
+                        Flowchart </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'WasteItemDescription'|translate}}</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="WasteItemDescription" ng-model="description">
+                </div>
+                <label class="col-sm-2 control-label">{{'State'|translate}}</label>
+                <div class="col-sm-3">
+                    <select class="form-control" type="text" name="State" ng-model="state">
+                        <option ng-selected="true" value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="item in statelist" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'ProcessComp'|translate}}</label>
+                <div class="col-sm-3">
+                    <select style="width:100%" class="form-control" ng-model="process_comp" name="process_comp" ng-options="d.CompID as d.CompName for d in companylist | filter:{Type:'P'}"
+                        required>
+                        <option value="">{{'Show All' | translate}}</option>
+                    </select>
+                </div>
+
+                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
+                <div class="col-sm-3">
+                    <select class="form-control" name="State" ng-model="w_status">
+                        <option ng-selected="true" value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="item in statuslist" value="{{item.id}}">{{item.name}}</option>
+
+
+                    </select>
+                </div>
+
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div style="width: 100%;margin-right: 80px">
+                <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-core
+                    ui-grid-exporter></div>
+            </div>
+        </div>
+        <create_waste_item></create_waste_item>
+</form>

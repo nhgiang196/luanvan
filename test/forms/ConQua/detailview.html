@@ -1,0 +1,19 @@
+<form class="form-horizontal"  role="form" novalidate   name="form"  ng-if="bpmnloaded==false" >
+    <div ng-include="'forms/ConQua/detail.html'" ></div>
+</form>
+<div ng-if="bpmnloaded==true" style="padding-top: 20px">
+    <div process-diagram-preview flow-key="{{flowkey}}"/>
+    <!-- <div  process-diagram-preview process-definition-id="FlowDefinitionId"></div>-->
+</div>
+<div style="top: 60px; position: fixed; right: 0px;" class="pinned col-md-2 "    >
+    <div class="row">
+        <div class="col-md-12"   style="  padding-left:0px;padding-right: 2px; ">
+            <ul class="nav nav-pills nav-stacked">
+                <li style="cursor:pointer;">
+                    <a ng-click="showPng()" class="nav-list"> <i class="icon-bar glyphicon glyphicon-picture"></i>   {{'FlowDetail'|translate}}  <span class="badge">图</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>

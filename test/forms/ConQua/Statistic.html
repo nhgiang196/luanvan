@@ -1,0 +1,80 @@
+<style>
+
+
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+</style>
+<div class="col-md-12">
+    <form class="form-horizontal" novalidate name="form">
+        <legend><h3>{{'Contractor'|translate}}</h3></legend>
+        <div class="col-sm-12 form-group">
+            <label class="col-sm-2 control-label">{{'date'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="text" name="SDate" ng-model="note.SDate" date-picker/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ConQua_Employer'|translate}}</label>
+
+            <div class="col-sm-2">
+                <select class="form-control" name="paraDepartment" ng-model="note.EmployerID"
+                        ng-options="c.EmployerId as c.Employer for c in EmployerList">
+                    <option value="">-- ALL --</option>
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-primary" data-ng-click="QueryInfo()" ng-disabled="form.$invalid">
+                    {{'Search'|translate}}
+                </button>
+            </div>
+        </div>
+        <div>
+            <div style="width: 100%;">
+                <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
+                     ui-grid-resize-columns
+                     ui-grid-core ui-grid-exporter external-scopes="gridHandlers"></div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 800px">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{'Detail'|translate}}</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table  table-hover table-condensed">
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'GuestIDCard'|translate}}</th>
+                        <th>{{'ConName'|translate}}</th>
+                        <th>{{'Operate'|translate}}</th>
+                        <th>{{'OperateTime'|translate}}</th>
+                        <th>{{'SiteName'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+                    </tr>
+                    <tr ng-repeat="i in DetailList">
+                        <td>{{i.ContractorID}}</td>
+                        <td>{{i.ContractorName}}</td>
+                        <td>{{i.Operate}}</td>
+                        <td>{{i.OperateTime}}</td>
+                        <td>{{i.SiteName}}</td>
+                        <td>{{i.Remark}}</td>
+                    </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+<form class="form-horizontal" role="form" novalidate name="form">
+    <legend><h3>{{'ContractorQua'|translate}}</h3></legend>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'ContractorBelong'|translate}}</label>
+
+        <div class="col-sm-3 ">
+
+            <select style="width:100%" ui-select2 ng-model="event.Employer"
+                     name="eventStart_Employer">
+                <option ng-repeat="value in employers" value="{{value.EmployerId}}">
+                    {{value.Employer}}
+                </option>
+            </select>
+        </div>
+        <label class="col-sm-2 control-label">*{{'ValidTo'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control"  type="date" required
+                   name="eventStart_ValidTo" ng-model="event.ValidTo" field-validate/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'GuestIDCard'|translate}}</label>
+
+        <div class="col-sm-3 ">
+            <input class="form-control" name="eventStart_IdCard"
+                   type="string"
+                   ng-model="event.IdCard" required field-validate/>
+        </div>
+        <label class="col-sm-2 control-label">*{{'ConName'|translate}}</label>
+
+        <div class="col-sm-3 ">
+            <input class="form-control" name="eventStart_Name"   type="string"
+                   ng-model="event.Name" required field-validate/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'phone'|translate}}</label>
+
+        <div class="col-sm-3 ">
+            <input class="form-control" name="eventStart_Phone"   type="string"
+                   ng-model="event.Phone" required field-validate/>
+        </div>
+        <label class="col-sm-2 control-label">*{{'Remark'|translate}}</label>
+
+        <div class="col-sm-3 ">
+            <input class="form-control" name="eventStart_Remark"   type="string"
+                   ng-model="event.Remark" field-validate/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'PersonalEquipment'|translate}}</label>
+
+        <div class="col-sm-2">
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#equipModal">
+                {{'AddEquip'|translate}}
+            </button>
+        </div>
+        <label>{{'Equip'|translate}}：{{note.equipment}}</label>
+    </div>
+    <H4 style="background-color: #ececec; padding: 5px">{{'PersonalQualification'|translate}}</H4>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Certificates'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table  table-hover table-condensed">
+                <thead>
+                <tr style="background-color:#FAFAFA;">
+                    <th>{{'CertificatesNO'|translate}}</th>
+                    <th>{{'CerName'|translate}}</th>
+                    <th>{{'IssuedBy'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="c in cers">
+                    <td>{{c.CerId}}</td>
+                    <td>{{c.CerNameRemark}}</td>
+                    <td>{{c.IssuedByRemark}}</td>
+                    <td>{{c.ValidTo}}</td>
+                    <td>
+                        <div ng-repeat="file in c.Files">
+                            <div>
+                                <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                   class="a-file"> {{file.OldName}}</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a class="btn btn-danger btn-xs" role="button" ng-click="cerDel($index)" title="删除">X</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="float: right;">
+                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#cerModal">
+                    {{'Add'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Ins'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table  table-hover table-condensed">
+                <thead>
+                <tr style="background-color:#FAFAFA;">
+                    <th>{{'InsID'|translate}}</th>
+                    <th>{{'InsName'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="i in inss">
+                    <td>{{i.InsId}}</td>
+                    <td>{{i.InsNameRemark}}</td>
+                    <td>{{i.ValidTo}}</td>
+                    <td>
+                        <div ng-repeat="file in i.Files">
+                            <div>
+                                <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                   class="a-file">{{file.OldName}}</a>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td><a class="btn btn-danger btn-xs" role="button" ng-click="insDel($index)" title="删除">X</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div style="float: right;">
+                <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#insModal">
+                    {{'Add'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'MedicalInspection'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr style="background-color: #fafafa">
+                    <th>{{'MedicalInspection'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td><input class="form-control" name="event_MedicalInspection"
+                                type="string" ng-model="event.MedicalInspection" field-validate/></td>
+                    <td><input class="form-control" name="event_MIValidTo"
+                                type="date" ng-model="event.MIValidTo" field-validate/></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" ng-click="upAddition('health')">
+                            {{'UploadFile'|translate}}
+                        </button>
+                    </td>
+                    <td>
+                        <div ng-repeat="myfile in healthFile">
+                            <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                <a class="btn btn-info btn-xs" role="button"
+                                   ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                   class="a-file">{{myfile.OldName}}</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'TrainTime'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr style="background-color: #fafafa">
+                    <th>{{'TrainTime'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tr>
+                    <td><input class="form-control" name="event_TrainTime"
+                                type="string" ng-model="event.TrainTime" field-validate/></td>
+                    <td>
+                        <input class="form-control" name="event_TTValidTo"
+                                type="date" ng-model="event.TTValidTo" field-validate/></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" ng-click="upAddition('train')">
+                            {{'UploadFile'|translate}}
+                        </button>
+                    </td>
+                    <td>
+                        <div ng-repeat="myfile in trainFile" class="btn-group"
+                             style="margin-bottom: 2px;padding: 0px; width:100%;">
+                            <a class="btn btn-info btn-xs" role="button" style="width: 85px"
+                               ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                               class="a-file">{{myfile.OldName}}</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <hr/>
+</form>

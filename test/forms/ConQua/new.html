@@ -1,0 +1,229 @@
+<form class="form-horizontal" role="form" novalidate name="Forms">
+    <legend><h3>{{'ConQua_Qualification'|translate}}</h3></legend>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'ConQua_Employer'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" ng-model="projects.Employer" ng-mouseleave="key_login()"
+                   ng-readonly="readEmployer"
+                   name="add_Employer" required field-validate/>
+        </div>
+        <div class="col-sm-1  control-label">
+            <span class="glyphicon glyphicon-ok-sign" style="color: green"></span>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'Type'|translate}}</label>
+
+        <div class="col-sm-3">
+            <select class="form-control" type="text" name="Type"
+                    ng-model="projects.Type"
+                    max="0"
+                    required
+                    ng-options="t.ID as t.Type for t in CTypeList">
+            </select>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'ConQua_CType'|translate}}</label>
+
+        <div class="col-sm-3">
+            <select class="form-control" type="text" name="Ctype"
+                    ng-model="projects.CType"
+                    max="0"
+                    required
+                    ng-options="t.ID as t.CType for t in KindList">
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'ConQua_Rcode'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input type="text" class="form-control" ng-model="projects.Rcode" name="Rcode" field-validate required/>
+        </div>
+
+    </div>
+    <!--<div class="form-group">
+        <label class="col-sm-2 control-label">*{{'Department'|translate}}</label>
+
+        <div class="col-sm-3">
+        </div>
+    </div>-->
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Remark'|translate}}</label>
+
+        <div class="col-sm-3">
+        <textarea type="text" class="form-control" name="Remark" ng-model="projects.Remark"
+                  required/>
+        </div>
+    </div>
+
+    <div>
+        <div class="col-sm-12">
+            <h4 style="background-color: #ececec; padding: 5px">{{'Information'|translate}}</h4>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_BusinessLicence'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in BusinessLicence  ">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+                        <td><a class="btn btn-danger btn-xs" role="button"
+                               ng-click="cerDel(BusinessLicence,$index,c.Code,'BusinessLicence')" title="Delete">X</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" ng-click="upAddition('BusinessLicence')">
+                        {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_OrganizationCodeCertificate'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in Cer2 ">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+
+                                <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                   class="a-file">{{file.OldName}}</a>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+                        <td><a class="btn btn-danger btn-xs" role="button" ng-click="cerDel(Cer2,$index,c.Code,'Cer2')"
+                               title="Delete">X</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" ng-click="upAddition('Cer2')"> {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_TaxRegistrationCertificate'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in Cer3">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+                        <td><a class="btn btn-danger btn-xs" role="button" ng-click="cerDel(Cer3,$index,c.Code,'Cer3')"
+                               title="Delete">X</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" ng-click="upAddition('Cer3')"> {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_CQ'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table table-hover table-condensed">
+                    <!--showaddCQ-->
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="c in Cer4">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+                        <td><a class="btn btn-danger btn-xs" role="button" ng-click="cerDel(Cer4,$index,c.Code,'Cer4')"
+                               title="Delete">X</a></td>
+                    </tr>
+                    </tr>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" ng-click="upAddition('Cer4')"> {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

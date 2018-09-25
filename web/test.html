@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="stream">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="product" content="Metro UI CSS Framework">
+    <meta name="description" content="Simple responsive css framework">
+    <meta name="author" content="Sergey S. Pimenov, Ukraine, Kiev">
+    <link href="vendor/metro/css/metro-bootstrap.css" rel="stylesheet">
+    <link href="vendor/metro/css/metro-bootstrap-responsive.css" rel="stylesheet">
+    <link href="vendor/metro/css/iconFont.css" rel="stylesheet">
+    <link href="vendor/metro/css/docs.css" rel="stylesheet">
+    <link href="vendor/metro/css/prettify.css" rel="stylesheet">
+    <!-- Load JavaScript Libraries -->
+
+    <script src="vendor/metro/js/jquery.min.js"></script>
+    <script src="vendor/metro/js/jquery.widget.min.js"></script>
+    <script src="vendor/metro/js/jquery.mousewheel.js"></script>
+
+
+    <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular/angular-route.js"></script>
+    <script src="vendor/angular/angular-resource.js"></script>
+    <script src="vendor/angular/angular-cookies.js"></script>
+
+    <script type="text/javascript">
+
+        var testApp = angular.module('stream', []);
+        var testCtrl =function($scope, $http) {
+            $http.get('vendor/metro/js/test.json').success(function(data) {
+                // console.log(JSON.parse(data));
+                //var data=JSON.parse(data);
+                console.log( data.rooms);
+                $scope.rooms=data.rooms;
+                //    $scope.myStyle={height:90*data.rooms.length};
+                $scope.events=data.events;
+                console.log( $scope.events);
+
+                var s = document.createElement('script'); // use global document since Angular's $document is weak
+                s.src = 'vendor/metro/js/metro.min.js';
+                document.body.appendChild(s);
+            });
+        } ;
+
+
+        testApp.controller("testCtrl",testCtrl)
+    </script>
+    <!-- Metro UI CSS JavaScript plugins -->
+
+
+    <!-- Local JavaScript -->
+    <title>Metro UI CSS</title>
+</head>
+
+<body class="metro">
+
+<div class="page">
+    <div class="page-region">
+        <div class="page-region-content">
+            <h1>
+                <a href="/"><i class="icon-arrow-left-3 fg-darker smaller"></i></a>
+                Streamer<small class="on-right">component</small>
+            </h1>
+
+            <div class="example1 border padding20"  ng-controller="testCtrl">
+
+                <div class="streamer" data-role="streamer" data-scroll-bar="true" data-slide-to-group="3" data-slide-speed="500"  >
+                    <div class="streams" >
+                        <div class="streams-title">
+                            <div class="toolbar">
+                                <button class="button small js-show-all-streams" title="Show all streams" data-role=""><span class="icon-eye"></span></button>
+                                <button class="button small js-schedule-mode" title="On|Off schedule mode" data-role=""><span class="icon-history"></span></button>
+                                <button class="button small js-go-previous-time" title="Go to previous time interval" data-role=""><span class="icon-previous"></span></button>
+                                <button class="button small js-go-next-time" title="Go to next time interval" data-role=""><span class="icon-next"></span></button>
+                            </div>
+                        </div>
+
+                        <div ng-repeat="room in rooms" class="stream {{room.color}}" >
+                            <div class="stream-title">{{room.id}}</div>
+                            <div class="stream-number">{{room.number}}</div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="events">
+                        <div class="events-area">
+                            <div class="events-grid" >
+
+                                <div class="event-group" ng-repeat="eventcontent in events">
+                                    <div  class="{{eventcontent.type}}"    ng-repeat="content in eventcontent.eventcontent">
+                                        <div   class="event" data-role="live" >
+                                            <div class="event-content" ng-repeat="content in content.content" >
+                                                <div class="event-content-logo">
+                                                    <img class="icon" src="{{content.icon}}">
+                                                    <div class="time"> {{content.time}}</div>
+                                                </div>
+                                                <div class="event-content-data">
+                                                    <div class="title">{{content.title}}</div>
+                                                    <div class="subtitle">{{content.subtitle}}</div>
+                                                    <div class="remark">{{content.remark}}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="event-group double" >
+                                    <div class="event-super padding20">
+                                        <div class="event-content-logo">
+                                            <img class="icon" src="vendor/metro/images/x.jpg">
+                                            <div class="time">11:00</div>
+                                        </div>
+                                        <div class="event-content-data">
+                                            <div class="title">3333</div>
+                                            <div class="remark">333333</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="page-footer">
+        <div class="page-footer-content">
+            <!--<div data-load="header.html"></div>-->
+        </div>
+    </div>
+</div>
+
+<script src="vendor/metro/js/hitua.js"></script>
+
+</body>
+</html>

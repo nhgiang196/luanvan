@@ -1,0 +1,139 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form">
+<legend><h3>字典管理<code>红色没确认，蓝色越文已经确认，黑色全部确认</code></h3></legend>
+<div class="form-group form-table">
+    <div class=" form-group ">
+        <label class="col-sm-1 control-label">开始时间</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="text" ng-model="query.StartTime" date-picker>
+        </div>
+        <label class="col-sm-1 control-label">TO</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="text" ng-model="query.EndTime" date-picker>
+        </div>
+        </div>
+    <div class=" form-group ">
+   <label class="col-sm-1 control-label">ID</label>
+    <div class="col-sm-1">
+        <input class="form-control" type="text" ng-model="query.ID">
+    </div>
+
+    <label class="col-sm-2 control-label">CN 中文简体</label>
+    <div class="col-sm-2">
+        <input class="form-control" type="text" ng-model="query.CN">
+    </div>
+
+        <div class="col-sm-2">
+    <button type="button" class="btn btn-primary" ng-click="search()">查询
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="add()">新增
+    </button>
+            </div>
+        <div class="col-sm-1">
+            <input class="form-control" type="text" ng-model="lan">
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="ChangeJson(lan)">生成JSON文件
+        </button>
+
+</div>
+
+    </div>
+<table class="table table-bordered" style="table-layout:fixed;padding-left: 20px;float: left;postion: relative;">
+
+    <tr>
+        <th>ID</th>
+        <th >中文</th>
+        <th>英文</th>
+        <th>越南文</th>
+        <th>中文繁体</th>
+        <td></td>
+    </tr>
+    <tr ng-repeat="word in dictionary">
+        <td >
+            <a  ng-click="updateWord(word.ID)"  style="cursor: pointer">{{word.ID}}</a>
+        </td>
+        <td >
+            {{word.CN}}
+        </td>
+        <td  style="{{functionThatReturnsStyle(word.Publish)}}">
+            {{word.EN}}
+        </td>
+        <td style="{{functionThatReturnsStyle(word.Publish)}}">
+            {{word.VN}}
+        </td>
+        <td style="{{functionThatReturnsStyle(word.Publish)}}">
+            {{word.TW}}
+        </td>
+        <td title="'Actions'">
+
+            <a ng-click="deleteWord(word.ID)"               class="btn btn-danger btn-xs">删除</a>
+        </td>
+    </tr>
+</table>
+</form>
+<div class="modal fade " id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
+     data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-body" style="padding-bottom:3px">
+                <form class="form-horizontal" role="form" name="Form" novalidate>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">ID</label>
+
+                        <div class="col-sm-3"  ng-if="action=='Update'" >
+                            <input class="form-control" type="text" ng-model="words.ID"  readonly required>
+                        </div>
+                        <div class="col-sm-3"  ng-show="action=='ADD'" >
+                            <input class="form-control" type="text" ng-model="words.ID"   required>
+                        </div>
+                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">中文</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" ng-model="words.CN" required>
+                        </div>
+                        <label class="col-sm-2 control-label">中文繁体</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" ng-model="words.TW" required>
+                        </div>
+
+                      </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">英语</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" ng-model="words.EN" required>
+                        </div>
+                        <label class="col-sm-2 control-label">越南语</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" ng-model="words.VN" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="close()"
+                        ng-disable="Form.$invalid">关闭
+                </button>
+                <button type="button" class="btn  " ng-click="addNewWord(2)"
+                        ng-disable="Form.$invalid">全部确认
+                </button>
+                <button type="button" class="btn btn-info " ng-click="addNewWord(1)"
+                        ng-disable="Form.$invalid">越文确认
+                </button>
+
+                <button type="button" class="btn btn-danger" ng-click="addNewWord(0)"
+                        ng-disable="Form.$invalid">未确认添加
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div >{{str}}</div>

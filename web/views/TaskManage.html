@@ -1,0 +1,89 @@
+<h4>流程管理</h4>
+<div class="col-sm-12" >
+    <form class="form-horizontal search-form" name="searchForm">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="col-md-2 control-label">流程进程ID</label>
+                <div class="col-md-4" >
+                    <input type="text"  class="form-control"   name="pid" ng-model="pid"   placeholder=""/>
+                </div>
+                <div class="col-sm-4">
+                    <button class="btn btn-primary btn-search" ng-click="deletePid()" ng-disabled="searchForm.$invalid">删除进程</button>
+                    <button class="btn btn-primary btn-search" ng-click="StopPId()" ng-disabled="searchForm.$invalid">停止进程</button>
+                    <button class="btn btn-primary btn-search" ng-click="QueryPIdTask()" ng-disabled="searchForm.$invalid">查询任务</button>
+                  <!--  <button class="btn btn-primary btn-search" ng-click="AssigneeTask()" ng-disabled="searchForm.$invalid">分配任务</button>-->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+<!--<div class="col-sm-12" >
+    <form class="form-horizontal search-form" name="searchForm">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="col-md-1 control-label">TaskID</label>
+                <div class="col-md-4" >
+                    <input type="text"  class="form-control"   name="taskid" ng-model="taskid"   placeholder=""/>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary btn-search" ng-click="search()" ng-disabled="searchForm.$invalid">搜索</button>
+                </div>
+                <label class="col-md-2 control-label">分配人员工号</label>
+                <div class="col-sm-1">
+                    <input type="text"  class="form-control"   name="username" ng-model="username"   placeholder=""/>
+                </div>
+                </div>
+            </div>
+        </form>
+
+    <table  class="table table-bordered">
+        <tr><th>名称</th><th>task</th><th>时间</th><th>分配人</th><th>描述</th><th></th></tr>
+
+        <tr ng-if="task"><td>{{task.name}}</td><td>{{task.taskDefinitionKey}}</td>  <td>{{task.created}}</td><td>{{task.assignee}}</td>
+            <td>{{task.description}}</td>
+            <td> <button type="button" ng-click="AssigneeTask(task.id)" class=" btn-xs btn btn-danger">重新分配</button></td>
+        </tr>
+    </table>
+    </div>-->
+        <hr>
+<p>查询任务任务清单</p>
+<div class="col-sm-12" >
+    <form class="form-horizontal search-form" name="searchForm">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="col-md-1 control-label">用户名</label>
+                <div class="col-md-2" >
+                    <input type="text"  class="form-control"   name="taskuserid" ng-model="taskuserid"   placeholder=""/>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary btn-search" ng-click="querytask()" ng-disabled="searchForm.$invalid">搜索</button>
+                </div>
+                <label class="col-md-2 control-label">分配人员工号</label>
+                <div class="col-sm-1">
+                    <input type="text"  class="form-control"   name="username" ng-model="username"   placeholder=""/>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
+    <table  class="table table-bordered">
+        <tr><th></th><th>taskid</th><th>task</th><th>name</th><th>时间</th><th>分配人</th><th>描述</th><th></th><th></th></tr>
+
+        <tr ng-repeat="usertask in usertasklist">
+            <td>{{$index}}</td>
+            <td>{{usertask.id}}</td>
+            <td>{{usertask.taskDefinitionKey}}</td>
+            <td>{{usertask.name}}</td>
+            <td>{{usertask.created}}</td>
+            <td>{{usertask.assignee}}</td>
+            <td>{{usertask.description}}</td>
+            <td>{{usertask.processInstanceId}}</td>
+            <td> <button type="button" ng-click="AssigneeTask(usertask.id)" class=" btn-xs btn btn-danger">重新分配</button></td>
+        </tr>
+    </table>
+    </div>

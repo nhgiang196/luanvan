@@ -1,0 +1,41 @@
+
+<div class="container" >
+    <div class="row" style="padding-top: 20px; ">
+        <div class="col-md-3"   style="  padding-left:0px; ">
+
+        </div>
+
+        <div class="col-md-9">
+            <div class="bs-example-popover" ng-repeat="p in processDefinitions">
+                <div class="popover right"  >
+                    <div class="arrow"></div>
+                    <h3 class="popover-title">{{p.name}}</h3>
+                    <div class="popover-content">
+                        <div  >
+                            <div ng-repeat="pp in pds[p.key]" id="{{p.id}}"  >
+                                <p  ><a href="#/taskForm/start/{{pp.id}}">{{pp.name}}-版本:{{pp.version}}</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <style>
+
+            .bs-example-popover .popover {
+                position: relative;
+                display: block;
+                float: left;
+                width: 260px;
+                margin:10px;
+            }
+
+        </style>
+
+
+
+

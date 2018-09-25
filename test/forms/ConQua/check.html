@@ -1,0 +1,68 @@
+<script type="text/javascript">
+    function ContractorInfoProcess_check($scope,EngineApi,$http, $timeout,Notifications,$upload,$compile,$filter,Auth,ConQuaService,$routeParams,GateGuest) {
+        console.log("Employer:"+$scope.variable.Employer);
+        console.log($scope.variable);
+        var lang = window.localStorage.lang;
+        $scope.passOrNot = GateGuest.GetCheckList();
+
+        ConQuaService.ContractorQualification().getDetailHeader({"employerid":$scope.variable.EmployerId,language:lang}).$promise.then(function (res) {
+            console.log(res);
+            var emID=  res[0].EmployerId;
+            $scope.project=res[0];
+            $scope.formVariables.push({name: "EmployerId", value:emID});
+              ConQuaService.ContractorQualification().getFiles({"employerId":emID,kind:true}).$promise.then(function (fileres) {
+               console.log(fileres);
+                //  $scope.project.files=fileres
+                  $scope.BusinessLicence = parseData( fileres,"BusinessLicence")||[];
+                  $scope.Cer2 = parseData( fileres,"Cer2")||[];
+                  $scope.Cer3 = parseData( fileres,"Cer3")||[];
+                  $scope.Cer4 = parseData(fileres,"Cer4")||[];
+            });
+        });
+        //附近的拆和 合并
+        var parseData = function(data,filetype) {
+            var arr=[];
+            for(var i=0;i<data.length;i++) {
+                if(data[i].FileType==filetype){
+                    arr.push(data[i]);
+                }
+            }
+            return arr;
+        }
+
+
+
+    }
+</script>
+<div ng-controller="ContractorInfoProcess_check">
+    <form class="form-horizontal"  role="form" novalidate   name="form" >
+        <div ng-include="'forms/ConQua/detail.html'" ></div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" style="text-align: left;">{{'IsPass'|translate}}:</label>
+
+            <div class="col-sm-3">
+                <select class="form-control" history-field="IsPass" form-field
+                        name="agree"
+                        ng-model="agree"
+                        ng-options="c.value as c.name for c in passOrNot"
+                        required> </select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="agree=='NO'">
+            <label class="col-sm-2  control-label" style="text-align: left;">*{{'DenyReason'|translate}}:</label>
+
+            <div class="col-sm-6">
+                <textarea class="form-control" name="leadercheck_remark" type="text" form-field required=""
+                          history-field="DenyReason" ng-model="leadercheck_remark" field-validate rows="3"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">
+                    {{'submit'|translate}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

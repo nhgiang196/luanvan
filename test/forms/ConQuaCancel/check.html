@@ -1,0 +1,242 @@
+<script type="text/javascript">
+    function ContractorCancelProcess_check($scope,EngineApi,$http, $timeout,Notifications,$upload,$compile,$filter,Auth,ConQuaService,$routeParams,GateGuest) {
+        console.log("Employer:"+$scope.variable.Employer);
+        console.log($scope.variable);
+        var lang = window.localStorage.lang;
+        $scope.passOrNot = GateGuest.GetCheckList();
+
+        ConQuaService.ContractorQualification().getDetailHeader({"employerid":$scope.variable.EmployerId,language:lang}).$promise.then(function (res) {
+            console.log(res);
+            var emID=  res[0].EmployerId;
+            $scope.project=res[0];
+            $scope.formVariables.push({name: "EmployerId", value:emID});
+            ConQuaService.ContractorQualification().getFiles({"employerId":emID,kind:true}).$promise.then(function (fileres) {
+                console.log(fileres);
+                //  $scope.project.files=fileres
+                $scope.BusinessLicence = parseData( fileres,"BusinessLicence")||[];
+                $scope.Cer2 = parseData( fileres,"Cer2")||[];
+                $scope.Cer3 = parseData( fileres,"Cer3")||[];
+                $scope.Cer4 = parseData(fileres,"Cer4")||[];
+            });
+        });
+        //附近的拆和 合并
+        var parseData = function(data,filetype) {
+            var arr=[];
+            for(var i=0;i<data.length;i++) {
+                if(data[i].FileType==filetype){
+                    arr.push(data[i]);
+                }
+            }
+            return arr;
+        }
+
+
+
+    }
+</script>
+<div ng-controller="ContractorCancelProcess_check">
+    <form class="form-horizontal"  role="form" novalidate   name="form" >
+        <legend><h3>{{'FEPVConInfoCancel'|translate}}--{{'leaderCheck'|translate}}</h3></legend>
+        <div class="col-sm-12">
+            <div class="form-group">
+                <table class="table table-bordered">
+                    <tr>
+                        <td style="width:15%;"><b> {{'DeleteReason'|translate}}:</b></td>
+                        <td style="width:35%;"> {{variable.invalidReason}}</td>
+                        <td style="width:15%;"></td>
+                        <td style="width:35%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:15%;"><b> {{'ConQua_Employer'|translate}}:</b></td>
+                        <td style="width:35%;"> {{project.Employer}}</td>
+                        <td style="width:15%;"><b> {{'ConQua_Type'|translate}}:</b></td>
+                        <td style="width:35%;"> {{project.ContracorType}}</td>
+                    </tr>
+                    <tr>
+                        <td><b> {{'ConQua_CType'|translate}}:</b></td>
+                        <td>
+                            {{project.ContracorKind }}
+                        </td>
+                        <td><b> {{'ConQua_Rcode'|translate}}:</b></td>
+                        <td> {{project.Rcode }}</td>
+                    </tr>
+                    <tr>
+                        <th><b> {{'Department'|translate}}:</b></th>
+                        <td>
+                            {{project.Specification }}
+                        </td>
+                        <td><b> {{'Remark'|translate}}:</b></td>
+                        <td>{{project.Remark }}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <h4 style="background-color: #ececec; padding: 5px">{{'Information'|translate}}</h4>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_BusinessLicence'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'UploadDate'|translate}}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in BusinessLicence  ">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="Cer2.length>0">
+            <label class="col-sm-2 control-label">{{'ConQua_OrganizationCode'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'UploadDate'|translate}}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in Cer2">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="Cer3.length>0">
+            <label class="col-sm-2 control-label">{{'ConQua_TaxRegistrationCertificate'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in Cer3">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <div class="form-group" ng-if="Cer4.length>0">
+            <label class="col-sm-2 control-label">{{'ConQua_CQ'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table table-hover table-condensed">
+                    <!--showaddCQ-->
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th>{{'Remark'|translate}}</th>
+
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="c in Cer4">
+                        <td>{{c.Code}}</td>
+                        <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+        <H4 style="background-color: #ececec; padding: 5px">{{'leaderCheck'|translate}}</H4>
+        <div class="form-group">
+            <label class="col-sm-2 control-label" style="text-align: left;">{{'IsPass'|translate}}:</label>
+
+            <div class="col-sm-3">
+                <select class="form-control" history-field="IsPass" form-field
+                        name="agree"
+                        ng-model="agree"
+                        ng-options="c.value as c.name for c in passOrNot"
+                        required> </select>
+            </div>
+        </div>
+        <div class="form-group" ng-if="agree=='NO'">
+            <label class="col-sm-2  control-label" style="text-align: left;">*{{'DenyReason'|translate}}:</label>
+
+            <div class="col-sm-6">
+                <textarea class="form-control" name="leadercheck_remark" type="text" form-field required=""
+                          history-field="DenyReason" ng-model="leadercheck_remark" field-validate rows="3"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">
+                    {{'submit'|translate}}
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

@@ -1,0 +1,102 @@
+<div id="Search">
+    <form class="form-horizontal" role="form" novalidate name="ConQuaform" ng-if="bpmnloaded==false">
+        <legend><h3>{{'ContractorQua'|translate}}</h3></legend>
+        <div class="col-sm-12 form-group">
+            <div class="form-group form-table">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'GuestIDCard'|translate}}</label>
+
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="IdCard" ng-model="note.IdCard">
+                    </div>
+                    <label class="col-sm-1 control-label">{{'Contractor'|translate}}</label>
+
+                    <div class="col-sm-2">
+                        <select class="form-control" name="paraDepartment" ng-model="note.EmployerID"
+                                ng-options="c.EmployerId as c.Employer for c in EmployerList" required>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'Department'|translate}}</label>
+
+                    <div class="col-sm-2">
+                        <select class="form-control" name="paraDepartment" ng-model="note.Department"
+                                ng-options="c.DepartmentID as c.Spe for c in CDepartmentList" required>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">{{'Status'|translate}}</label>
+
+                    <div class="col-sm-2">
+                        <select class="form-control" name="Status" ng-model="note.Status"
+                                ng-options="c.Status as c.Remark for c in StatusList" required>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
+                 ui-grid-resize-columns
+                 ui-grid-core ui-grid-exporter external-scopes="gridHandlers"></div>
+        </div>
+    </form>
+    <div style="top: 260px; position: fixed; right: 0px;" class="ibx-manage-logo"   ng-hide="menuBar"> <span class="icon-bar glyphicon glyphicon-play " ></span></div>
+    <div style="top: 60px; position: fixed; right: 0px;" class="pinned col-md-2 "    >
+        <div class="row">
+            <div class="col-md-12"   style="  padding-left:0px;padding-right: 2px; ">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"  style="cursor:pointer;">
+                        <a  class="nav-list"> {{'Menu'|translate}}</a>
+                    </li>
+                    <li style="cursor:pointer;">
+                        <a ng-click="showPng()" class="nav-list"> <i class="icon-bar glyphicon glyphicon-picture"></i>   {{'Flowchart'|translate}}  <span class="badge">图</span></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ng-include="'forms/GateGuest/NextTask.html'"></div>
+    <div ng-if="bpmnloaded==true" style="padding-top: 20px">
+        <div process-diagram-preview flow-key="{{flowkey}}"/>
+        <!-- <div  process-diagram-preview process-definition-id="FlowDefinitionId"></div>-->
+    </div>
+</div>
+
+<div class="modal fade" id="Details" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'UpdateTime'|translate}}</th>
+                        <th>{{'UserID'|translate}}</th>
+                        <th>{{'RenewalDate'|translate}}</th>
+                        <th>{{'FlowDetail'|translate}}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in processList">
+                        <td>{{i._sync_time_create | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{i.initiator}}</td>
+                        <td>{{i.eventStart_ValidTo}}</td>
+                        <td><a target="_blank"
+                               href="#/processlog/{{i.ProcessInstanceId}}">{{'FlowDetail'|translate}}</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

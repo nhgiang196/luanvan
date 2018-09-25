@@ -1,0 +1,168 @@
+<legend><h3>{{'ConQua_Qualification'|translate}}--{{'leaderCheck'|translate}}</h3></legend>
+<div class="col-sm-12">
+    <div class="form-group">
+        <table class="table table-bordered">
+            <tr>
+                <td style="width:15%;"><b> {{'ConQua_Employer'|translate}}:</b></td>
+                <td style="width:35%;"> {{project.Employer}}</td>
+                <td style="width:15%;"><b> {{'Type'|translate}}:</b></td>
+                <td style="width:35%;"> {{project.ContracorType}}</td>
+            </tr>
+            <tr>
+                <td><b> {{'ConQua_CType'|translate}}:</b></td>
+                <td>
+                    {{project.ContracorKind }}
+                </td>
+                <td><b> {{'ConQua_Rcode'|translate}}:</b></td>
+                <td> {{project.Rcode }}</td>
+            </tr>
+            <tr>
+                <th><b> {{'Department'|translate}}:</b></th>
+                <td>
+                    {{project.Specification }}
+                </td>
+                <td><b> {{'Remark'|translate}}:</b></td>
+                <td>{{project.Remark }}</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+<h4 style="background-color: #ececec; padding: 5px">{{'Information'|translate}}</h4>
+<div class="form-group">
+    <label class="col-sm-2 control-label">{{'ConQua_BusinessLicence'|translate}}</label>
+
+    <div class="col-sm-8">
+        <table class="table  table-hover table-condensed">
+            <thead>
+            <tr style="background-color:#FAFAFA;">
+                <th>{{'CertificatesNO'|translate}}</th>
+                <th>{{'ValidTo'|translate}}</th>
+                <th>{{'File'|translate}}</th>
+                <th>{{'Remark'|translate}}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="c in BusinessLicence  ">
+                <td>{{c.Code}}</td>
+                <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                <td>
+                    <div ng-repeat="file in c.Files">
+                        <div>
+                            <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                               class="a-file">{{file.OldName}}</a>
+                        </div>
+                    </div>
+                </td>
+                <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="form-group" ng-if="Cer2.length>0">
+    <label class="col-sm-2 control-label">{{'ConQua_OrganizationCodeCertificate'|translate}}</label>
+
+    <div class="col-sm-8">
+        <table class="table  table-hover table-condensed">
+            <thead>
+            <tr style="background-color:#FAFAFA;">
+                <th>{{'CertificatesNO'|translate}}</th>
+                <th>{{'ValidTo'|translate}}</th>
+                <th>{{'File'|translate}}</th>
+                <th>{{'Remark'|translate}}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="c in Cer2">
+                <td>{{c.Code}}</td>
+                <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                <td>
+                    <div ng-repeat="file in c.Files">
+                        <div>
+                            <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                               class="a-file">{{file.OldName}}</a>
+                        </div>
+                    </div>
+                </td>
+                <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="form-group" ng-if="Cer3.length>0">
+    <label class="col-sm-2 control-label">{{'ConQua_TaxRegistrationCertificate'|translate}}</label>
+
+    <div class="col-sm-8">
+        <table class="table  table-hover table-condensed">
+            <thead>
+            <tr style="background-color:#FAFAFA;">
+                <th>{{'CertificatesNO'|translate}}</th>
+                <th>{{'ValidTo'|translate}}</th>
+                <th>{{'File'|translate}}</th>
+                <th>{{'Remark'|translate}}</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="c in Cer3">
+                <td>{{c.Code}}</td>
+                <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                <td>
+                    <div ng-repeat="file in c.Files">
+                        <div>
+                            <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                               class="a-file">{{file.OldName}}</a>
+                        </div>
+                    </div>
+                </td>
+                <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<div class="form-group" ng-if="Cer4.length>0">
+    <label class="col-sm-2 control-label">{{'ConQua_CQ'|translate}}</label>
+
+    <div class="col-sm-8">
+        <table class="table table-hover table-condensed">
+            <!--showaddCQ-->
+            <thead>
+            <tr style="background-color:#FAFAFA;">
+                <th>{{'CertificatesNO'|translate}}</th>
+                <th>{{'ValidTo'|translate}}</th>
+                <th>{{'File'|translate}}</th>
+                <th>{{'Remark'|translate}}</th>
+
+            </tr>
+            </thead>
+            <tr ng-repeat="c in Cer4">
+                <td>{{c.Code}}</td>
+                <td>{{c.InvalidTime| date : 'yyyy-MM-dd'}}</td>
+                <td>
+                    <div ng-repeat="file in c.Files">
+                        <div>
+                            <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}"
+                               class="a-file">{{file.OldName}}</a>
+                        </div>
+                    </div>
+                </td>
+                <td><span title="{{c.Remark}}" data-toggle="tooltip">{{c.Remark|limitTo:20}}</span></td>
+
+            </tr>
+        </table>
+
+    </div>
+</div>

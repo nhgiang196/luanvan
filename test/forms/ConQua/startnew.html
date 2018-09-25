@@ -1,0 +1,87 @@
+
+<div  ng-if="bpmnloaded==false">
+    <!--   <div ng-include="'forms/ConQua/new.html'" ></div>-->
+    <my_Contractor></my_Contractor>
+    <div class="modal-footer" >
+
+        <div class="col-sm-offset-6 col-sm-4" >
+
+            <button class="btn btn-warning" ng-show="!readEmployer" ng-click="save()" ng-disabled="Forms.$invalid || BusinessLicence.length <=0">{{'saveDraft'|translate}}</button>
+            <button class="btn btn-primary" ng-click="saveSumbit()" ng-disabled="Forms.$invalid || BusinessLicence.length <=0">{{'submit'|translate}}</button>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="modal" id="cerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 5px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{'File'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formAddCer" role="form" ng-submit="addCer()">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'CertificatesNO'|translate}}</label>
+                            <div class="col-sm-8 ">
+                                <input class="form-control" type="text" required field-validate ng-model="note.Code"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+                            <div class="col-sm-8 ">
+                                <input class="form-control" type="date" required field-validate ng-model="note.InvalidTime"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >{{'File'|translate}}</label>
+                            <div class="col-sm-8 " >
+                                <my_delfile></my_delfile>
+                            </div>
+
+                        </div>
+                        <div ng-if="filedata.length>1"> <label class="col-sm-2 control-label" ><code>{{'Msg_ConQua_FileNumber'|translate}}</code></label></div>
+                        <div class="form-group"  >
+                            <label class="col-sm-2  control-label">{{'Remark'|translate}}</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" type="text"
+                                          ng-model="note.Remark" rows="2"  ></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" ng-disabled="formAddCer.$invalid||filedata.length !=1" ng-click="addCer()">{{'Add'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="top: 60px; position: fixed; right: 0px;" class="pinned col-md-2 "    >
+    <div class="row">
+        <div class="col-md-12"   style="  padding-left:0px;padding-right: 2px; ">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"  style="cursor:pointer;">
+                    <a ng-click="toggleCustom()" class="nav-list"> {{'Menu'|translate}}</a>
+                </li>
+                <li style="cursor:pointer;">
+                    <a ng-click="showPng()" class="nav-list"> <i class="icon-bar glyphicon glyphicon-picture"></i>   {{'Flowchart'|translate}}  <span class="badge">图</span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<div ng-if="bpmnloaded==true" style="padding-top: 20px">
+    <div  process-diagram-preview flow-key="{{flowkey}}" />
+
+</div>

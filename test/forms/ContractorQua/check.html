@@ -1,0 +1,260 @@
+<script type="text/javascript">
+    function ContractorQuaProcess_check($scope, EngineApi, $http, $timeout, Notifications, $upload, $compile, $filter, Auth, GateGuest, ConQuaService, $translatePartialLoader, $translate) {
+        $scope.passOrNot = GateGuest.GetCheckList();
+        $scope.note = {}
+        function parseArray(arrStr) {
+            var tempKey = 'arr23' + new Date().getTime();//arr231432350056527
+            var arrayJsonStr = '{"' + tempKey + '":' + arrStr + '}';
+            var arrayJson;
+            if (JSON && JSON.parse) {
+                arrayJson = JSON.parse(arrayJsonStr);
+            } else {
+                arrayJson = eval('(' + arrayJsonStr + ')');
+            }
+            return arrayJson[tempKey];
+        };
+        ConQuaService.GetContractor().get({
+            idCard: $scope.variable.eventStart_IdCard,
+            EmployerId: $scope.variable.eventStart_Employer,
+            Language: window.localStorage.lang
+        }).$promise.then(function (res) {
+                    $scope.note = res[0];
+                    $scope.note.cers = res[0].Certificates;
+                    $scope.note.inss = res[0].Insurances;
+                    $scope.note.IdCard = $scope.variable.eventStart_IdCard;
+                    $scope.note.ValidTo = $filter('date')($scope.note.ValidTo, 'yyyy-MM-dd');
+                    $scope.note.TTValidTo = $filter('date')($scope.note.TTValidTo, 'yyyy-MM-dd');
+                    $scope.note.MIValidTo = $filter('date')($scope.note.MIValidTo, 'yyyy-MM-dd');
+                    $scope.PersonalEquipment = parseArray(res[0].PersonalEquipment);
+                    $scope.note.Employer = res[0].Employer;
+                    $scope.trainFile = JSON.parse(res[0].TTFile);
+                    $scope.healthFile = JSON.parse(res[0].MIFile);
+                    $scope.note.PersonalEquip = "";
+                    ConQuaService.GetEquipmentList().get({Language: window.localStorage.lang}).$promise.then(function (res) {
+                        $scope.equips = res;
+                        for (var i = 0; i < $scope.PersonalEquipment.length; i++) {
+                            if ($scope.PersonalEquipment[i] !=null && $scope.PersonalEquipment[i] != "false") {
+                                for (var j =0;j< $scope.equips.length;j++) {
+                                    var eq = $scope.equips[j]
+                                    if (eq.ID == $scope.PersonalEquipment[i]) {
+                                        if ($scope.note.PersonalEquip == "") {
+                                            $scope.note.PersonalEquip = eq.Equipment;
+                                        }
+                                        else {
+                                            $scope.note.PersonalEquip = $scope.note.PersonalEquip + "/" + eq.Equipment;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        //$scope.checkboxes = new Array($scope.equips.length);
+                    }, function (errResponse) {
+                        Notifications.addError({'status': 'error', 'message': errResponse});
+                    });
+                }, function (errResponse) {
+                    Notifications.addError({'status': 'error', 'message': errResponse});
+                });
+        $scope.btSelect = function (p) {
+            if (p === "YES") {
+                $scope.formVariables.push({name: "agree", value: "YES"});
+            } else {
+                $scope.formVariables.push({name: "agree", value: "NO"});
+            }
+        };
+    }
+</script>
+
+<div ng-controller="ContractorQuaProcess_check">
+    <form class="form-horizontal" role="form" novalidate name="form">
+        <legend><h3>{{'ContractorQua'|translate}}--{{'leaderCheck'|translate}}</h3></legend>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'GuestIDCard'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.IdCard" readonly/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ContractorBelong'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.Employer" readonly/>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConName'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.Name" readonly/>
+            </div>
+            <label class="col-sm-2 control-label">{{'phone'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.Phone" readonly/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'Remark'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.Remark" readonly/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" type="string" ng-model="note.ValidTo" readonly/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'PersonalEquipment'|translate}}</label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="string" ng-model="note.PersonalEquip" readonly/>
+            </div>
+        </div>
+        <H4 style="background-color: #ececec; padding: 5px">{{'PersonalQualification'|translate}}</H4>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'Certificates'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'CerName'|translate}}</th>
+                        <th>{{'IssuedBy'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in note.cers">
+                        <td>{{c.CerId}}</td>
+                        <td>{{c.CerNameRemark}}</td>
+                        <td>{{c.IssuedByRemark}}</td>
+                        <td>{{c.ValidTo}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'Ins'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'InsID'|translate}}</th>
+                        <th>{{'InsName'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in note.inss">
+                        <td>{{i.InsId}}</td>
+                        <td>{{i.InsNameRemark}}</td>
+                        <td>{{i.ValidTo}}</td>
+                        <td>
+                            <div ng-repeat="file in i.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'MedicalInspection'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="string" ng-model="note.MedicalInspection" readonly/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="string" ng-model="note.MIValidTo" readonly/>
+            </div>
+            <div class="col-sm-2 ">
+                <div ng-repeat="myfile in healthFile">
+                    <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                        <a class="btn btn-info btn-xs" role="button"
+                           ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                           class="a-file"> {{myfile.OldName}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'TrainTime'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="string" ng-model="note.TrainTime" readonly/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="string" ng-model="note.TTValidTo" readonly/>
+            </div>
+            <div class="col-sm-2">
+                <div ng-repeat="myfile in trainFile">
+                    <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                        <a class="btn btn-info btn-xs" role="button"
+                           ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                           class="a-file"> {{myfile.OldName}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <H4 style="background-color: #ececec; padding: 5px">{{'leaderCheck'|translate}}</H4>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'IsPass'|translate}}</label>
+
+            <div class="col-sm-3">
+                <select ng-change="btSelect(eventCheck_passOrNot)" class="form-control" history-field="IsPass" form-field
+                        name="eventCheck_passOrNot" ng-model="eventCheck_passOrNot"
+                        ng-options="c.value as c.name for c in passOrNot" required> </select>
+            </div>
+        </div>
+
+        <div class="form-group" ng-if="eventCheck_passOrNot == 'NO'">
+            <label class="col-sm-2 control-label">{{'DenyReason'|translate}}</label>
+
+            <div class="col-sm-6 ">
+                <textarea class="form-control" name="eventCheck_advice" history-field="DenyReason" form-field type="string"
+                          ng-model="eventCheck_advice" field-validate rows="3"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-primary" ng-click="submit()" ng-disabled="form.$invalid">{{'submit'|translate}}</button>
+            </div>
+        </div>
+    </form>
+
+</div>

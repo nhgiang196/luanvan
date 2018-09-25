@@ -1,0 +1,39 @@
+<div class="col-md-12">
+    <form class="form-horizontal" novalidate name="form">
+        <legend><h3>{{'承揽商综合查询'|translate}}</h3></legend>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_CType'|translate}}</label>
+
+            <div class="col-sm-2">
+                <select class="form-control" name="paraCType" ng-model="paraCType"
+                        ng-options="t.ID as t.CType  for t in KindList" required></select>
+            </div>
+            <label class="col-sm-3 control-label">{{'ConQua_Employer'|translate}}</label>
+
+            <div class="col-sm-2">
+                <input class="form-control" type="text" ng-model="paraEmployer"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ConQua_paraDepartment'|translate}}</label>
+
+            <div class="col-sm-2">
+                <select class="form-control" name="paraDepartment" ng-model="paraDepartment"
+                        ng-options="c.DepartmentID as c.Specification for c in CDepartmentList" required>
+
+
+                </select>
+            </div>
+            <div class="col-sm-1">
+                <button class="btn btn-primary" data-ng-click="QueryInfo()">{{'Search'|translate}}</button>
+            </div>
+        </div>
+        <div>
+            <div style="width: 100%;">
+                <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
+                     ui-grid-resize-columns
+                     ui-grid-core ui-grid-exporter external-scopes="gridHandlers"></div>
+            </div>
+
+        </div>
+    </form>

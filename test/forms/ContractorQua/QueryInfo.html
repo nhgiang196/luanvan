@@ -1,0 +1,170 @@
+<div class="col-sm-12" style="margin-top:20px;">
+    <form class="form-horizontal" name="recordForm">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">承揽商</label>
+
+                <div class="col-sm-2">
+                    <select style="width:100%" ui-select2 ng-model="Employer" name="Employer">
+                        <option ng-repeat="value in employers" value="{{value.Name}}">
+                            {{value.Name}}
+                        </option>
+                    </select>
+                </div>
+                <label class="col-sm-1 control-label">身份证</label>
+
+                <div class="col-sm-3 ">
+                    <input class="form-control" name="IdCard" type="string" ng-model="IdCard" placeholder="身份证"/>
+                </div>
+                <label class="col-sm-1 control-label">部门</label>
+
+                <div class="col-sm-3">
+                    <select class="form-control" ng-model="departmentinfo"
+                            ng-options="t.DepartmentID as t.Specification for t in department " required>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">进厂是否有效</label>
+
+                <div class="col-sm-3  control-label" style="text-align: left;">
+                    <input type="radio" name="IsValid" id="option1" value="有效" ng-model="IsValid"> 有效
+
+                    <input type="radio" name="IsValid" id="option2" value="过期" ng-model="IsValid"> 过期
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary" ng-click="submitForm()">查询</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<table class="table table-bordered table-hover table-condensed" width="100%">
+    <tr style="background-color:#FAFAFA;">
+        <th>管理单位</th>
+        <th>承揽商</th>
+        <th>姓名</th>
+        <th>身份证号码</th>
+        <th>办卡日期</th>
+        <th>有效期至</th>
+        <th>培训日期</th>
+        <th>保险和特种证件</th>
+    </tr>
+    <tr ng-repeat="value in Contractorlist">
+        <td>{{value.Specification}}</td>
+        <td>
+            <a href="#/ConQua/Index?Employer={{value.Employer}}&DepartmentID={{value.DepartmentID}}">{{value.Employer}}</a>
+        </td>
+        <td>{{value.Name}}</td>
+        <td><a ng-click="GetDetail(value.Employer,value.IdCard)">{{value.IdCard}}</a></td>
+        <td>{{value.ProvideDate | date : 'yyyy-MM-dd hh:mm'}}</td>
+        <td>{{value.ValidTo | date : 'yyyy-MM-dd'}}</td>
+        <td>{{value.TrainDate | date : 'yyyy-MM-dd'}}</td>
+        <td colspan="2">
+            <a ng-click="GetInns(value.IdCard,value.Employer)">证书、保险</a>
+        </td>
+
+        <!--  <td><a ng-click="GetCer(value.IdCard)">证书信息</a></td>-->
+    </tr>
+
+</table>
+
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <h4>证书</h4>
+
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>证书编号</th>
+                        <th>工种</th>
+                        <th>发证机构</th>
+                        <th>有效期</th>
+                        <th>附件</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in cers">
+                        <td style="font-size: 8px">{{c.CerId}}</td>
+                        <td style="font-size: 8px">{{c.CerName}}</td>
+                        <td style="font-size: 8px">{{c.IssuedBy}}</td>
+                        <td style="font-size: 8px">{{c.ValidTo | date : 'yyyy-MM-dd'}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div style="font-size: 8px">
+                                    <a  ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                        class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <h4>保险</h4>
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>保险编号</th>
+                        <th>保险名称</th>
+                        <th>有效期</th>
+                        <th>附件</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in inss">
+                        <td style="font-size: 8px">{{i.InsId}}</td>
+                        <td style="font-size: 8px">{{i.InsName}}</td>
+                        <td style="font-size: 8px">{{i.ValidTo | date : 'yyyy-MM-dd'}}</td>
+                        <td style="font-size: 8px">
+                            <div ng-repeat="file in i.Files">
+                                <div style="font-size: 8px">
+                                    <a href="/bpm/api/default/bpm-rest-api/file/downfile/{{file.DocId}}">{{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade " id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>时间</th>
+                        <th>修改人</th>
+                        <th>续保日期</th>
+                        <th>流程详情</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in processList">
+                        <td>{{i._sync_time_create | date : 'yyyy-MM-dd'}}</td>
+                        <td>{{i.initiator}}</td>
+                        <td>{{i.eventStart_ValidTo}}</td>
+                        <td><a target="_blank" href="#/processlog/{{i.ProcessInstanceId}}">流程详情</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

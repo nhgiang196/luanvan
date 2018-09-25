@@ -1,0 +1,106 @@
+
+
+<div class="container"   >
+    <div class="row" style="padding-top: 20px; ">
+
+
+        <div class="col-md-12">
+            <form class="form-horizontal" novalidate   name="form"  >
+                <h2 class="featured">历史查询</h2>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">开始时间</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="date"    name ="startTime" ng-model="startTime" field-validate required    />
+                    </div>
+                    <label class="col-sm-1">---</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="date"    name ="EndTime" ng-model="EndTime" field-validate  required />
+                    </div>
+                    <label class="col-sm-2 control-label">申请人</label>
+                    <div class="col-sm-2">
+                        <input class="form-control" type="text"    name ="applyUser" ng-model="applyUser" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">流程清单</label>
+                    <div class="col-sm-2">
+                       <select class="form-control" name="selectedprocess" id="selectedprocess" ng-model="selectedprocess" required field-validate>
+                           <option  value="GongAnV2Process" >
+                               工安稽查
+                           </option>
+
+                           <option  value="ContractorInspectProcess" >
+                               承揽商稽查
+                           </option>
+
+                           <option  value="SpecialTruckProcess" >
+                               特种车辆
+                           </option>
+
+                           <option  value="ContractorQuaProcess" >
+                               包商办卡
+                           </option>
+                           <option  value="TrainingCertificate" >
+                               证照管理
+                           </option>
+                       </select>
+                    </div>
+                    <label class="col-sm-1 control-label">状态</label>
+                    <div class="col-sm-2">
+
+                        <select class="form-control"
+                                ng-model="isfinished"  ng-options="currOption.id as currOption.lable for currOption in options">
+                            <option>--</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary"   ng-click="submit()"  ng-disabled="form.$invalid"  class="btn btn-default">查询</button>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                  </div>
+            </form>
+
+
+
+            <div class="panel panel-default" ng-repeat="value in formHistory" >
+                <!-- Default panel contents -->
+                <div class="panel-heading" style="background-color: {{value.color}}" ><span>{{value.key}}</span><code>{{ value.startTime | date : 'yyyy-MM-dd HH:mm:ss'}}</code><span class="badge" ng-show="value.superEngin.length>0">  {{value.superEngin.length}}</span></div>
+                <div class="panel-body" ng-show="value.superEngin.length<=0">
+                    <p>流发起人： <span show-user="{{value.username}}" ></span></p>
+
+                    <span>结束时间：{{ value.endTime | date : 'yyyy-MM-dd HH:mm:ss'}}</span></p>
+                  <p> 查看详情：<a href="#/processlog/{{value.id}}" target="_blank"><button type="button" class="btn btn-info btn-xs" >详情</button></a>
+                      <a href="#/png/{{value.processDefinitionId}}/{{value.id}}" target="_blank" style="background-color: #f9f9f9;;width:25px"><button  type="button" class=" btn btn-info btn-xs" >流程图</button></a>
+                  </p>
+                    <p ng-show="value.deleteReason!=null">删除原因：{{value.deleteReason}}</p>
+                   <!-- <p ng-show="value.color=='#fcf8e3'"><span ng-click="getCurrentUser(this,value.id)">当前处理人</span></p>-->
+                </div>
+
+                <!-- Table -->
+                <table class="table table-condensed" ng-show="value.superEngin.length>0">
+                    <tr>
+                        <th>发起人</th>
+                        <th>名称</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>流程图</th>
+                        <th>流程详情</th>
+                    </tr>
+                    <tr ng-repeat="supervalue in value.superEngin" >
+                        <td class="col-sm-1"> <span show-user="{{value.username}}" ></span></td>
+                        <td class="col-sm-2">工安执行追踪</td>
+                        <td class="col-sm-3">{{ supervalue.startTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td class="col-sm-3">{{ supervalue.endTime | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td ng-show="value.deleteReason!=null">删除原因：{{value.deleteReason}}</td>
+                        <td class="col-sm-1"><a href="#/png/{{supervalue.processDefinitionId}}/{{supervalue.processInstanceId}}" target="_blank"><div style="background-color: #f9f9f9;;width:25px"><span class="glyphicon glyphicon-picture" style="background-color: #39b3d7;margin-top: 1px;margin-bottom: 1px;font-size: 24px;"></span></div></a></td>
+                        <td class="col-sm-2"><a href="#/processlog/{{value.id}}/{{supervalue.processInstanceId}}" target="_blank"><button type="button" class="btn btn-info btn-xs"   >详情</button></a></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

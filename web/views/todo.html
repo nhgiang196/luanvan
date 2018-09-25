@@ -1,0 +1,152 @@
+<style type="text/css">
+  .head_title{
+      padding-left: 15px;
+  }
+  .head_title .fg-red{
+
+        font-size: 21px;
+        color:  #e51400 !important;
+    }
+  .panel-collapse .fg-red{
+
+      font-size: 21px;
+      color:  #e51400 !important;
+  }
+</style>
+<h3 class="head_title"><span class="icon-bar fg-red glyphicon glyphicon-file"></span>  {{ 'MyTask' | translate }}   </h3>
+
+<div ng-if="counter>0">
+<div  class="col-xs-9" >
+    <div id="accordion">
+        <!--item1-->
+        <div class="panel panel-default"  ng-repeat="key in keyList" ng-hide="isShow">
+            <div class="panel-heading" >
+                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{key}}">
+                    <h4 class="panel-title">
+
+                        {{pdList[key].name|translate}}
+                        <span class="badge pull-right" style="background-color:#b94a48;">{{toDoList[key].length}}</span>
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse{{key}}" class="panel-collapse collapse ">
+                <div class="panel-body" >
+                    <div ng-repeat="toDo in toDoList[key]"  >
+
+                        <a class="list"  href="#/taskForm/task/{{toDo.id}}/{{toDo.processInstanceId}}" >
+                            <div class="list-content" >
+                                <span   class="glyphicon glyphicon-user" style="color: red" tooltip="{{toDo.tasktype}}" ng-if="toDo.tasktype"><span show-user="{{toDo.tasktype}}" ></span></span>
+                                <span ng-if="toDo.priority>50" class="icon-bar fg-red glyphicon glyphicon-flag"></span>
+                                <span  ng-if="toDo.priority<=50" class="icon-bar fg-green glyphicon glyphicon-flag"></span>
+                                <span >{{toDo.name}}</span>
+                                <span class="list-subtitle" >{{toDo.created | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+
+                                <span ng-if="toDo.due!=null">{{toDo.due}}</span>
+                                   <span ng-if="toDo.description!=null && toDo.description!=''"
+                                         style="color: #428bca;margin-left: 60px" class="" data-toggle="tooltip"
+                                         data-placement="left" title="{{toDo.description}}">
+                                    {{toDo.description|limitTo:100}}</span>
+
+
+                            <!--    <span  ng-mouseover= "showPng(toDo.processDefinitionId,toDo.id,toDo.taskDefinitionKey)" style=" display:block;font-size: 21px;color: #60a917 !important; float: right" class="icon-bar glyphicon glyphicon-picture ">  </span>-->
+                            </div>
+
+                        </a>
+                        <div id="diagram" class="bpmn-diagram">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--item end-->
+
+     <!--   <div class="panel panel-default" ng-show="isShow">
+            <div class="panel-heading" >
+                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse_main">
+                    <h4 class="panel-title">
+                       紧急的任务
+                        <span class="badge pull-right" style="background-color:#b94a48;">{{mainCount}}</span>
+                    </h4>
+                </a>
+               </div>
+            <div id="collapse_main" class="panel-collapse collapse ">
+                <div class="panel-body" ng-repeat="toDokey in toDoList">
+                    <div ng-repeat="toDo in toDokey" >
+
+                        <a href="#/taskForm/task/{{toDo.id}}/{{toDo.processInstanceId}}" class="list" ng-if="toDo.priority>50">
+                            <div class="list-content">
+                                <span ng-if="toDo.priority>50" class="icon-bar fg-red glyphicon glyphicon-flag"></span>
+                                <span  ng-if="toDo.priority<=50" class="icon-bar fg-green glyphicon glyphicon-flag"></span>
+                                <span >{{toDo.name}}</span>
+                                <span class="list-subtitle" >{{toDo.created | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                <span ng-if="toDo.due!=null">{{toDo.due}}</span>
+                                   <span ng-if="toDo.description!=null && toDo.description!=''"
+                                         style="color: #428bca;margin-left: 60px" class="" data-toggle="tooltip"
+                                         data-placement="left" title="{{toDo.description}}">
+                                    {{toDo.description|limitTo:21}}...</span>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="isShow">
+            <div class="panel-heading" >
+                <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse_common">
+                    <h4 class="panel-title">
+                       一般任务
+                        <span class="badge pull-right" style="background-color:#b94a48;">{{commonCount}}</span>
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse_common" class="panel-collapse collapse ">
+                <div class="panel-body" ng-repeat="toDokey in toDoList">
+                    <div ng-repeat="toDo in toDokey" >
+
+                        <a href="#/taskForm/task/{{toDo.id}}/{{toDo.processInstanceId}}" class="list" ng-if="toDo.priority<=50">
+                            <div class="list-content">
+                                <span ng-if="toDo.priority>50" class="icon-bar fg-red glyphicon glyphicon-flag"></span>
+                                <span  ng-if="toDo.priority<=50" class="icon-bar fg-green glyphicon glyphicon-flag"></span>
+                                <span >{{toDo.name}}</span>
+                                <span class="list-subtitle" >{{toDo.created | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                <span ng-if="toDo.due!=null">{{toDo.due}}</span>
+                                   <span ng-if="toDo.description!=null && toDo.description!=''"
+                                         style="color: #428bca;margin-left: 60px" class="" data-toggle="tooltip"
+                                         data-placement="left" title="{{toDo.description}}">
+                                    {{toDo.description|limitTo:21}}...</span>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
+    </div>
+
+
+</div>
+<div class="col-md-3" >
+
+    <div class="row"  >
+       <!-- <div class="col-md-12"   style="  padding-left:0px;  ">
+            <ul class="nav nav-pills nav-stacked " id="nav-menu">
+
+                <li ng-click="show('time')" style="cursor:pointer;">
+                    <a class="nav-list"> <i class="icon-bar glyphicon glyphicon-picture"></i> 任务分类   <span class="badge">{{keyList.length}}</span></a>
+                </li>
+                <li style="cursor:pointer;" >
+                    <a   ng-click="show('main')" class="nav-list"> <i class="icon-bar glyphicon glyphicon-align-left"></i> 重要性   <span class="badge"></span></a>
+                </li>
+
+
+
+            </ul>
+        </div>-->
+    </div>
+</div>
+</div>
+<div class="col-xs-9" ng-if="counter<1">
+<div class="glyphicon glyphicon-thumbs-up" style="  font-size: 20px;color:  #e51400 !important;">{{ 'TaskInfo' | translate }} </div>
+</div>

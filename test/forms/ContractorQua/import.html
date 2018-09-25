@@ -1,0 +1,65 @@
+<style type="text/css">
+    [class*="ui-grid-icon-"] {color:#000;}
+    .modal-lg {
+        width: 940px;
+    }
+
+</style>
+
+
+<div class="col-sm-12" style="padding-top: 20px;">
+    <form class="form-horizontal" role="form" novalidate >
+        <legend><h3>{{'ContractorQua'|translate}}</h3></legend>
+        <div class="col-sm-12 form-group">
+            <div class="form-group form-table">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'GuestIDCard'|translate}}</label>
+
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="IdCard" ng-model="IdCard">
+                    </div>
+                    <label class="col-sm-2 control-label">*{{'ContractorBelong'|translate}}</label>
+
+                    <div class="col-sm-3 ">
+
+                        <select style="width:100%" ui-select2 ng-model="EmployerId"
+                                name="eventStart_Employer">
+                            <option ng-repeat="value in employers" value="{{value.EmployerId}}">
+                                {{value.Employer}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                        </button>
+                        <a class="btn btn-primary" target="_blank" href="css/contrator.xls" >
+                         {{'teplate'|translate}}  </a>
+                    </div>
+                </div>
+         </div>
+       </div>
+
+     </form>
+
+
+    <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
+         ui-grid-resize-columns
+         ui-grid-core ui-grid-exporter external-scopes="gridHandlers"></div>
+
+    <div class="modal fade" id="importmodel" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+    <input id="div-fileupload" type="file" upload-file/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

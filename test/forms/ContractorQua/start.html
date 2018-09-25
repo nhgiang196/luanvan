@@ -1,0 +1,914 @@
+<script type="text/javascript">
+    function ContractorQuaProcess_start($scope, EngineApi, $http, $timeout, Notifications, $upload, $compile, ConQuaService, $filter, Auth, $translatePartialLoader, $translate,GateGuest) {
+        $scope.filedata = [];
+        $scope.cers = [];
+        $scope.inss = [];
+        var query = {};
+        $scope.flowkey="GateContractorQuaProcess";
+        query.Language = window.localStorage.lang;
+        query.employer = $scope.eventStart_Employer || "";
+        query.cType = "";
+        query.departmentID = "";
+        ConQuaService.GetContractorQualification().get(query).$promise.then(function (res) {
+            $scope.employers = res;
+            var initVal = window.localStorage.getItem("Employer") || $scope.employers[0].Name;
+            $scope.eventStart_Employer = initVal;
+        }, function (errResponse) {
+            Notifications.addError({'status': 'error', 'message': errResponse});
+        });
+//        $http.get('/ehs/contractorinspect/contractors').success(function(data){
+//            $scope.employers= data ;
+//            var initVal = window.localStorage.getItem("Employer") || $scope.employers[0].Name;
+//            $scope.eventStart_Employer = initVal;
+//        });
+        ConQuaService.GetCerTypes().get({Language: window.localStorage.lang}).$promise.then(function (res) {
+            $scope.cerTypes = res;
+        }, function (errResponse) {
+            Notifications.addError({'status': 'error', 'message': errResponse});
+        });
+        ConQuaService.GetIssuedBy().get({Language: window.localStorage.lang}).$promise.then(function (res) {
+            $scope.issuedBys = res;
+        }, function (errResponse) {
+            Notifications.addError({'status': 'error', 'message': errResponse});
+        });
+        ConQuaService.GetInsTypes().get({Language: window.localStorage.lang}).$promise.then(function (res) {
+            $scope.insTypes = res;
+        }, function (errResponse) {
+            Notifications.addError({'status': 'error', 'message': errResponse});
+        });
+        ConQuaService.GetEquipmentList().get({Language: window.localStorage.lang}).$promise.then(function (res) {
+            $scope.equips = res;
+            $scope.checkboxes = new Array($scope.equips.length);
+        }, function (errResponse) {
+            Notifications.addError({'status': 'error', 'message': errResponse});
+        });
+
+        //get checker
+        /* $http.get('/ehs/leader4user/' + Auth.username).success(function (data) {
+         if (data.length === 0) {
+         Notifications.addError({'status': 'error', 'message': "该员工的部门没有配置领导信息，请联系资讯配置！"});
+
+         $scope.isHaveLeader = false;
+         } else {
+         $scope.isHaveLeader = true;
+         $scope.formVariables.push({name: "checker", value: data[0].EmployeeID});
+
+         }
+         });*/
+
+        /*var doc_taskid = $scope.taskid;
+         if (!doc_taskid) {
+         doc_taskid = $scope.definitionID;
+         }*/
+        function isCanCerRemove(cerId, callback) {
+            ConQuaService.GetCer().get({
+                cerId: cerId,
+                idCard: $scope.eventStart_IdCard,
+                employerId: $scope.eventStart_Employer
+            }).$promise.then(function (res) {
+                        callback(res.Files.length)
+                    }, function (err) {
+                        Notifications.addError({'status': 'error', 'message': err})
+                    });
+        }
+
+        $scope.cerDel = function (index) {
+            if ($scope.cers[index].CerId) {
+                isCanCerRemove($scope.cers[index].CerId, function (count) {
+                    $scope.cers.splice(index, 1);
+                    if (count <= 0) {
+                        $.each($scope.cers[index].Files, function (i, file) {
+                            $http.delete("/ehs/file/delete?" + "DocId=" + file.DocId).success(function () {
+                                console.log("删除文件成功：" + file.OldName);
+                            }).error(function (checkData, status) {
+                                console.error("删除文件失败!");
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': "删除文件信息失败：" + status + checkData
+                                });
+                            });
+                        });
+                        $scope.cers.splice(index, 1);
+                    } else {
+                        $scope.cers.splice(index, 1);
+                    }
+                });
+            }
+
+        };
+
+        $scope.addCer = function () {
+            for (var i = 0, cer; !!(cer = $scope.cers[i]); i++) {
+                if (cer.CerId == $scope.cerId) {
+                    console.log("重复");
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant("Msg_ConQua_Duplicate") + $scope.cerId
+                    });
+                    return;
+                }
+            }
+            console.log("addCer");
+            var cer = {};
+            cer.CerId = $scope.cerId;
+            cer.CerName = $scope.cerName;
+            cer.IssuedBy = $scope.issuedBy;
+            cer.ValidTo = $scope.cerValidTo;
+            cer.JsonFile = JSON.stringify($scope.filedata);
+            cer.Files = $scope.filedata;
+            for (var i = 0; i < $scope.cerTypes.length; i++) {
+                if ($scope.cerTypes[i].ID == $scope.cerName) {
+                    cer.CerNameRemark = $scope.cerTypes[i].CerType;
+                    break
+                }
+            }
+            cer.IssuedByRemark = $filter('filter')($scope.issuedBys, $scope.IssuedBy)[0].IssuedBy || "";
+            $scope.cers.push(cer);
+            $scope.cerId = null;
+            $scope.cerName = null;
+            $scope.issuedBy = null;
+            $scope.cerValidTo = null;
+            $scope.filedata = [];
+            $('#cerModal').modal('hide');
+        };
+        function isCanRemove(InsId, callback) {
+            ConQuaService.GetIns().get({
+                insId: InsId,
+                employerId: $scope.eventStart_Employer
+            }).$promise.then(function (res) {
+                        callback(res)
+                    }, function (err) {
+                        Notifications.addError({'status': 'error', 'message': err})
+                    });
+        }
+
+        $scope.trainFile = [];
+        $scope.healthFile = [];
+        $scope.upAddition = function (type) {
+            $scope.upType = type;
+            switch (type) {
+                case "train":
+                    $scope.filedata = $scope.trainFile || [];
+                    break;
+                case "health":
+                    $scope.filedata = $scope.healthFile || [];
+                    break;
+            }
+            $('#fileModal').modal("show");
+        };
+        $scope.saveFile = function () {
+            if ($scope.filedata.length > 1) {
+                Notifications.addError({'status': 'error', 'message': $translate.instant("Msg_ConQua_FileNumber")})
+                return
+            }
+            switch ($scope.upType) {
+                case "train":
+                    $scope.trainFile = $scope.filedata;
+                    $scope.filedata = [];
+                    break;
+                case "health":
+                    $scope.healthFile = $scope.filedata;
+                    $scope.filedata = [];
+                    break;
+            }
+            $('#fileModal').modal("hide");
+        };
+        $scope.insDel = function (index) {
+            //这个保险是否在其他的承揽商已经使用
+            if ($scope.inss[index].InsId) {
+                isCanRemove($scope.inss[index].InsId, function (count) {
+                    $scope.inss.splice(index, 1);
+                    if (count <= 0) {
+                        $.each($scope.inss[index].Files, function (i, file) {
+                            var data = "DocId=" + file.DocId;
+                            $http.delete('/api/cmis/deletefile?' + data)
+                                    .success(function () {
+                                        console.log("删除文件成功：" + file.OldName);
+                                    }).error(function (checkData, status) {
+                                        console.error("删除文件失败!");
+                                        Notifications.addError({
+                                            'status': 'error',
+                                            'message': "删除文件信息失败：" + status + checkData
+                                        });
+                                    });
+                        });
+                        $scope.inss.splice(index, 1);
+                    } else {
+                        $scope.inss.splice(index, 1);
+                    }
+                })
+            }
+
+
+        };
+        //添加装备
+        $scope.note = {}
+        $scope.note.equipment = "";
+        $scope.addEquip = function () {
+            $scope.note.equipment = "";
+            console.log($scope.checkboxes)
+            for (var i = 0; i < $scope.checkboxes.length; i++) {
+                if ($scope.checkboxes[i] != null && $scope.checkboxes[i] != "false") {
+                    for (var j = 0; j < $scope.equips.length; j++) {
+                        var eq = $scope.equips[j]
+                        if (eq.ID == $scope.checkboxes[i]) {
+                            if ($scope.note.equipment == "") {
+                                $scope.note.equipment = eq.Equipment;
+                            }
+                            else {
+                                $scope.note.equipment = $scope.note.equipment + "/" + eq.Equipment;
+                            }
+                        }
+                    }
+                }
+            }
+            $('#equipModal').modal('hide');
+        };
+        //增加保险
+        $scope.addIns = function () {
+            for (var i = 0, ins; !!(ins = $scope.inss[i]); i++) {
+                if (ins.InsId == $scope.insId) {
+                    console.log("重复");
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant("Msg_ConQua_Duplicate") + $scope.insId
+                    });
+                    return;
+                }
+            }
+            var ins = {};
+            ins.InsId = $scope.insId;
+            ins.InsName = $scope.insName;
+            ins.ValidTo = $scope.insValidTo;
+            ins.JsonFile = JSON.stringify($scope.filedata);
+            ins.Files = $scope.filedata;
+            ins.InsNameRemark = $filter('filter')($scope.insTypes, $scope.insName)[0].InsType || "";
+            $scope.inss.push(ins);
+            $scope.insId = null;
+            $scope.insName = null;
+            $scope.insValidTo = null;
+            $scope.filedata = [];
+            $('#insModal').modal('hide');
+        };
+        var myDate = new Date();
+        $scope.$watch("eventStart_IdCard", function (n, o) {
+            if (n !== undefined && $scope.eventStart_Employer !== null) {
+                ConQuaService.GetContractor().get({
+                    idCard: n,
+                    EmployerId: $scope.eventStart_Employer || "",
+                    Language: window.localStorage.lang || ""
+                }).$promise.then(function (data) {
+                            console.log(data)
+                            if (data.length !== 0) {
+                                $scope.eventStart_Name = data[0].Name;
+                                $scope.eventStart_Phone = data[0].Phone;
+                                $scope.eventStart_Remark = data[0].Remark;
+                                $scope.TrainDate = data[0].TrainDate;
+                                if (data[0].ValidTo !== "0001-01-01T00:00:00") {
+                                    $scope.eventStart_ValidTo = $filter('date')(data[0].ValidTo, 'yyyy-MM-dd');
+                                }
+                                $scope.cers = data[0].Certificates;
+                                $scope.inss = data[0].Insurances;
+                                //这个单据在流程中，不能重新启动
+                                $scope.isCanSave = data[0].IsUpdate;
+                                if (data[0].TTValidTo <= myDate.toLocaleString()) {
+                                    $scope.event_TrainTime = data[0].TrainTime;
+                                    $scope.event_TTValidTo = $filter('date')(data[0].TTValidTo, 'yyyy-MM-dd');
+                                    $scope.trainFile = JSON.parse(data[0].TTFile);
+                                }
+                                console.log(data[0].MIValidTo <= myDate.toLocaleString())
+                                if (data[0].MIValidTo <= myDate.toLocaleString()) {
+                                    $scope.event_MedicalInspection = data[0].MedicalInspection;
+                                    $scope.event_MIValidTo = $filter('date')(data[0].MIValidTo, 'yyyy-MM-dd');
+                                    $scope.healthFile = JSON.parse(data[0].MIFile);
+                                }
+
+                            }
+                            if (data.length !== 0) {
+                                $scope.formVariables.push({name: "IsUpdate", value: "YES"});
+                                $scope.IsUpdate = true;
+                            } else {
+                                $scope.formVariables.push({name: "IsUpdate", value: "NO"});
+                                $scope.IsUpdate = false;
+                            }
+                        }, function (err) {
+                            Notifications.addError({'status': 'error', 'message': err})
+                        });
+            }
+        });
+
+        $scope.$watch("eventStart_Employer", function (n, o) {
+            if (n !== undefined && $scope.eventStart_IdCard !== undefined) {
+                ConQuaService.GetContractor().get({
+                    idCard: $scope.eventStart_IdCard || "",
+                    EmployerId: $scope.eventStart_Employer || "",
+                    Language: window.localStorage.lang || ""
+                }).$promise.then(function (data) {
+                            if (data.length !== 0) {
+                                $scope.eventStart_Name = data.Name;
+                                $scope.eventStart_Phone = data.Phone;
+                                $scope.eventStart_Remark = data.Remark;
+                                if (data.ValidTo !== "0001-01-01T00:00:00") {
+                                    $scope.eventStart_ValidTo = $filter('date')(data.ValidTo, 'yyyy-MM-dd');
+                                }
+                                $scope.cers = data.Certificates;
+                                $scope.inss = data.Insurances;
+
+                                //这个单据在流程中，不能重新启动
+                                $scope.isCanSave = data.IsUpdate;
+                                console.log($scope.isCanSave);
+                            }
+
+                            if (data.length !== 0) {
+                                $scope.formVariables.push({name: "IsUpdate", value: "YES"});
+                                $scope.IsUpdate = true;
+                            } else {
+                                $scope.formVariables.push({name: "IsUpdate", value: "NO"});
+                                $scope.IsUpdate = false;
+                            }
+                        }, function (err) {
+                            Notifications.addError({'status': 'error', 'message': err})
+                        });
+            }
+        });
+        /*$scope.$watch("cerId", function (n, o) {
+         if (n !== undefined && $scope.eventStart_Employer !== undefined && $scope.eventStart_IdCard !== undefined) {
+         ConQuaService.GetCer().get({
+         cerId: n,
+         idCard: $scope.eventStart_IdCard || " ",
+         employerId: $scope.eventStart_Employer ||""
+         }).$promise.then(function (data) {
+         $scope.cerName = data.CerName;
+         $scope.issuedBy = data.IssuedBy;
+         if (data.ValidTo !== "0001-01-01T00:00:00") {
+         $scope.cerValidTo = $filter('date')(data.ValidTo, 'yyyy-MM-dd');
+         }
+         if (data.Files.length <= 0) {
+         $scope.IscerShow = true;
+         } else {
+         $scope.IscerShow = false;
+         }
+         $scope.filedata = data.Files;
+
+         }, function (err) {
+         Notifications.addError({'status': 'error', 'message': err})
+         })
+         }
+         });*/
+        $scope.$watch("insId", function (n, o) {
+            console.log(n)
+            if (n !== undefined && n != null) {
+                ConQuaService.GetIns().get({
+                    insId: n
+                }).$promise.then(function (data) {
+                            $scope.insName = data.InsName;
+                            if (data.ValidTo !== "0001-01-01T00:00:00") {
+                                $scope.insValidTo = $filter('date')(data.ValidTo, 'yyyy-MM-dd');
+                            }
+                            if (data.Files.length <= 0) {
+                                $scope.IsinsShow = true;
+                            } else {
+                                $scope.IsinsShow = false;
+                            }
+                            $scope.filedata = data.Files
+                        }, function (err) {
+                            Notifications.addError({'status': 'error', 'message': err})
+                        })
+            }
+
+        });
+        function saveVoucher(status,callback){
+            var today = new Date();
+            var d1 = parseInt(new Date(today).getTime() / 1000 / 60 / 60 / 24);
+            var d2 = parseInt(new Date($scope.eventStart_ValidTo).getTime() / 1000 / 60 / 60 / 24);
+            var days = d2 - d1;
+            if (days > 366) {
+                Notifications.addError({'status': 'error', 'message': $translate.instant("Msg_ConQua_Validity")});
+                return;
+            }
+            var event = {};
+            event.IdCard = $scope.eventStart_IdCard;
+            event.EmployerID = $scope.eventStart_Employer;
+            event.Name = $scope.eventStart_Name;
+            event.Phone = $scope.eventStart_Phone;
+            event.Remark = $scope.eventStart_Remark;
+            event.ValidTo = $scope.eventStart_ValidTo;
+            event.UserId = Auth.username;
+            event.Certificates = $scope.cers;
+            event.Insurances = $scope.inss;
+            event.IsUpdate = $scope.IsUpdate;
+            event.Status = status;
+            event.PersonalEquipment = JSON.stringify($scope.checkboxes);
+            event.TrainTime = $scope.event_TrainTime;
+            event.TTValidTo = $scope.event_TTValidTo;
+            event.TTFile = JSON.stringify($scope.trainFile);
+            event.MedicalInspection = $scope.event_MedicalInspection;
+            event.MIValidTo = $scope.event_MIValidTo;
+            event.MIFile = JSON.stringify($scope.healthFile);
+            event.TrainDate = $scope.TrainDate || null;
+            ConQuaService.SaveContractor().save(event).$promise.then(function (res) {
+                callback(null)
+            }, function (errResponse) {
+                callback(errResponse)
+            });
+        }
+        $scope.save = function () {
+            window.localStorage.setItem("Employer", $scope.eventStart_Employer);
+            /*if ($scope.isCanSave == false) {
+             Notifications.addError({'status': 'error', 'message': "这个包商还在流程中，不能重新启动!"});
+             return;
+             }*/
+            //日期的判断有效期不能大于一年
+            GateGuest.GetGateCheckers().getCheckers({
+                owner: Auth.username,
+                fLowKey: $scope.flowkey,
+                Kinds: "",
+                CheckDate: ""
+            }).$promise.then(function (res) {
+                        var leaderList = [];
+                        for (var i = 0; i < res.length; i++) {
+                            leaderList[i] = res[i].Person;
+                        }
+                        if (leaderList.length <= 0) {
+                            Notifications.addError({'status': 'error', 'message': $translate.instant('Leader_NO_MSG')});
+                            return
+                        } else {
+                            saveVoucher("F",function(errResponse){
+                                if(errResponse){
+                                    Notifications.addError({'status': 'error', 'message': errResponse});
+                                }
+                                else{
+                                    $scope.formVariables.push({name: "cers", value: $scope.cers});
+                                    $scope.formVariables.push({name: "inss", value: $scope.inss});
+                                    $scope.formVariables.push({"name": "start_remark", "value": "remark"});
+                                    $scope.formVariables.push({name: "checker", value: leaderList});
+                                    $scope.formVariables.push({name: "safety", value: "cassie"});//审核人员
+                                    $scope.submit();
+                                }
+                            })
+                        }
+                    });
+        };
+        $scope.saveDraft = function(){
+            saveVoucher(function(errResponse){
+                if("N",errResponse){
+                    Notifications.addError({'status': 'error', 'message': errResponse});
+                }
+                else{
+                    Notifications.addError({'status': 'error', 'message': "保存成功"});
+                }
+            })
+        }
+    }
+</script>
+
+<div ng-controller="ContractorQuaProcess_start">
+
+    <form class="form-horizontal" role="form" novalidate name="form">
+        <legend><h3>{{'承揽商个人资质'|translate}}</h3></legend>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'ContractorBelong'|translate}}</label>
+
+            <div class="col-sm-3 ">
+
+                <select style="width:100%" ui-select2 ng-model="eventStart_Employer" history-field="ContractorBelong"
+                        form-field
+                        id="eventStart_Employer" name="eventStart_Employer">
+                    <option ng-repeat="value in employers" value="{{value.EmployerId}}">
+                        {{value.Employer}}
+                    </option>
+                </select>
+            </div>
+            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+            <div class="col-sm-3">
+                <input class="form-control" form-field type="date" required history-field="ValidTo"
+                       name="eventStart_ValidTo" ng-model="eventStart_ValidTo" field-validate/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'GuestIDCard'|translate}}</label>
+
+            <div class="col-sm-3 ">
+                <input class="form-control" name="eventStart_IdCard" history-field="GuestIDCard" form-field
+                       type="string"
+                       ng-model="eventStart_IdCard" required field-validate/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ConName'|translate}}</label>
+
+            <div class="col-sm-3 ">
+                <input class="form-control" name="eventStart_Name" history-field="ConName" form-field type="string"
+                       ng-model="eventStart_Name" required field-validate/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'phone'|translate}}</label>
+
+            <div class="col-sm-3 ">
+                <input class="form-control" name="eventStart_Phone" history-field="phone" form-field type="string"
+                       ng-model="eventStart_Phone" required field-validate/>
+            </div>
+            <label class="col-sm-2 control-label">{{'Remark'|translate}}</label>
+
+            <div class="col-sm-3 ">
+                <input class="form-control" name="eventStart_Remark" history-field="Remark" form-field type="string"
+                       ng-model="eventStart_Remark" field-validate/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'PersonalEquipment'|translate}}</label>
+
+            <div class="col-sm-2">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#equipModal">
+                    {{'AddEquip'|translate}}
+                </button>
+            </div>
+            <label>{{'Equip'|translate}}：{{note.equipment}}</label>
+        </div>
+        <H4 style="background-color: #ececec; padding: 5px">{{'个人资质信息'|translate}}</H4>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'Certificates'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'CertificatesNO'|translate}}</th>
+                        <th>{{'CerName'|translate}}</th>
+                        <th>{{'IssuedBy'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="c in cers">
+                        <td>{{c.CerId}}</td>
+                        <td>{{c.CerNameRemark}}</td>
+                        <td>{{c.IssuedByRemark}}</td>
+                        <td>{{c.ValidTo}}</td>
+                        <td>
+                            <div ng-repeat="file in c.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file"> {{file.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><a class="btn btn-danger btn-xs" role="button" ng-click="cerDel($index)" title="删除">X</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#cerModal">
+                        {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'Ins'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table  table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color:#FAFAFA;">
+                        <th>{{'InsID'|translate}}</th>
+                        <th>{{'InsName'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in inss">
+                        <td>{{i.InsId}}</td>
+                        <td>{{i.InsNameRemark}}</td>
+                        <td>{{i.ValidTo}}</td>
+                        <td>
+                            <div ng-repeat="file in i.Files">
+                                <div>
+                                    <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                       class="a-file">{{file.OldName}}</a>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td><a class="btn btn-danger btn-xs" role="button" ng-click="insDel($index)" title="删除">X</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="float: right;">
+                    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#insModal">
+                        {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'MedicalInspection'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color: #fafafa">
+                        <th>{{'MedicalInspection'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td><input class="form-control" name="event_MedicalInspection" history-field="MedicalInspection"
+                                   form-field type="string" ng-model="event_MedicalInspection" field-validate/></td>
+                        <td><input class="form-control" name="event_MIValidTo" history-field="ValidTo"
+                                   form-field type="date" ng-model="event_MIValidTo" field-validate/></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" ng-click="upAddition('health')">
+                                {{'UploadFile'|translate}}
+                            </button>
+                        </td>
+                        <td>
+                            <div ng-repeat="myfile in healthFile">
+                                <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                    <a class="btn btn-info btn-xs" role="button"
+                                       ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                       class="a-file">{{myfile.OldName}}</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'TrainTime'|translate}}</label>
+
+            <div class="col-sm-8">
+                <table class="table table-hover table-condensed">
+                    <thead>
+                    <tr style="background-color: #fafafa">
+                        <th>{{'TrainTime'|translate}}</th>
+                        <th>{{'ValidTo'|translate}}</th>
+                        <th>{{'File'|translate}}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td><input class="form-control" name="event_TrainTime" history-field="TrainTime"
+                                   form-field type="string" ng-model="event_TrainTime" field-validate/></td>
+                        <td>
+                            <input class="form-control" name="event_TTValidTo" history-field="TTValidTo"
+                                   form-field type="date" ng-model="event_TTValidTo" field-validate/></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" ng-click="upAddition('train')">
+                                {{'UploadFile'|translate}}
+                            </button>
+                        </td>
+                        <td>
+                            <div ng-repeat="myfile in trainFile" class="btn-group"
+                                 style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                <a class="btn btn-info btn-xs" role="button" style="width: 85px"
+                                   ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                   class="a-file">{{myfile.OldName}}</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <!--<div class="col-sm-3 ">
+                <input class="form-control" name="event_TrainTime" history-field="TrainTime" form-field type="number"
+                       ng-model="event_TrainTime" field-validate/>
+            </div>
+            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+            <div class="col-sm-3 ">
+                <input class="form-control" name="event_TTValidTo" history-field="ValidTo" form-field type="date"
+                       ng-model="event_TTValidTo" field-validate/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">{{'File'|translate}}</label>
+
+            <div class="col-sm-2 ">
+                <button class="btn btn-primary btn-sm" ng-click="upAddition('train')">{{'UploadFile'|translate}}
+                </button>
+            </div>
+            <div class="col-sm-8">
+                <div ng-repeat="myfile in trainFile">
+                    <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                        <a class="btn btn-info btn-xs" role="button"
+                           ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                           class="a-file">{{myfile.OldName}}</a>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="filedata.length>1"><label class="col-sm-2 control-label"><code>{{'Msg_ConQua_FileNumber'|translate}}</code></label>
+            </div>-->
+        </div>
+        <hr/>
+        <div class="form-group">
+            <div class="col-sm-offset-8 col-sm-10">
+                <button class="btn btn-primary" ng-click="saveDraft()"
+                        ng-disabled="form.$invalid||inss.length == 0">{{'草稿'|translate}}
+                </button>
+                <button class="btn btn-primary" ng-click="save()"
+                        ng-disabled="form.$invalid||inss.length == 0">{{'submit'|translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="modal fade" id="cerModal" data-backdrop="static" aria-labelledby="myLargeModalLabel"
+         data-keyboard="false">
+        <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{'Certificates'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formAddCer" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'CertificatesNO'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <input class="form-control" type="text" required field-validate ng-model="cerId"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'CerName'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <select class="form-control" ng-model="cerName"
+                                        ng-options="c.ID as c.CerType for c in cerTypes" required field-validate>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'IssuedBy'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <select class="form-control" ng-model="issuedBy"
+                                        ng-options="c.ID as c.IssuedBy for c in issuedBys" required field-validate>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <input class="form-control" type="date" required field-validate ng-model="cerValidTo"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 ">
+
+                                <label class="col-sm-2 control-label">{{'File'|translate}}</label>
+
+                                <div class="col-sm-3 ">
+                                    <button class="btn btn-primary btn-sm" ng-click="upAddition('ins')">
+                                        {{'UploadFile'|translate}}
+                                    </button>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div ng-repeat="myfile in filedata">
+                                        <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                            <a class="btn btn-info btn-xs" role="button"
+                                               ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                               class="a-file">{{myfile.OldName}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-disabled="formAddCer.$invalid||filedata.length !=1"
+                            ng-click="addCer()">{{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="equipModal" data-backdrop="static" aria-labelledby="myLargeModalLabel"
+         data-keyboard="false">
+        <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{'AddEquip'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-detail">
+                        <tr ng-repeat="i in equips">
+                            <td>
+                                <input type="checkbox" ng-model="checkboxes[$index]" ng-true-value="{{i.ID}}"
+                                       ng-false-value="false">
+                            </td>
+                            <td>{{i.Equipment}}</td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-click="addEquip()">{{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="insModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+         data-backdrop="static">
+        <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 5px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{'Ins'|translate}}({{'Msg_ConQua_Duplicate'|translate}})</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formAddIns" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'InsID'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <input class="form-control" type="text" required field-validate ng-model="insId"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'InsName'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <select class="form-control" ng-model="insName"
+                                        ng-options="c.ID as c.InsType for c in insTypes" required field-validate>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+                            <div class="col-sm-10 ">
+                                <input class="form-control" type="date" required field-validate ng-model="insValidTo"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 ">
+
+                                <label class="col-sm-2 control-label">{{'File'|translate}}</label>
+
+                                <div class="col-sm-3 ">
+                                    <button class="btn btn-primary btn-sm" ng-click="upAddition('ins')">
+                                        {{'UploadFile'|translate}}
+                                    </button>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div ng-repeat="myfile in filedata">
+                                        <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                            <a class="btn btn-info btn-xs" role="button"
+                                               ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                               class="a-file">{{myfile.OldName}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary"
+                            ng-disabled="formAddIns.$invalid||filedata.length != 1" ng-click="addIns()">
+                        {{'Add'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="fileModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <my_delfile></my_delfile>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="saveFile()">{{'确定'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

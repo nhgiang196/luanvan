@@ -1,0 +1,55 @@
+<style>
+    .ibx-manage-logo {
+
+
+        height: 42px;
+        border: 1px solid #D6D6D6;
+        border-right: none;
+        background-color: #959595;
+        cursor: pointer;
+        padding: 10px;
+    }
+    .highlight{
+        display: none;
+
+    }
+</style>
+<div class="container"  ng-controller="loadController"  >
+    <div class="row" style="padding-top:8px; ">
+        <div class="col-md-12" style="min-height:  400px">
+            <div id="bindHtml" ng-bind-html="testhtml" ng-show="bindform">
+
+            </div>
+            <div ng-hide="bindform">
+                <div id="diagram" class="bpmn-diagram">
+
+                </div>
+            </div>
+        </div>
+        <div style="top: 260px; position: fixed; right: 0px;" class="ibx-manage-logo" ng-click="toggleCustom()"  ng-hide="menuBar"> <span class="icon-bar glyphicon glyphicon-play " ></span></div>
+        <div style="top: 60px; position: fixed; right: 0px;" class="pinned col-md-2 "    >
+            <div class="row">
+                <div class="col-md-12"   style="  padding-left:0px;padding-right: 2px; ">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="active"  style="cursor:pointer;">
+                            <a ng-click="toggleCustom()" class="nav-list"> {{'Menu'|translate}}</a>
+                        </li>
+                        <li style="cursor:pointer;">
+                            <a ng-click="showPng()" class="nav-list"> <i class="icon-bar glyphicon glyphicon-picture"></i>   {{'Flowchart'|translate}}  <span class="badge">图</span></a>
+                        </li>
+                        <li  style="cursor:pointer;"  ng-if="historyurl.length>0">
+                            <a  href="{{historyurl}}"  target="_blank" class="nav-list"> <i class="icon-bar glyphicon glyphicon-align-left"></i>   {{'HistoryList'|translate}}  <span class="badge"></span></a>
+                        </li>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+     </div>
+
+ </div>
+
+
+

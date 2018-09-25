@@ -1,0 +1,82 @@
+<style>
+    .checkbox {
+        display: block;
+        min-height: 20px;
+        margin-left: 400px;
+        text-align: center;
+
+    }
+    .checkbox label {
+        display: inline;
+
+        font-weight: normal;
+        cursor: pointer;
+
+    }
+</style>
+
+<form class="form-horizontal" role="form" style="margin-top: 10px;margin-left: 195px" ng-keypress="($event.charCode==13)? login() : return">
+    <div class="row">
+        <div class="col-xs-12" style="text-align: center" >
+            <img src="/css/image/logo.png" style="opacity: 1; transition: opacity 1s; background-color: rgb(255, 255, 255);width:50%;margin-right: 200px">
+
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3" >
+        </div>
+        <div class="col-sm-4" >
+            <label class="control-label" style="text-align: left"  >{{'UserName'|translate}}</label>
+            <input type="text" id="username"  class="form-control" placeholder="user name"  name="name" ng-model="username" required autofocus="">
+      </div>
+        <div class="col-sm-2" >
+        </div>
+
+    </div>
+    <div class="row" style="padding-top: 10px"  >
+        <div class="col-sm-3" >
+        </div>
+        <div class="col-sm-4" style="text-align: left">
+            <label class="control-label"   >{{'PassWord'|translate}}</label>
+            <input  type="password" id="Password"  class="form-control" placeholder="Password"    name="password" ng-model="password" required>
+        </div>
+        <div class="col-sm-2" >
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px"  >
+        <div class="col-sm-3" style="text-align: left">
+            </div>
+        <div class="col-sm-4" style="text-align: left">
+            <label class="control-label" >{{'Language'|translate}}</label>
+            <select  style="text-align: center" class="form-control"  ng-model="cur_lang" ng-change="switching(cur_lang)">
+                <option value="EN">{{'EN' |translate}}</option>
+                <option value="CN">{{'CN'|translate}}</option>
+                <option value="VN">{{'VN'|translate}}</option>
+                <option value="TW">{{'TW'|translate}}</option>
+            </select>
+        </div>
+        <div class="col-sm-2" >
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px" >
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-4" style="text-align: left">
+            <input type="checkbox"  ng-model="isRemember">{{'AutoLogin'|translate}}
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px"  >
+        <div class="col-sm-3 control-label"></div>
+        <div class="col-sm-4">
+            <button class="btn btn-lg btn-primary btn-block" type="button"  ng-click="login()" >{{'Login'|translate}}</button>
+
+        </div>
+        <div class="col-sm-2">
+        </div>
+    </div>
+</form>

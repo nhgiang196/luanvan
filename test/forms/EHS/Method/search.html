@@ -1,0 +1,67 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li ul {
+        display: none;
+        border: 1px solid #000000;
+        margin-left: -3px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+    <legend>
+        <h3>{{'MethodQuery'|translate}}</h3>
+    </legend>
+    <div class="col-sm-12 form-group">
+        <div class="form-group search-table">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'MethodName'|translate}}</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="MethodName" ng-model="method_name">
+                </div>
+                <label class="col-sm-2 control-label">{{'MethodDescription'|translate}}</label>
+                <div class="col-sm-3">
+                        <input type="text" class="form-control" name="MethodDescription" ng-model="method_description">
+                </div>
+
+            </div> 
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
+                <div class="col-sm-3">
+                    <select class="form-control" name="State" ng-model="w_status">
+                        <option ng-selected="true" value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="item in statuslist" value="{{item.id}}">{{item.name}}</option>
+
+
+                    </select>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    </button>
+                </div>
+            </div>       
+        </div>
+    </div>
+    <div style="width: 100%;">
+        <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-core
+            ui-grid-exporter></div>
+    </div>
+    <create_method></create_method>
+</form>

@@ -1,0 +1,7 @@
+[
+    {
+        "name":"eventCheck_passOrNot",
+        "type":"string",
+        "regex" :""
+    }
+]

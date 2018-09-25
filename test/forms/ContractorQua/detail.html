@@ -1,0 +1,162 @@
+<form class="form-horizontal" role="form" novalidate name="form">
+    <legend><h3>{{'ContractorQua'|translate}}</h3></legend>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'GuestIDCard'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.IdCard" readonly/>
+        </div>
+        <label class="col-sm-2 control-label">{{'ContractorBelong'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.Employer" readonly/>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'ConName'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.Name" readonly/>
+        </div>
+        <label class="col-sm-2 control-label">{{'phone'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.Phone" readonly/>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Remark'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.Remark" readonly/>
+        </div>
+        <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+        <div class="col-sm-3">
+            <input class="form-control" type="string" ng-model="note.ValidTo" readonly/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'PersonalEquipment'|translate}}</label>
+
+        <div class="col-sm-8">
+            <input class="form-control" type="string" ng-model="note.PersonalEquip" readonly/>
+        </div>
+    </div>
+    <H4 style="background-color: #ececec; padding: 5px">{{'个人资质信息'|translate}}</H4>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Certificates'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table  table-hover table-condensed">
+                <thead>
+                <tr style="background-color:#FAFAFA;">
+                    <th>{{'CertificatesNO'|translate}}</th>
+                    <th>{{'CerName'|translate}}</th>
+                    <th>{{'IssuedBy'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="c in note.cers">
+                    <td>{{c.CerId}}</td>
+                    <td>{{c.CerNameRemark}}</td>
+                    <td>{{c.IssuedByRemark}}</td>
+                    <td>{{c.ValidTo}}</td>
+                    <td>
+                        <div ng-repeat="file in c.Files">
+                            <div>
+                                <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                   class="a-file">{{file.OldName}}</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'Ins'|translate}}</label>
+
+        <div class="col-sm-8">
+            <table class="table  table-hover table-condensed">
+                <thead>
+                <tr style="background-color:#FAFAFA;">
+                    <th>{{'InsID'|translate}}</th>
+                    <th>{{'InsName'|translate}}</th>
+                    <th>{{'ValidTo'|translate}}</th>
+                    <th>{{'File'|translate}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="i in note.inss">
+                    <td>{{i.InsId}}</td>
+                    <td>{{i.InsNameRemark}}</td>
+                    <td>{{i.ValidTo}}</td>
+                    <td>
+                        <div ng-repeat="file in i.Files">
+                            <div>
+                                <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}'
+                                   class="a-file">{{file.OldName}}</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'MedicalInspection'|translate}}</label>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="string" ng-model="note.MedicalInspection" readonly/>
+        </div>
+        <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="string" ng-model="note.MIValidTo" readonly/>
+        </div>
+        <div class="col-sm-2 ">
+            <div ng-repeat="myfile in healthFile">
+                <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                    <a class="btn btn-info btn-xs" role="button"
+                       ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                       class="a-file"> {{myfile.OldName}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{'TrainTime'|translate}}</label>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="string" ng-model="note.TrainTime" readonly/>
+        </div>
+        <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+        <div class="col-sm-2">
+            <input class="form-control" type="string" ng-model="note.TTValidTo" readonly/>
+        </div>
+        <div class="col-sm-2">
+            <div ng-repeat="myfile in trainFile">
+                <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                    <a class="btn btn-info btn-xs" role="button"
+                       ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                       class="a-file"> {{myfile.OldName}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>

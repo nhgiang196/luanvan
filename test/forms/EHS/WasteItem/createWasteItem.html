@@ -1,0 +1,70 @@
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form action=""></form>
+            <div class="modal-body" style="padding-bottom:3px">
+                <H4 style="background-color: #ececec; padding:5px">{{'WasteItemInformation'|translate}}</H4>
+                <form class="form-horizontal" role="form" name="formWaste" novalidate>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'ItemCode'|translate}}</label>
+
+                        <div class="col-sm-3">
+                            <input class="form-control" type="text" name="ItemCode" ng-model="recod.item_code" required/>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'ProcessComp'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select style="width:100%" id="ProcessComp" class="form-control" ng-model="recod.compid" name="compid" 
+                            ng-options="d.CompID as d.CompName for d in companylist | filter:{Type:'P'}" required>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'State'|translate}}</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" type="text" name="State" ng-model="recod.state" required>
+                                <option value="S">{{'Solid' | translate}}</option>
+                                <option value="L">{{'Liquid' | translate}}</option>
+                                <option value="M">{{'Sludge' | translate}}</option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'ChooseMethodProcess'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select style="width:100%" ui-select2 ng-model="recod.method_id" name="method_id" required>
+                                ng-options="m.MethodID as m.MethodDescription for m in method_list" 
+                                <option ng-repeat="m in method_list" value="{{m.MethodID}}">
+                                    {{m.MethodDescription}}
+                                </option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-sm-2 control-label">*{{'WasteItemDescriptionVN'|translate}}</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" name="Description_VN" ng-model="recod.description_VN" required/>
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'WasteItemDescriptionTW'|translate}}</label>
+
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" name="Description_TW" ng-model="recod.description_TW" required />
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="savesubmit()" ng-disabled="formWaste.$invalid">
+                    {{'saveSubmit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
+            </div>
+
+        </div>
+
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

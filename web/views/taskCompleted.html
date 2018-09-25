@@ -1,0 +1,23 @@
+
+
+        <div>
+            <h3>下一步处理</h3>
+
+            <div class="highlight">
+                <div ng-repeat="nt in nexttasks">
+                <p ng-if="nt.assignee!=null">{{'DoneTask'| translate}} ：<code style="font-size: 120%;">{{nt.assignee}} -- <span show-user="{{nt.assignee}}" ></span></code></p>
+                <div  ng-if="nt.assignee==null"><span show-candidate="{{nt}}"></span></div>
+
+                <p ng-if="nt.name!=null">{{'DoneTaskUserName'| translate}}：{{nt.name}} </p>
+                <p ng-if="nt.description!=null">{{'Remark'| translate}}：{{nt.description}} </p>
+                <p ng-if="nt.due!=null">{{'datedue'| translate}}：{{nt.due}} </p>
+
+
+            </div>
+
+            </div>
+
+        </div>
+
+
+        <span><a ng-click="goTo()">立即跳转到我的任务</a></span>

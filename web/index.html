@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<style>
+    ul li:hover ul
+    {
+        display: block;
+        transition-delay: 1s;
+    }
+    li a:hover {
+
+    }
+    ul.dropdown-menu > li {
+        display: table-cell;
+    }
+</style>
+<html>
+
+<head>
+    <title>FEPV MES</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="FEIT TEAM">
+    <meta name="application-name" content="">
+    <!-- settings the base path for relative links -->
+    <!-- styles -->
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="vendor/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="css/docs.css" rel="stylesheet" />
+    <link rel="stylesheet" href="vendor/select2/select2.css" />
+    <link rel="stylesheet" href="vendor/datetimepicker/jquery.datetimepicker.css" />
+    <link rel="stylesheet" href="vendor/ui-grid/ui-grid.css" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- scripts -->
+    <!--<script src="vendor/sweetalert2/sweetalert2.js"></script>-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script data-main="main.js" src="vendor/require/require.js"></script>
+
+
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" ng-controller="headerController">
+        <script>
+
+            function headerController($scope, $translate, EngineApi, Auth, $location, Notifications, $http, $cookieStore) {
+                $scope.switching = function (lang) {
+                    $translate.use(lang);
+                    window.localStorage.lang = lang;
+                    window.location.reload();
+                }
+                $scope.btCheckAuth = function (key, url) {
+                    console.log(key);
+                    console.log(url);
+                    if (Auth.username != "" || Auth.username != undefined || Auth.username != null) {
+                        console.log(Auth.username);
+                        EngineApi.getTcodeLink().get({ "userid": Auth.username, "tcode": key }, function (linkres) {
+                            if (linkres.IsSuccess) {
+                                $location.url(url);
+                            } else {
+                                Notifications.addError({ 'status': 'error', 'message': "You do not have permission！" });
+                            }
+                        });
+                    } else {
+                        Notifications.addError({ 'status': 'error', 'message': "Please must log in to use this feature" });
+                    }
+
+
+                }
+                $scope.btSelectAuth = function (key, flowkey) {
+                    if (Auth.username != null) {
+                        EngineApi.getTcodeLink().get({ "userid": Auth.username, "tcode": key }, function (linkres) {
+                            //  console.log(linkres);
+                            if (linkres.IsSuccess) {
+                                EngineApi.getKeyId().getkey({ "key": flowkey }, function (res) {
+                                    console.log(res);
+                                    console.log(res.id);
+                                    ///taskForm/start/:id
+                                    $location.url("/taskForm/start/" + res.id);
+                                });
+                            } else {
+                                Notifications.addError({ 'status': 'error', 'message': "You do not have permission！" });
+                            }
+                        })
+                    } else {
+                        Notifications.addError({ 'status': 'error', 'message': "Please must log in to use this feature" });
+                    }
+
+                }
+                $scope.Logout = function () {
+                    $http.post('/authorize/logout').success(function (data) {
+                        $cookieStore.remove('username');
+                        $location.path('/login');
+                    }).error(function (data, status) {
+                        Notifications.addError({ 'status': 'error', 'message': "logout failure" + status + data });
+                    });
+                }
+            }
+
+        </script>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><img src="/css/image/logoheader.png" style="opacity: 1; transition: opacity 1s; width:28px;">FEPV
+                    MES</a>
+                <span class="element-divider"></span>
+            </div>
+            <div class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li class="active"><a href="#"  > {{ 'Application' | translate }}</a></li>-->
+                    <!--EHS menu bar-->
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ 'Quản lý thông tin' | translate }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/GiangVien')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Giảng viên'| translate}} </span></a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/HocVien') ">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Học viên'| translate}} </span></a>
+
+                                <div class="divider"></div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/BoMon')"><span
+                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                    <span> {{'Bộ môn'| translate}}</span></a>
+                                <a href="#/ths/NienKhoa"> <span class=" glyphicon glyphicon-bookmark"
+                                        style="color: #563d7c"></span><span>{{'Niên khóa'| translate}}
+                                    </span></a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/DonViNgoai')"><span
+                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                    <span> {{'Đơn vị ngoài'| translate}}</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ 'Luận văn' | translate }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/DangKyLuanVan')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Đăng ký luận văn'| translate}} </span></a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/QuanLyDeTai') ">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Quản lý đề tài'| translate}} </span></a>
+
+                                <div class="divider"></div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/import')"><span
+                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                    <span> {{'Chuyên ngành'| translate}}</span></a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/import')"><span
+                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                    <span> {{'Lĩnh vực'| translate}}</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ 'Hội đồng' | translate }}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/HDDC')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Hội đồng đề cương'| translate}} </span></a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/HDLV') ">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Hội đồng bảo vệ luận văn'| translate}} </span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--LIMS Report bar-->
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            {{ 'Report' | translate }}
+                            <span class="caret"></span></a> <!-- nothing here -->
+
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <!-- <a  href="#/Lims/POLY21"> <span style="color: #563d7c" class="glyphicon glyphicon-stats"></span>
+                                <span > {{'POLY21'| translate}} </span></a>
+                            <a  href="#/Lims/SSPDay"> <span style="color: #563d7c" class="glyphicon glyphicon-stats"></span>
+                                <span > {{'SSP'| translate}} </span></a> -->
+                                <!--<a href="javascript:void(0)" ng-click="btSelectAuth('FEPVGateGuestQuery','FEPVGateGuest')"> <span style=" color: #563d7c" class="glyphicon glyphicon-list-alt"></span>-->
+                                <!--<span >{{'LIMS 1'| translate}}</span></a>-->
+                                <!--<a href="javascript:void(0)" ng-click="btCheckAuth('FEPVGateGoodOutQuery','/gate/GoodsOut')"> <span style=" color: #563d7c" class="glyphicon glyphicon-edit"></span>-->
+                                <!--<span >{{'LIMS 2'| translate}} </span></a>-->
+                                <!--<a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/Index')"> <span style="color: #563d7c" class="glyphicon glyphicon-log-out"></span>-->
+                                <!--<span > {{'LIMS 3'| translate}} </span></a>-->
+                                <!--<a  href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/Index') "> <span style="color: #563d7c" class="glyphicon glyphicon-log-out"></span>-->
+                                <!--<span > {{'LIMS 4'| translate}} </span></a>-->
+                                <!--<a  href="javascript:void(0)" ng-click="btCheckAuth('FEPVUnJointTruckQuery','gate/UnJointTruck')"> <span style="color: #563d7c" class="glyphicon glyphicon-compressed"></span>-->
+                                <!--<span > {{'LIMS 5'| translate}} </span></a>-->
+                                <!--<a   href="javascript:void(0)" ng-click="btCheckAuth('FEPVJointTruckQuery','gate/JointTruck')"> <span style="color: #563d7c" class="glyphicon glyphicon-sound-dolby"></span>-->
+                                <!--<span > {{'LIMS 6'| translate}} </span></a>-->
+
+                                <!--<div class="divider"></div>-->
+
+                                <!--<a  href="javascript:void(0)" ng-click="btCheckAuth('FEPVPtaEgTruckQuery','gate/PtaEgTruck')"> <span style="color: #563d7c" class="glyphicon glyphicon-stats"></span>-->
+                                <!--<span > {{'LIMS Report 3'| translate}} </span></a> -->
+                            </li>
+
+
+
+                        </ul>
+                    </li>
+                    <li><a href="#"><span class="icon-bar glyphicon glyphicon-refresh"></span></a>
+                    </li>
+
+                </ul>
+
+                <span class="element-divider"></span>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control " placeholder="Search">
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right btn-group">
+                    <!--    <li class="active center"  ng-controller="socketIoController"> <a ng-if="isConnected==true">{{serverTime|date:'HH:mm:ss'}} </a><a ng-if="isConnected==false">Socket通信问题请联系IT</a></li>-->
+                    <li>
+                        <a href="#/FormSetting/formmain"><span class="icon-bar glyphicon glyphicon-cog"></span></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="icon-bar glyphicon glyphicon-user">{{authentication.username}}</span>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li>
+                                <a ng-click="Logout()" style="cursor: pointer">{{authentication.nickname}} {{ 'Signout'
+                                    | translate }}</a>
+                                <a href="#/main/userInfo">{{ 'ChangePassword' | translate }}</a>
+                                <a href="#/taskForm/ProxyUser">{{ 'Agentsettings' | translate }}</a>
+                                <div class="divider"></div>
+                                <a ng-click="switching('VN')" style="cursor: pointer">{{'VN'|translate}}</a>
+                                <a ng-click="switching('EN')" style="cursor: pointer">{{'EN'|translate}}</a>
+
+                                <!--   <li><a ng-click="switching('EN')" style="cursor: pointer">{{'EN'|translate}}</a></li>-->
+                                <!-- <a ng-click="switching('CN')" style="cursor: pointer">{{'CN'|translate}}</a>
+                    <a ng-click="switching('TW')" style="cursor: pointer">{{'TW'|translate}}</a> -->
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="spinner_wait" style="display:none;position:absolute;background:#000000;filter:alpha(opacity=0);opacity:0.5;width:100%; height:1000px;left:0;top:0;z-index:1990; text-align:center;  padding-top:100px">
+        <img src="css/image/loading.gif" />
+    </div>
+    <!----end header----->
+    <!-- content -->
+    <div class="container" style="padding-top: 50px;min-height: 450px;">
+        <div class="row">
+
+            <div class="col-xs-12">
+                <ng-view></ng-view>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="row">
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation" style="min-height:18px;z-index: 1000000000"
+                ng-show="isShowHttpAlter">
+                <div class="alert alert-{{httpStatus}}">
+                    <button type="button" class="close" ng-click="closeHttpAlter()">&times;</button>
+                    {{httpMessage}} <a data-toggle="modal" data-target="#httpStatusModal">- Chi tiết</a></div>
+                <!-- {{httpAlterTime}} -->
+            </nav>
+        </div>
+    </div>
+    <!-- footer -->
+    <footer id="footer" ng-controller="fonterController">
+        <script>
+            function fonterController($scope, $translate) {
+                $scope.switching = function (lang) {
+                    $translate.use(lang);
+                    window.localStorage.lang = lang;
+                    window.location.reload();
+                }
+            }
+        </script>
+        <div id="bottom-footer" class="container" style="text-align: center;">
+            <div class="pull-left">
+                <p>
+                    <!-- <strong><a href="">FEIT</a></strong> Copyright © {{'上海远资信息技术有限公司'|translate}} | -->
+                    <!-- <strong style="font-size: 13px;color:red;">FEPV IT Team Vietnam</strong> | -->
+                    <strong><a href="FEIT">About</a></strong> |
+                    <!-- <strong><a href="FEIT">FEIT</a></strong> | <strong><a href="FEIT">Terms</a></strong> | -->
+                    <strong style="cursor: pointer"><a ng-click="switching('VN')">{{'VN'|translate}}</a></strong> |
+                    <strong style="cursor: pointer"><a ng-click="switching('EN')">{{'EN'|translate}}</a></strong> |
+                    <!-- <strong style="cursor: pointer"><a ng-click="switching('CN')">{{'CN'|translate}}</a></strong> |
+                <strong style="cursor: pointer"><a ng-click="switching('TW')">{{'TW'|translate}}</a></strong> -->
+                    <!--  <strong style="cursor: pointer"><a ng-click="switching('EN')" >{{'EN'|translate}}</a></strong>|-->
+                </p>
+            </div>
+            <div class="pull-right" style="margin-right: 135px">
+                <p>Contact us at <strong><a href="mailto:nhgiang196@gmail.com">quanlyluanvan@edu.vn</a></strong></p>
+            </div>
+        </div><!-- bottom-footer -->
+    </footer>
+    <div class="modal" id="httpStatusModal" style="z-index: 1000000000" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">{{'Error'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{httperror}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+
+</body>
+
+</html>

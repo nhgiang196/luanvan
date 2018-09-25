@@ -1,0 +1,60 @@
+
+<style>
+    .theme-img.boxshadow, .theme-img-s.boxshadow {
+        background-color: #FFF;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .theme-thumb.boxshadow {
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    }
+    .browser-bar-xl {
+        display: block;
+        height: 6px;
+        background-color: #E6E6E6;
+        padding: 6px 10px;
+        -webkit-border-radius: 2px 2px 0 0;
+        -moz-border-radius: 2px 2px 0 0;
+        border-radius: 2px 2px 0 0;
+    }
+    img {
+        max-width: 100%;
+        width: auto\9;
+        height: auto;
+        border: 0;
+        vertical-align: middle;
+        -ms-interpolation-mode: bicubic;
+    }
+    h1.featured, h2.featured {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    #main-footer {
+        margin-top: 20px;
+        background: #E6E6E6;
+        color: #64686D;
+    }
+</style>
+<div class="container" >
+  <div class="row" style="padding-top: 20px; ">
+    <div class="col-md-3"   style="  padding-left:0px; ">
+        <div ng-include="'views/formSetting/formMenu.html'"></div>
+    </div>
+    <div class="col-md-9">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#home" data-toggle="tab" id="AHome">Home</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home"></div>
+            </div>
+
+         </div>
+   </div>
+</div>

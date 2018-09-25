@@ -1,0 +1,309 @@
+﻿<style>
+    .bs-glyphicons {
+        overflow: hidden;
+    }
+
+    .bs-glyphicons-list {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .bs-glyphicons li:hover {
+        color: #ff851b;
+        background-color: #fcf8e3;
+    }
+
+    @media (min-width: 768px) {
+        .bs-glyphicons li {
+            width: 12.5%;
+            font-size: 13px;
+        }
+    }
+
+    .glyphicon-class {
+        font-size: 12px;
+    }
+
+    .bs-glyphicons li {
+        float: left;
+        width: 100%;
+        height: 120px;
+        padding: 10px;
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+        /*background-color: #f9f9f9;*/
+        border: 1px solid #f5f5f5;
+    }
+
+    @media (min-width: 768px) {
+        .bs-glyphicons li {
+            float: left;
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 13px;
+            line-height: 1.4;
+            text-align: center;
+            background-color: #cccfdb;
+            margin: 10px;
+            /*   border: 1px solid #f5f5f5;*/
+        }
+
+        .glyphicon-class {
+            font-size: 16px;
+        }
+    }
+
+    .bs-glyphicons-list li a {
+        display: table-cell;
+        padding-left: 50px;
+        color: #333;
+    }
+
+    .bs-glyphicons-list li a:hover {
+        color: #ff4a00;
+        text-decoration: none;
+    }
+
+    .bs-glyphicons .glyphicon {
+        color: #6d6d6d;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        font-size: 13px;
+    }
+
+    .bs-glyphicons .glyphicon-class {
+        display: block;
+        text-align: center;
+        color: #000000;
+        word-wrap: break-word;
+    }
+
+    .list-group-item-my {
+        padding: 5px 5px;
+        display: block;
+        border: 0px solid #dddddd;
+    }
+
+    .panel-body {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 15px;
+
+    }
+
+    .dividerss {
+        height: 1px;
+        margin: 8px 1px;
+        overflow: hidden;
+        background-color: #e5e5e5;
+        border-bottom: 1px solid #ffffff;
+        *width: 100%;
+        *margin: -5px 0 5px;
+    }
+</style>
+<div class="row" style="padding-top: 20px;">
+    <div>
+        <!--<img src="/css/image/logo.png" style="opacity: 1; transition: opacity 1s; background-color: rgb(255, 255, 255);width: 100%;">-->
+        <h3 style="margin-left: 10px">〖HỆ THỐNG QUẢN LÝ CÔNG TÁC THỰC HIỆN LUẬN VĂN TỐT NGHIỆP BẬC THẠC SĨ〗</h3>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+
+
+
+            <div class="row panel panel-default" style="margin-right: 5px;margin-left: 5px">
+                <!--ACS html tag-->
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                </div>
+                <!--EHS system-->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="/css/image/" style="opacity: 1; transition: opacity 1s; background-color: rgb(255, 255, 255);width: 100%;padding-top: 30px;margin-left: 10px;">
+                    </div>
+                    <div class="col-sm-9" style="padding-top: 15px; padding-bottom: 15px">
+                        <h4 style="    border-bottom: 1px solid #d5d5d5;    padding-bottom: 0.5em; margin-right: 5px;">QUẢN
+                            LÝ THÔNG TIN</h4>
+                        <div class="col-sm-6">
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/GiangVien')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-user"></span>
+                                    <span> {{'Giảng viên'| translate}} </span></a>
+
+                            </div>
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorQuaProcessQuery','/ths/HocVien') ">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-user"></span>
+                                    <span> {{'Học viên'| translate}} </span></a>
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ContractorQua/import')"><span
+                                        class=" glyphicon glyphicon-cloud" style="color: #563d7c"></span>
+                                    <span> {{'Niên khóa'| translate}}</span></a>
+                            </div>
+                            <div>
+                                <a href="#/Contractor/StatisticReport"> <span class=" glyphicon glyphicon-cloud"
+                                        style="color: #563d7c"></span><span>
+                                        {{'Đơn vị ngoài'| translate}}</span></a>
+                            </div>
+                            <div>
+
+                                    <a href="#/waste/Main"> <span class=" glyphicon glyphicon-cloud" style="color: #563d7c"></span><span>
+                                            {{'Bộ môn'| translate}}</span></a>
+    
+    
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                </div>
+                <!--LIMS html tag-->
+
+
+
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                    <!--OA html tag-->
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-6">
+
+
+
+            <div class="row panel panel-default" style="margin-right: 5px;margin-left: 5px">
+                <!--ACS html tag-->
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                </div>
+                <!--EHS system-->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="/css/image/" style="opacity: 1; transition: opacity 1s; background-color: rgb(255, 255, 255);width: 100%;padding-top: 30px;margin-left: 10px;">
+                    </div>
+                    <div class="col-sm-9" style="padding-top: 15px; padding-bottom: 15px">
+                        <h4 style="    border-bottom: 1px solid #d5d5d5;    padding-bottom: 0.5em; margin-right: 5px;">QUẢN
+                            LÝ THÔNG TIN LUẬN VĂN</h4>
+                        <div class="col-sm-6">
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/DangKyLuanVan')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Đăng ký luận văn (dành cho giảng viên)'| translate}} </span></a>
+
+                            </div>
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorQuaProcessQuery','/ths/DeTaiLuanVan') ">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'Quản lý đề tài luận văn'| translate}} </span></a>
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                    <a href="#/ths/ChuyenNganh"> <span class=" glyphicon glyphicon-flag"
+                                        style="color: #563d7c"></span>
+                                    <span> {{'Chuyên ngành'| translate}}</span></a>
+                            </div>
+                            <div>
+                                <a href="#/ths/ChuyenMon"> <span class=" glyphicon glyphicon-flag"
+                                        style="color: #563d7c"></span>
+                                        <span>{{'Lĩnh vực chuyên môn'| translate}}</span></a>
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                </div>
+                <!--LIMS html tag-->
+
+
+
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                    <!--OA html tag-->
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div ng-if="isProxyUser==true">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{'Notice'| translate}}:</strong> {{'proxytask'| translate}}!,<span class="glyphicon glyphicon-pencil"><a
+                                href="#/taskForm/ProxyUser">{{'cancelproxytask'| translate}}</a></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row" style="padding-top: 20px; ">
+        <div class="col-xs-6">
+
+            <div class="row panel panel-default" style="margin-right: 5px;margin-left: 5px">
+                <!--ACS html tag-->
+                <div style="margin-top: 20px;border: 0;border-top: 1px solid #eeeeee;">
+                </div>
+                <!--EHS system-->
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="/css/image/" style="opacity: 1; transition: opacity 1s; background-color: rgb(255, 255, 255);width: 100%;padding-top: 30px;margin-left: 10px;">
+                    </div>
+                    <div class="col-sm-9" style="padding-top: 15px; padding-bottom: 15px">
+                        <h4 style="    border-bottom: 1px solid #d5d5d5;    padding-bottom: 0.5em; margin-right: 5px;">THƯ KÝ HỘI ĐỒNG</h4>
+
+                            <div>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/HoiDongBaoVeDeCuong')">
+                                    <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
+                                    <span> {{'HỘI ĐỒNG BẢO VỆ ĐỀ CƯƠNG'| translate}} </span></a>
+
+                            </div>
+
+                            <div>
+
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','/ths/HoiDongBaoVeLuanVan')"><span
+                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                    <span> {{'HỘI ĐỒNG BẢO VỆ LUẬN VĂN'| translate}}</span></a>
+                            </div>
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div ng-if="isProxyUser==true">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>{{'Notice'| translate}}:</strong> {{'proxytask'| translate}}!,<span class="glyphicon glyphicon-pencil"><a
+                                href="#/taskForm/ProxyUser">{{'cancelproxytask'| translate}}</a></span>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+</div>

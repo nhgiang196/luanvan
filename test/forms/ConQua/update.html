@@ -1,0 +1,180 @@
+<script type="text/javascript">
+function ContractorInfoProcess_start($scope,EngineApi,$http, $timeout,Notifications,$upload,$compile,$filter,Auth,ConQuaService,GateGuest,$translate) {
+    $scope.projects={};
+    $scope.filedata = [];
+    $scope.note={};
+    var lang=window.localStorage.lang;
+    console.log("---update---");
+        $scope.readEmployer=true;
+    var parseData = function(data,filetype) {
+        var arr=[];
+        for(var i=0;i<data.length;i++) {
+            if(data[i].FileType==filetype){
+                arr.push(data[i]);
+            }
+        }
+        return arr;
+    }
+    $scope.$watch("CTypeList", function (n) {
+        if(n) {
+
+            ConQuaService.ContractorQualification().get({employerid: $scope.variable.EmployerId}).$promise.then(function (res) {
+                if (res) {
+                    if (res.EmployerId && res.isvalid == 1){
+                        $scope.projects = res;
+                        if (!$scope.projects.QualificationFiles) {
+                            $scope.BusinessLicence = [];
+                            $scope.Cer2 = [];
+                            $scope.Cer3 = [];
+                            $scope.Cer4 = [];
+                        } else {
+                            $scope.BusinessLicence = parseData($scope.projects.QualificationFiles||[], "BusinessLicence");
+                            $scope.Cer2 = parseData($scope.projects.QualificationFiles||[], "Cer2");
+                            $scope.Cer3 = parseData($scope.projects.QualificationFiles||[], "Cer3");
+                            $scope.Cer4 = parseData($scope.projects.QualificationFiles||[], "Cer4");
+                        }
+                    }else{
+                        Notifications.addError({'status': 'error', 'message': "it is not exsit; "});
+                    }}
+
+
+            }, function (errResponse) {
+                Notifications.addError({'status': 'error', 'message': errResponse});
+            });
+        }
+    });
+
+
+    var parseDataFile = function(data) {
+        for(var i=0;i< data.length;i++) {
+            data[i].Files =data[i].Files;
+            data[i].JsonFile=JSON.stringify(data[i].Files);
+        }
+
+        return data;
+    }
+
+        $scope.close = function () {
+            if(confirm( $translate.instant('Delete_IS_MSG '))) {
+                 $scope.historyVariable.push({name: "Delete_IS_MSG", value: "YES"});
+                  $scope.formVariables.push({name: "IsClose", value: "YES"});
+                 $scope.submit();
+
+            }
+
+        }
+
+    $scope.saveSumbit=function(){
+        saveInfo(function(obj) {
+            if (obj) {
+                Notifications.addError({'status': 'error', 'message': obj});
+            } else {
+                    $scope.formVariables.push({name: "IsClose", value: "NO"});
+                    $scope.formVariables.push({name: "start_remark", value:$scope.projects.Remark});
+                    $scope.formVariables.push({name: "Employer", value:$scope.projects.Employer});
+                    $scope.historyVariable.push({name: "ConQua_Employer", value: $scope.projects.Employer});
+                   $scope.submit();
+
+
+            }
+        })
+    }
+    function saveInfo(callback){
+        EngineApi.getMemberInfo().get({userid: Auth.username}).$promise.then(function (res) {
+            $scope.projects.UserID = Auth.username;
+            $scope.projects.DepartmentID = res.DepartmentID;
+           //N:新建  F:提交审核  Q:审核通过
+            $scope.projects.isvalid=1;
+            $scope.projects.QualificationFiles=[];
+            $scope.projects.AccDate = $filter('date')(new Date(), "yyyy-MM-dd HH:mm:ss");
+            if($scope.BusinessLicence.length<0){
+                callback("Upload attachments should be greater than 0");
+                return;
+            }
+            var arr=  $scope.BusinessLicence;
+            arr= arr.concat(  $scope.Cer2);
+            arr= arr.concat(  $scope.Cer3);
+            arr=arr.concat(  $scope.Cer4);
+            $scope.projects.QualificationFiles=parseDataFile(arr);
+            ConQuaService.CreateContractorQualification().save($scope.projects).$promise.then(function (message) {
+                callback("")
+
+            }, function (errResponse) {
+                // Notifications.addError({'status': 'error', 'message': errResponse});
+                callback(errResponse);
+            });
+        });
+    }
+    $scope.save=function() {
+        //新建承揽商
+        saveInfo(function(obj){
+            if(obj){
+                Notifications.addError({'status': 'error', 'message': obj});
+            }
+
+        })
+    }
+}
+</script>
+<div ng-controller="ContractorInfoProcess_start">
+<!--    <div ng-include="'forms/ConQua/new.html'" ></div>-->
+    <my_Contractor></my_Contractor>
+    <div class="modal-footer" >
+
+        <div class="col-sm-offset-8 col-sm-2" >
+            <button type="button" class="btn btn-danger" style="margin-right: 30px" ng-click="close()">{{'Delete'|translate}}
+            </button>
+            <button class="btn btn-primary" ng-click="saveSumbit()" ng-disabled="Forms.$invalid || BusinessLicence.length <=0">{{'submit'|translate}}</button>
+
+        </div>
+
+     </div>
+    <div class="modal" id="cerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 600px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding: 5px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">{{'FileInformation'|translate}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="formAddCer" role="form" ng-submit="addCer()">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'CertificatesNO'}}</label>
+                            <div class="col-sm-8 ">
+                                <input class="form-control" type="text" required field-validate ng-model="note.Code"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+                            <div class="col-sm-8 ">
+                                <input class="form-control" type="date" required field-validate ng-model="note.InvalidTime"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" >{{'File'|translate}}</label>
+                            <div class="col-sm-8 " >
+                                <my_delfile></my_delfile>
+                            </div>
+
+                        </div>
+                        <div ng-if="filedata.length>1"> <label class="col-sm-2 control-label" ><code>{{'Msg_ConQua_FileNumber'|translate}}</code></label></div>
+                        <div class="form-group"  >
+                            <label class="col-sm-2  control-label">{{'Remark'|translate}}</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" type="text"
+                                          ng-model="note.Remark" rows="2"  ></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="formAddCer.$invalid||filedata.length !=1" ng-click="addCer()">{{'Add'|translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,5 @@
+<div style="margin-bottom:10px" ng-repeat="candidate in Candidates">
+
+    <div>{{'Candidate'| translate}} ：<code style="font-size: 120%;">{{candidate.userId}} -- <span show-user="{{candidate.userId}}" ></span></code>
+    <div ng-if="candidate.ProxyUser">{{'ProxyUser'|translate}}：{{candidate.ProxyUser}} -- <span show-user="{{candidate.ProxyUser}}" ></span></div></div>
+ </div>

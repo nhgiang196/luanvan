@@ -1,0 +1,492 @@
+/****************error-field   validationEngine************************************/
+body {
+
+    font-family: "Hiragino Sans GB","微软雅黑";
+}
+h3 {
+    margin-top: 10px;
+    margin-bottom: 1px;
+}
+form>h2 {
+     font-size: 20px;
+     margin-top:0px;
+     margin-bottom: 10px;
+ }
+.formdiv>h2 {
+    font-size: 20px;
+    margin-top:0px;
+    margin-bottom: 10px;
+}
+
+.my-file-preview-frame {
+    position: relative;
+    display: table;
+    margin: 8px;
+    height: 160px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 5px 0 #a2958a;
+    padding: 6px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.my-btn-file input[type=file] {
+    align-items: baseline;
+    position: absolute;
+    top:0;
+    right:0;
+    min-width: 100%;
+    min-height: 100%;
+    text-align: right;
+    opacity: 0;
+    background: none;
+    cursor: inherit;
+    display: block;
+}
+.bs-example {
+    position: relative;
+    padding: 45px 15px 15px;
+    margin: 0 -15px 15px;
+    background-color: #fafafa;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+    border-color: #e5e5e5 #eee #eee;
+    border-style: solid;
+    border-width: 1px 0;
+}
+/* Echo out a label for the example */
+.bs-example:after {
+    content: "Example";
+    position: absolute;
+    top:  15px;
+    left: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #bbb;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tweak display of the code snippets when following an example */
+.bs-example + .highlight {
+    margin: -15px -15px 15px;
+    border-radius: 0;
+    border-width: 0 0 1px;
+}
+.form-group {
+    margin-bottom: 4px;
+}
+.form-control {
+    height: 32px;
+}
+.showFooter{
+    font-size: 10px;
+}
+.csv-data-link-span {
+    float: left;
+    margin: 5px;
+    margin-top: 7px;
+}
+.ngTotalSelectContainer{
+    font-size: 10px;
+
+    display: block;
+}
+.ngFooterSelectedItems{
+    float: left;
+}
+.ngFooterTotalItems{
+    float: left;
+}
+/* Make the examples and snippets not full-width */
+@media (min-width: 768px) {
+    .bs-example {
+        margin-left: 0;
+        margin-right: 0;
+        background-color: #fff;
+        border-width: 1px;
+        border-color: #ddd;
+        border-radius: 4px 4px 0 0;
+        box-shadow: none;
+    }
+    .bs-example + .highlight {
+        margin-top: -16px;
+        margin-left: 0;
+        margin-right: 0;
+        border-width: 1px;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
+}
+
+/* Undo width of container */
+.bs-example .container {
+    width: auto;
+}
+
+/**
+ * bpmn renderer
+ */
+.bpmn-highlight  {
+    -webkit-box-shadow: 0px 0px 4px 4px rgba(30, 144, 255, 1); /* WebKit */
+    -moz-box-shadow: 0px 0px 4px 4px rgba(30, 144, 255, 1); /* Firefox */
+    box-shadow: 0px 0px 4px 4px rgb(255,23, 255); /* Standard */
+    border-radius: 5px;
+}
+
+
+.bpmn-highlight-last  {
+    -webkit-box-shadow: 0px 0px 4px 4px rgba(30, 144, 255, 1); /* WebKit */
+    -moz-box-shadow: 0px 0px 4px 4px rgba(30, 144, 255, 1); /* Firefox */
+    box-shadow: 0px 0px 4px 4px rgb(0, 250, 154); /* Standard */
+    border-radius: 5px;
+}
+.bpmn-diagram {
+    overflow: hidden;
+}
+.navbar-header .element-divider,.navbar-collapse .element-divider{
+    padding: 15px 0;
+    line-height: 15px;
+    width: 1px !important;
+    border-left: 1px #ccc solid;
+    opacity: .3;
+    position: relative;
+}
+.navbar-header .element-divider,.navbar-collapse .element-divider{
+    display: block;
+    float: left;
+    background-color: inherit;
+    position: relative;
+    height: 50px;
+}
+[class*="icon-"] {
+    font-size: 16px;color: #ffffff;
+    padding: 0px;
+    margin: 0px;;
+}
+/*main*/
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    background-color: #FF6B45;
+
+}
+a.accordion-toggle:hover{
+
+}
+.nav-stacked>li {
+
+    background-color: #e6e6e6;;
+}
+.nav-list >i.icon-bar{
+    padding-right: 20px;
+
+}
+.nav-stacked>li>a:active, a:hover{
+    color: #7F868F;
+}
+.nav-list>.badge {
+    float: right;
+    background-color: #FF6B45;
+}
+.heading-title {
+    color: #373E44;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    background: url("image/normal-bar.png") repeat-x bottom left;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+/*to do  collapse*/
+.panel-heading{
+    cursor: pointer;
+}
+.panel-collapse .list {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px #e1e1e1 solid;
+    padding: 2px 0;
+    color: #555555;
+    margin-bottom: 0;
+}
+.panel-body .list:hover {
+    background-color: #e6f2fa;
+    outline: none;
+}
+.panel-body .list:active,
+.panel-body .list:focus,
+.panel-body .list.active {
+    background-color: #cde6f7 !important;
+    outline: 1px #999999 dotted;
+    color: #555555 !important;
+}
+.panel-body .list .list-content {
+
+    display: block;
+    margin: 2px 0;
+    padding: 2px 20px;
+    font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+
+    color: inherit;
+    border-left: 3px transparent solid;
+}
+.panel-body .list .list-content .list-subtitle {
+    font-weight: bold;
+    color: #0067cb;
+}
+.panel-collapse .fg-green {
+    color: #60a917 !important;
+}
+.panel-collapse .fg-red {
+    color:  #e51400 !important;
+}
+/*end  to do  collapse*/
+/*end main*/
+ .tq-validate.ng-invalid {
+    background-color: #FA787E;
+}
+
+.error-field {/**add by bluespring**/
+    border: 1px solid #FF0000 !important
+}
+
+.inputContainer {
+    position: relative;
+    float: left;
+}
+
+.formError {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+    margin-bottom: 13px;
+    display: block;
+    z-index: 991200;
+    cursor: pointer;
+}
+/*foot*/
+
+
+#footer {
+    font-size:12px;
+    padding-top: 20px;
+    margin-top: 20px;
+    color: #777;
+
+    border-top: 1px solid #e5e5e5;
+}
+
+#footer p {
+    margin:20px 0;
+}
+
+#footer a {
+    color:#FF6B45;
+}
+
+#footer a:hover {
+    color:#f5603b;
+    text-decoration: none;
+}
+
+#top-footer-steps {
+    background-color:#E6E6E6;
+}
+
+#bottom-footer {
+    color: #7B8085;
+}
+
+
+/*
+#debugMode {
+	background: #000;
+	position: fixed;
+	width: 100%;
+	height: 200px;
+	top: 0;
+	left: 0;
+	overflow: scroll;
+	opacity: 0.8;
+	display: block;
+	padding: 10px;
+	color: #fff;
+	font-size: 14px;
+	z-index: 100000;
+}
+
+.ajaxSubmit {
+	padding: 20px;
+	background: #55ea55;
+	border: 1px solid #999;
+	display: none
+}
+.greenPopup .formErrorContent {
+	background: #33be40;
+}
+
+.blackPopup .formErrorContent {
+	background: #393939;
+	color: #FFF;
+}
+.greenPopup .formErrorArrow div {
+	background: #33be40;
+}
+
+.blackPopup .formErrorArrow div {
+	background: #393939;
+	color: #FFF;
+}
+*/
+.writetipserror {
+    position: absolute;
+    bottom: 20px;
+    left: 3px;
+    margin-bottom: 13px;
+    display: block;
+    z-index: 991200;
+    cursor: pointer;
+}
+.writetipserror .formErrorContent {
+    width: 100%;
+    background: #ee0101;
+    color: #fff;
+    max-width:550px;
+    min-width:100px;
+    font-family: tahoma;
+    font-size: 12px;
+    border: 2px solid #ddd;
+    box-shadow: 0px 0px 6px #000;
+    -moz-box-shadow: 0px 0px 6px #000;
+    -webkit-box-shadow: 0px 0px 6px #000;
+    padding: 4px 10px 4px 10px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+.formError .formErrorContent {
+    width: 100%;
+    background: #ee0101;
+    color: #fff;
+    width: 150px;
+    font-family: tahoma;
+    font-size: 12px;
+    border: 2px solid #ddd;
+    box-shadow: 0px 0px 6px #000;
+    -moz-box-shadow: 0px 0px 6px #000;
+    -webkit-box-shadow: 0px 0px 6px #000;
+    padding: 4px 10px 4px 10px;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+
+.formError .formErrorArrow {
+    width: 15px;
+    margin: -2px 0 0 13px;
+    z-index: 5001000;
+}
+
+.formError .formErrorArrowBottom {
+    top: 0;
+    margin: -6px;
+}
+
+.formError .formErrorArrow div {
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    box-shadow: 0px 2px 3px #444;
+    -moz-box-shadow: 0px 2px 3px #444;
+    -webkit-box-shadow: 0px 2px 3px #444;
+    height: 1px;
+    background: #ee0101;
+    margin: 0 auto;
+    line-height: 0px;
+    font-size: 0px;
+    display: block;
+}
+
+.formError .formErrorArrowBottom div {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+
+
+.formError .formErrorArrow .line10 {
+    width: 15px;
+    border: none;
+}
+
+.formError .formErrorArrow .line9 {
+    width: 13px;
+    border: none;
+}
+
+.formError .formErrorArrow .line8 {
+    width: 11px;
+}
+
+.formError .formErrorArrow .line7 {
+    width: 9px;
+}
+
+.formError .formErrorArrow .line6 {
+    width: 7px;
+}
+
+.formError .formErrorArrow .line5 {
+    width: 5px;
+}
+
+.formError .formErrorArrow .line4 {
+    width: 3px;
+}
+
+.formError .formErrorArrow .line3 {
+    width: 1px;
+    border-left: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    border-bottom: 0px solid #ddd;
+}
+
+.formError .formErrorArrow .line2 {
+    width: 3px;
+    border: none;
+    background: #ddd;
+}
+
+.formError .formErrorArrow .line1 {
+    width: 1px;
+    border: none;
+    background: #ddd;
+}
+.accordion {
+  margin-bottom: 18px;
+}
+.accordion-group {
+  margin-bottom: 2px;
+  border: 1px solid #e5e5e5;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.accordion-heading {
+  border-bottom: 0;
+}
+.accordion-heading .accordion-toggle {
+  display: block;
+  padding: 8px 15px;
+}
+.accordion-inner {
+  padding: 9px 15px;
+  border-top: 1px solid #e5e5e5;
+}

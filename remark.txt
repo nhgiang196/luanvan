@@ -1,0 +1,11 @@
+﻿1.时间的点:访申请 来访时间
+
+2.显示附件
+  <a href="/api/cmis/showfile?filename={{file.DocId}}&mimetype={{file.FileType}}" 
+  class="a-file">{{file.OldName}}</a>
+下载附件
+  <a ng-href='/api/cmis/downfile?filename={{file.DocId}}&Name={{file.Name}}' 
+  class="a-file">{{file.OldName}}</a>
+3.峰值用电：3分钟的KW 一个月内最大
+                          
+fdfassfa

@@ -1,0 +1,116 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li ul {
+        display: none;
+        border: 1px solid #000000;
+        margin-left: -3px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+    <legend>
+        <h3>{{'VoucherQuery'|translate}}</h3>
+    </legend>
+    <div class="col-sm-12 form-group">
+        <div class="form-group search-table">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'dateFrom'|translate}}</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" name="dateFrom" ng-change="setdateTo()" ng-model="dateFrom" date-picker/>
+                </div>
+                <label class="col-sm-2 control-label">{{'dateTo'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" name="dateTo" ng-model="dateTo" date-picker/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'ProcessComp'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <select class="form-control" name="ProcessComp" ng-model="process_comp" ng-options="d.CompID as d.CompName for d in company | filter:{Type:'P',Status:'1'}"
+                        required ng-disabled="IsReady">
+                        <option value="">{{'Show All' | translate}}</option>
+                    </select>
+                </div>
+                <label class="col-sm-2 control-label">{{'DepartProcess'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
+                        <option value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
+                            {{value.Specification}}
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'VoucherNumber'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
+                </div>
+
+                <label class="col-sm-2 control-label">{{'DepartReq'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <select style="width:100%" ui-select2 name="DepartReq" ng-model="DepartReq">
+                        <option value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="value in cdepartments" value="{{value.CostCenter}}">
+                            {{value.Specification}}
+                        </option>
+
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <select class="form-control" name="status" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
+                        <option value="">{{'Show All' | translate}}</option>
+                        Flowchart </select>
+                </div>
+                <div class="col-sm-2">
+                    <label></label>
+                </div>
+                <div class="col-sm-3">
+                    <label>
+                        <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
+                    </label></div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;">
+        <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-core
+            ui-grid-exporter></div>
+    </div>
+    <create_voucher></create_voucher>
+</form>

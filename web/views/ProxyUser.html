@@ -1,0 +1,69 @@
+<style type="text/css">
+    .page-header {margin: 10px 0px 15px 0px;}
+ </style>
+<h3>代理人设置</h3>
+
+<table class="table table-bordered table-detail">
+    <tr>
+        <th>
+            <label for="flag">全选
+                <input id="flag" type="checkbox" ng-model="isAll" ng-click="checkAll()">
+            </label>
+
+        </th>
+        <th>流程名</th>
+        <th>流程KEY</th>
+        <th>代理人</th>
+        <th><button ng-click="delete('')" class="btn btn-danger btn-xs">取消所有代理</button>
+
+            <button type="button" class="btn btn-primary btn-xs" ng-click="paraFunc.createPara()">设置代理人</button></th>
+    </tr>
+    <tr ng-repeat="i in list">
+
+        <td>
+            <input type="checkbox" ng-model="checkboxes[$index]" ng-true-value="{{i.id}}" ng-false-value="false" >
+
+        </td>
+        <td>{{i.Description}} --{{i.EnglishName}}</td>
+        <td>{{i.id}}</td>
+        <th>{{i.ProxyUserId}}</th>
+        <th><button ng-click="delete(i.id)" ng-if="i.ProxyUserId.length>0" class="btn btn-danger btn-xs">取消代理</button>
+
+        </th>
+
+
+    </tr>
+</table>
+
+
+
+<div class="modal fade" id="myModal" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="myModalLabel">设置代理人</h4>
+            </div>
+            <div class="modal-body">
+                <form class="modal-body" name="paraForm">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">工号</label>
+                        <div class="col-sm-4">
+                        <input class="form-control" type="text" ng-model="note.ProxyUserId" required/>
+                        </div>
+                        <label class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" ng-model="note.Name"  disabled/>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="note={};">取消</button>
+                <button type="button" class="btn btn-primary" ng-disabled="paraForm.$invalid" ng-click="paraFunc.savePara(note)">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

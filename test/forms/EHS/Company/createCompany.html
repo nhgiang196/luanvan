@@ -1,0 +1,60 @@
+
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" name="form"  novalidate> </form>      
+            <div class="modal-body"  style="padding-bottom:3px">
+                    <form class="form-horizontal " role="form" name="formCompany"  novalidate>
+                    <H4 style="background-color: #ececec; padding:3px">{{'CompanyInformation'|translate}}</H4>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'CompanyName'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="comp_name"  ng-model="recod.comp_name" required/>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'CompanyCode'|translate}}</label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="comp_code"  ng-model="recod.comp_code" required/>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Type'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" type="text" name="type" ng-model="recod.type"   required
+                                 ng-options="t.id as t.name for t in types"></select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">*{{'Phone'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="phone" ng-model="recod.phone"  required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Email'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="email" ng-model="recod.email"  required/>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'Address'|translate}}</label>
+
+                        <div class="col-sm-4">
+                            <textarea class="form-control" type="text" name="address"  ng-model="recod.address"   required />
+                        </div>
+                    </div>
+              
+            </div>        
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid" >
+                    {{'saveSubmit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
+            </div>
+        </form>
+        </div>
+
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

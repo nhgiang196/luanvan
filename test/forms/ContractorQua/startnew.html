@@ -1,0 +1,210 @@
+<div>
+    <mycontractorqua></mycontractorqua>
+    <div class="form-group"  ng-show="importButton=='hide'">
+        <div class="col-sm-offset-8 col-sm-10">
+            <button class="btn btn-primary" ng-click="saveDraft()"
+                    ng-disabled="form.$invalid||inss.length == 0">{{'saveDraft'|translate}}
+            </button>
+            <button class="btn btn-primary" ng-click="save()"
+                    ng-disabled="form.$invalid||inss.length == 0">{{'submit'|translate}}
+            </button>
+
+        </div>
+    </div>
+    <div class="form-group"  ng-show="importButton=='show'">
+        <div class="col-sm-offset-8 col-sm-10">
+
+            <button class="btn btn-primary" ng-click="saveImport()"
+                    ng-disabled="form.$invalid||inss.length == 0">{{'importButton'|translate}}
+            </button>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cerModal" data-backdrop="static" aria-labelledby="myLargeModalLabel"
+     data-keyboard="false">
+    <div class="modal-dialog" style="width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{'Certificates'|translate}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="formAddCer" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'CertificatesNO'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <input class="form-control" type="text" required field-validate ng-model="cerId"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'CerName'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <select class="form-control" ng-model="cerName"
+                                    ng-options="c.ID as c.CerType for c in cerTypes" required field-validate>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'IssuedBy'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <select class="form-control" ng-model="issuedBy"
+                                    ng-options="c.ID as c.IssuedBy for c in issuedBys" required field-validate>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <input class="form-control" type="date" required field-validate ng-model="cerValidTo"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10 ">
+
+                            <label class="col-sm-2 control-label">{{'File'|translate}}</label>
+
+                            <div class="col-sm-3 ">
+                                <button class="btn btn-primary btn-sm" ng-click="upAddition('ins')">
+                                    {{'UploadFile'|translate}}
+                                </button>
+                            </div>
+                            <div class="col-sm-5">
+                                <div ng-repeat="myfile in filedata">
+                                    <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                        <a class="btn btn-info btn-xs" role="button"
+                                           ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                           class="a-file">{{myfile.OldName}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        ng-disabled="formAddCer.$invalid||filedata.length !=1"
+                        ng-click="addCer()">{{'Add'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="equipModal" data-backdrop="static" aria-labelledby="myLargeModalLabel"
+     data-keyboard="false">
+    <div class="modal-dialog" style="width: 600px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{'AddEquip'|translate}}</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-detail">
+                    <tr ng-repeat="i in equips">
+                        <td>
+                            <input type="checkbox" ng-model="checkboxes[$index]" ng-true-value="{{i.ID}}"
+                                   ng-false-value="false">
+                        </td>
+                        <td>{{i.Equipment}}</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        ng-click="addEquip()">{{'Add'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="insModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     data-backdrop="static">
+    <div class="modal-dialog" style="width: 600px">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px;">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">{{'Ins'|translate}}({{'Msg_ConQua_Duplicate'|translate}})</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" name="formAddIns" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'InsID'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <input class="form-control" type="text" required field-validate ng-model="insId"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'InsName'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <select class="form-control" ng-model="insName"
+                                    ng-options="c.ID as c.InsType for c in insTypes" required field-validate>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'ValidTo'|translate}}</label>
+
+                        <div class="col-sm-10 ">
+                            <input class="form-control" type="date" required field-validate ng-model="insValidTo"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10 ">
+
+                            <label class="col-sm-2 control-label">{{'File'|translate}}</label>
+
+                            <div class="col-sm-3 ">
+                                <button class="btn btn-primary btn-sm" ng-click="upAddition('ins')">
+                                    {{'UploadFile'|translate}}
+                                </button>
+                            </div>
+                            <div class="col-sm-5">
+                                <div ng-repeat="myfile in filedata">
+                                    <div class="btn-group" style="margin-bottom: 2px;padding: 0px; width:100%;">
+                                        <a class="btn btn-info btn-xs" role="button"
+                                           ng-href='/api/cmis/downfile?filename={{myfile.DocId}}&Name={{myfile.Name}}'
+                                           class="a-file">{{myfile.OldName}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"
+                        ng-disabled="formAddIns.$invalid||filedata.length != 1" ng-click="addIns()">
+                    {{'Add'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="fileModal" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <my_delfile></my_delfile>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="saveFile()">{{'agree'|translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+

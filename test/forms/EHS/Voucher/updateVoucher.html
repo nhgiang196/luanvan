@@ -1,0 +1,138 @@
+<style>
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding: 15px 0px;
+        box-shadow: 0px 0px 5px #ccc;
+        margin-bottom: 15px;
+    }
+</style>
+<div>
+    <div id="newVoucher" style="padding-top: 5px;">
+        <div class="col-sm-12">
+            <!--<ol class="breadcrumb">-->
+
+            <!--<li><a href="#/gate/JointTruck/">{{'FEPVJointTruck'|translate}}{{'Search'|translate}}</a></li>-->
+            <!--<li class="active">{{'FEPVJointTruck'|translate}}{{'Update'|translate}}</li>-->
+            <!--</ol>-->
+            <H4 style="background-color: #ececec; padding: 5px">{{'Shipping'|translate}}</H4>
+
+            <form class="form-horizontal" role="form" name="form" novalidate>
+                <table id="table" class="table table-bordered" style="table-layout:fixed">
+                    <tr>
+                        <th colspan="2">{{'VoucherID'|translate}}</th>
+                        <td colspan="4"><input type="text" class="form-control" name="VoucherID"
+                                               ng-model="note.VoucherID"
+                                               readonly></td>
+                        <th colspan="2">{{'Models'|translate}}</th>
+
+                        <td colspan="4"><select id="VehicleShape" class="form-control" name="VehicleShape"
+                                                ng-model="note.VehicleShape" id="VehicleShape"
+                                                ng-options="c.ID as c.Spec for c in Shape" required></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">{{'TransferCompany'|translate}}</th>
+                        <td colspan="4"><select id="TransferCompany" class="form-control" name="TransferCompany"
+                                                ng-model="note.TransferCompany" id="TransferCompany"
+                                                ng-options="c.ID as c.Spec for c in transfer" required></select>
+                        </td>
+                        <th colspan="2">{{'VehicleNO'|translate}}</th>
+                        <td colspan="4"><input id="VehicleNO" type="text" class="form-control" name="VehicleNO"
+                                               id="VehicleNO"
+                                               ng-model="note.VehicleNO"
+                                               required></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">{{'Driver'|translate}}</th>
+                        <td colspan="4"><input id="Driver" type="text" class="form-control" name="Driver" id="Driver"
+                                               ng-model="note.Driver"
+                                ></td>
+                        <th colspan="2">{{'DriverPhone'|translate}}</th>
+                        <td colspan="4"><input id="DriverPhone" type="text" class="form-control" name="DriverPhone"
+                                               id="DriverPhone"
+                                               ng-model="note.DriverPhone"
+                                ></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">{{'ExpectedIn'|translate}}</th>
+                        <td colspan="4"><input class="form-control" type="text" name="ExpectIn" id="ExpectIn"
+                                               ng-model="note.ExpectIn"/>
+
+
+                        </td>
+                        <th colspan="2">{{'ValidTo'|translate}}</th>
+                        <td colspan="4">
+
+                                <div class="input-group">
+                                        <input class="form-control" type="text"  date-picker  min="0"  
+                                        name="ValidatePeriod"
+                                        id="ValidatePeriod"
+                                        ng-model="note.ValidatePeriod" />
+                                        <span class="input-group-addon">
+                                          <input type="checkbox"  ng-model='Validatetype' ng-click="updateSelection($event)"  >
+                                        </span>
+                                      
+                                      </div><!-- /input-group -->
+                           </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">{{'Material'|translate}}</th>
+                        <td colspan="4"><select class="form-control" name="MaterielType" ng-model="note.MaterielType"
+                                                id="MaterielType"
+                                                ng-options="c.ID as c.Spec for c in material" required></select>
+                        <th colspan="2">{{'Remark'|translate}}</th>
+                        <td colspan="4"><input type="text" class="form-control" name="Remark" id="Remark"
+                                               ng-model="note.Remark"
+                                ></td>
+                    </tr>
+                    
+                    <!-- <tr>
+                        <th colspan="2">{{'ComeTime'|translate}}</th>
+                        <td colspan="4"><input class="form-control" type="text" name="ComeTime" id="ComeTime"
+                                               ng-model="note.ComeTime" />
+
+                        </td>
+                    </tr>
+                    -->
+                </table>
+            </form>
+            <form class="form-horizontal" role="form" name="order" novalidate>
+                <H4 style="background-color: #ececec; padding: 5px">{{'ShippingDetail'|translate}}</H4>
+                <div class="form-group">
+                        <label class="col-sm-2 control-label">{{'ShipType'|translate}}</label>
+                        <div class="col-sm-2">
+                            <select class="form-control"
+                                    name="ShippingOrder" ng-model="Trantype"
+                                    ng-options="c.value as c.name for c in trantypes"
+                                    required></select>
+                        </div>
+                    <label class="col-sm-2 control-label">{{'ShippingOrder'|translate}}</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control"
+                               name="ShippingOrder" ng-model="ShippingOrder" required ng-keydown="ngkeyDown($event)" ng-change="ShippingOrder = (ShippingOrder | uppercase)" />
+                    </div>
+                  
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-primary" ng-click="saveSO()"
+                                >{{'Add'|translate}}
+                        </button>
+                        <button type="button" class="btn btn-danger" ng-click="delOrder()">{{'Remove'|translate}}
+                        </button>
+                    </div>
+                </div>
+                <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
+                     ui-grid-resize-columns ui-grid-core ui-grid-exporter></div>
+            </form>
+        </div>
+
+    </div>
+    <button type="button" class="btn btn-primary" style="float: right;margin-right: 150px"
+            ng-click="savesubmit()"
+            ng-disabled="form.$invalid">
+        {{'saveSubmit'|translate}}
+    </button>
+</div>
+
+
