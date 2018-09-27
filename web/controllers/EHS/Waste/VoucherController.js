@@ -13,6 +13,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 sort: null
             };
             var full_lsWastItems = [];
+
             var full_lsCompany = [];
             $scope.disableProcessComp = false;
 
@@ -21,17 +22,17 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
              */
             $q.all([loadDepartment(), loadCompany(), loadWasteItems()]).then(function (result) {
                 $scope.statuslist = [{
-                    id: 'N',
-                    name: $translate.instant('StatusN')
-                },
-                {
-                    id: 'M',
-                    name: $translate.instant('StatusM')
-                },
-                {
-                    id: 'X',
-                    name: $translate.instant('StatusX')
-                }
+                        id: 'N',
+                        name: $translate.instant('StatusN')
+                    },
+                    {
+                        id: 'M',
+                        name: $translate.instant('StatusM')
+                    },
+                    {
+                        id: 'X',
+                        name: $translate.instant('StatusX')
+                    }
                 ];
                 console.log(result);
             }, function (error) {
@@ -107,6 +108,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 })
 
             }
+
             function loadCompany() {
                 var deferred = $q.defer();
                 CompanyService.GetCompany(function (data) {
@@ -138,89 +140,89 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
              * Define All Columns in UI Grid
              */
             var col = [{
-                field: 'VoucherID',
-                minWidth: 120,
-                displayName: $translate.instant('VoucherID'),
-                cellTooltip: true,
-                visible: true,
-                cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
+                    field: 'VoucherID',
+                    minWidth: 120,
+                    displayName: $translate.instant('VoucherID'),
+                    cellTooltip: true,
+                    visible: true,
+                    cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
 
-            },
-            {
-                field: 'OwnerComp',
-                displayName: $translate.instant('OwnerComp'),
-                minWidth: 120,
-                cellTooltip: true,
-                visible: false
+                },
+                {
+                    field: 'OwnerComp',
+                    displayName: $translate.instant('OwnerComp'),
+                    minWidth: 120,
+                    cellTooltip: true,
+                    visible: false
 
-            },
-            {
-                field: 'ProcessComp',
-                minWidth: 120,
-                displayName: $translate.instant('ProcessComp'),
-                cellTooltip: true
-            },
-            {
-                field: 'VoucherNumber',
-                minWidth: 155,
-                displayName: $translate.instant('VoucherNumber'),
-                cellTooltip: true
-            },
-            {
-                field: 'DepartReq',
-                minWidth: 100,
-                displayName: $translate.instant('DepartReq'),
-                cellTooltip: true
-            },
-            {
-                field: 'DepartProcess',
-                minWidth: 100,
-                displayName: $translate.instant('DepartProcess'),
-                cellTooltip: true
-            },
-            {
-                field: 'InternalPhone',
-                minWidth: 100,
-                displayName: $translate.instant('InternalPhone'),
-                cellTooltip: true
-            },
-            {
-                field: 'Location',
-                minWidth: 120,
-                displayName: $translate.instant('Location'),
-                cellTooltip: true
-            },
-            {
-                field: 'SumTotal',
-                minWidth: 80,
-                displayName: $translate.instant('SumTotal'),
-                cellTooltip: true
-            },
-            {
-                field: 'SumQty',
-                minWidth: 80,
-                displayName: $translate.instant('SumQty'),
-                cellTooltip: true
-            },
-            {
-                field: 'UserID',
-                minWidth: 100,
-                displayName: $translate.instant('CreateBy'),
-                cellTooltip: true
-            },
-            {
-                field: 'Status',
-                displayName: $translate.instant('Status'),
-                minWidth: 80,
-                cellTooltip: true
-            },
-            {
-                field: 'CreateTime',
-                displayName: $translate.instant('CreateTime'),
-                width: 170,
-                minWidth: 150,
-                cellTooltip: true
-            }
+                },
+                {
+                    field: 'ProcessComp',
+                    minWidth: 120,
+                    displayName: $translate.instant('ProcessComp'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'VoucherNumber',
+                    minWidth: 155,
+                    displayName: $translate.instant('VoucherNumber'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'DepartReq',
+                    minWidth: 100,
+                    displayName: $translate.instant('DepartReq'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'DepartProcess',
+                    minWidth: 100,
+                    displayName: $translate.instant('DepartProcess'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'InternalPhone',
+                    minWidth: 100,
+                    displayName: $translate.instant('InternalPhone'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'Location',
+                    minWidth: 120,
+                    displayName: $translate.instant('Location'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'SumTotal',
+                    minWidth: 80,
+                    displayName: $translate.instant('SumTotal'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'SumQty',
+                    minWidth: 80,
+                    displayName: $translate.instant('SumQty'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'UserID',
+                    minWidth: 100,
+                    displayName: $translate.instant('CreateBy'),
+                    cellTooltip: true
+                },
+                {
+                    field: 'Status',
+                    displayName: $translate.instant('Status'),
+                    minWidth: 80,
+                    cellTooltip: true
+                },
+                {
+                    field: 'CreateTime',
+                    displayName: $translate.instant('CreateTime'),
+                    width: 170,
+                    minWidth: 150,
+                    cellTooltip: true
+                }
             ];
             /**
              * Query Grid setting
@@ -250,7 +252,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                         'userid': Auth.username,
                         'tcode': 'M1'
                     }, function (linkres) {
-                        if(linkres.IsSuccess){
+                        if (linkres.IsSuccess) {
                             gridApi.core.addToGridMenu(gridApi.grid, gridMenu);
                         }
                     });
@@ -298,19 +300,19 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     VoucherID: id
                 };
                 VoucherService.DeleteByVoucherID(data, function (res) {
-                    if (res.Success) {
-                        $scope.Search();
-                        $('#myModal').modal('hide');
-                        $('#messageModal').modal('hide');
-                        $('#nextModal').modal('hide');
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('saveError') + res.Message
-                        });
-                    }
+                        if (res.Success) {
+                            $scope.Search();
+                            $('#myModal').modal('hide');
+                            $('#messageModal').modal('hide');
+                            $('#nextModal').modal('hide');
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('saveError') + res.Message
+                            });
+                        }
 
-                },
+                    },
                     function (error) {
                         Notifications.addError({
                             'status': 'error',
@@ -337,102 +339,105 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
             }
 
             var gridMenu = [{
-                title: $translate.instant('Create'),
-                action: function () {
-                    $scope.reset();
-                    $scope.recod.owner_comp = 'DBF1EA58-1326-442B-B4C3-897063F4F7FE';
-                    $scope.status = 'N';
-                    $scope.company = full_lsCompany.filter(x => x.Status == 1);
-                    $scope.lsWastItems = [];
-                    $("#ProcessComp").prop('disabled', false);
-                    $('#myModal').modal('show');
-                },
-                order: 1
-            }, {
-                title: $translate.instant('Update'),
-                action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.recod.comp_id = resultRows
-                    $scope.status = 'M'; //Set update Status
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].UserID == Auth.username) {
-                                var querypromise = loadVoucherDetail(resultRows[0].VoucherID);
-                                $("#ProcessComp").prop('disabled', true); //disable ProcessComp text
-                                $scope.company = full_lsCompany;
-                                querypromise.then(function () {
-                                    $('#myModal').modal('show');
-                                }, function (error) {
+                    title: $translate.instant('Create'),
+                    action: function () {
+                        $scope.reset();
+                        $scope.recod.owner_comp = 'DBF1EA58-1326-442B-B4C3-897063F4F7FE';
+                        $scope.status = 'N';
+                        $scope.company = full_lsCompany.filter(x => x.Status == 1);
+                        $scope.lsWastItems = [];
+                        $("#ProcessComp").prop('disabled', false);
+                        $('#myModal').modal('show');
+                    },
+                    order: 1
+                }, {
+                    title: $translate.instant('Update'),
+                    action: function () {
+                        var resultRows = $scope.gridApi.selection.getSelectedRows();
+                        $scope.recod.comp_id = resultRows
+                        $scope.status = 'M'; //Set update Status
+                        if (resultRows.length == 1) {
+                            if (resultRows[0].Status != 'X') {
+                                if (resultRows[0].UserID == Auth.username) {
+                                    var querypromise = loadVoucherDetail(resultRows[0].VoucherID);
+                                    $("#ProcessComp").prop('disabled', true); //disable ProcessComp text
+                                    $scope.company = full_lsCompany;
+                                    querypromise.then(function () {
+                                        $('#myModal').modal('show');
+                                    }, function (error) {
 
+                                        Notifications.addError({
+                                            'status': 'error',
+                                            'message': error
+                                        });
+                                    })
+
+                                } else {
                                     Notifications.addError({
                                         'status': 'error',
-                                        'message': error
-                                    });
-                                })
+                                        'message': $translate.instant('ModifyNotBelongUserID')
+                                    })
+                                }
 
+
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('Modified_to_X')
+                                });
                             }
-                            else {
-                                Notifications.addError({ 'status': 'error', 'message': $translate.instant('ModifyNotBelongUserID') })
-                            }
 
-
-                        }
-                        else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
-                },
-                order: 2
-            },
-            {
-                title: $translate.instant('Delete'),
-                action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    if (resultRows[0].UserID == Auth.username) {
-                        if (resultRows.length == 1) {
-                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].VoucherID)) {
-                                deleteById(resultRows[0].VoucherID);
-                            }
                         } else {
                             Notifications.addError({
                                 'status': 'error',
                                 'message': $translate.instant('Select_ONE_MSG')
                             });
                         }
-                    }
-                    else {
-                        Notifications.addError({ 'status': 'error', 'message': $translate.instant('ModifyNotBelongUserID') })
-                    }
-
+                    },
+                    order: 2
                 },
-                order: 3
+                {
+                    title: $translate.instant('Delete'),
+                    action: function () {
+                        var resultRows = $scope.gridApi.selection.getSelectedRows();
+                        if (resultRows[0].UserID == Auth.username) {
+                            if (resultRows.length == 1) {
+                                if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].VoucherID)) {
+                                    deleteById(resultRows[0].VoucherID);
+                                }
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('Select_ONE_MSG')
+                                });
+                            }
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
 
-            }, {
-                title: $translate.instant('PrintReport'),
-                action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    },
+                    order: 3
 
-                    if (resultRows.length == 1) {
-                        var href = '#/waste/Voucher/print/' + resultRows[0].VoucherID;
-                        window.open(href);
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
-                },
-                order: 4
-            }
+                }, {
+                    title: $translate.instant('PrintReport'),
+                    action: function () {
+                        var resultRows = $scope.gridApi.selection.getSelectedRows();
+
+                        if (resultRows.length == 1) {
+                            var href = '#/waste/Voucher/print/' + resultRows[0].VoucherID;
+                            window.open(href);
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('Select_ONE_MSG')
+                            });
+                        }
+                    },
+                    order: 4
+                }
             ];
             /**
              * Trigger option changedValue
@@ -458,14 +463,12 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     if (data.length != 0) {
                         alert($scope.gd.waste_name + ": " + $translate.instant('waste_name_existed'));
                         $scope.gd = {};
-                    }
-                    else {
+                    } else {
                         if ($scope.gd.Quantity < 0 || $scope.gd.Weight <= 0) {
                             alert($scope.gd.waste_name + ": " + $translate.instant('positive_quantity_weight'));
                             $scope.gd.Quantity = null;
                             $scope.gd.Weight = null;
-                        }
-                        else {
+                        } else {
                             $scope.wasteItems.push($scope.gd);
                             $scope.gd = {};
                         }
@@ -509,5 +512,6 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 else $scope.lsWastItems = [];
 
             };
-        }])
+        }
+    ])
 })

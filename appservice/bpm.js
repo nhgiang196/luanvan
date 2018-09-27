@@ -5,7 +5,7 @@
 module.exports = function(app,request,config,express) {
     var log = require('log4js').getLogger("bpm");
     var basicService = require('./../routes/basicRoute');
-    basicService.DBSQLConnection(config);
+    // basicService.DBSQLConnection(config);
     var http = require('http');
     app.get('/ehs/form/test',function(req,res){
         var data = {};
@@ -71,7 +71,7 @@ module.exports = function(app,request,config,express) {
         var tcode=req.params.tcode;
             if ( req.session['username'] && tcode) {
                 var url = config.hrrest + 'api/ths/THSAuthLogin/CheckTCode?username=' + req.session['username'] + '&tcode=' + tcode;
-            console.log(url);
+            console.log('Gởi đến hệ thống' + url);
                 request({ method: 'GET', uri: url  }, function (error, response, body) {
                     if (error) {
                         console.log(error);

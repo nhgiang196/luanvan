@@ -1,5 +1,5 @@
 define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'], function (myapp, angular) {
-    myapp.controller('NienKhoaController.js', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'VoucherService', 'WasteItemService', 'CompanyService', '$translate', '$q', '$scope', '$routeParams',
+    myapp.controller('NienKhoaController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'VoucherService', 'WasteItemService', 'CompanyService', '$translate', '$q', '$scope', '$routeParams',
         function ($filter, Notifications, Auth, EngineApi, VoucherService, WasteItemService, CompanyService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             $scope.recod = {};

@@ -4,7 +4,7 @@
             {
             "type": "chrome",
             "request": "launch",
-            "name": "FEPV MES Beling",
+            "name": "Website Belling",
             "url": "http://localhost:843",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}/web"

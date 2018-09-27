@@ -44,6 +44,8 @@ app.use(function (req, res, next) {
     console.log(url);
     console.log("req url:" + url + " method:" + req.method + " IP:" + req.connection.remoteAddress);
     //  console.log(code);
+
+    //Xác thực bằng IP
     if (!req.session['username']) {
         console.log("start querystring");
         var query = querystring.parse(URL.parse(req.url).query);
@@ -87,6 +89,7 @@ app.use(function (req, res, next) {
             console.log("no code");
         }
     }
+    //Xác thực bằng đăng nhập
     if (url != "/authorize/login?" && url != "/authorize/loginCode") {
         console.log("no log loginCode");
         if (!req.session['username']) {
@@ -166,6 +169,36 @@ app.post('/authorize/login', express.bodyParser(), function (req, res) {
         }
     });
 });
+app.get("/bpm/CheckTCode/:userid/:tcode", function(req, res) {
+    var tcode = req.params.tcode;
+    console.log("appjs tcode "+ tcode);
+    console.log("appjs userid "+ req.session['username']);
+    if ( req.session['username'] && tcode) {
+        var url = config.hrrest + 'api/ths/THSAuthLogin/CheckTCode?username=' + req.session['username'] + '&tcode=' + tcode;
+      console.log("appjs url " + url);
+      request({ method: "GET", uri: url }, function(error, response, body) {
+        if (error) {
+          console.log(error);
+          log.error(err);
+          res.send(500, err);
+        } else {
+          if (response.statusCode == 200) {
+            if (body == "true") {
+              console.log(body);
+              res.json({ IsSuccess: true });
+            } else {
+              res.json({ IsSuccess: null });
+            }
+          } else {
+            log.error("error getAuth!" + response.statusCode);
+            res.json({ IsSuccess: null });
+          }
+        }
+      });
+    } else {
+      res.send(500, "userid is error");
+    }
+  });
 
 // app.post('/authorize/loginToken',express.bodyParser(),function(req,res){
 //     console.log("loginToken");
@@ -239,18 +272,17 @@ var GateService = require('./appservice/GateGuestService')(app, request, config,
 // var BPMService = require('./appservice/bpm')(app, request, config, express);//
 var UploadService = require('./appservice/uploadservice')(app, request, config, express);//
 var memberSignService = require('./appservice/memberSign')(app, request, basicService, config);
-//转api
-// app.all('/bpm/api/*', function (req, res) {
-//     var x = request(config.bpmurl + req.url.replace('/bpm/api/', ''));
-//     x.pipe(res).on('error', function (e) {
-//         logger.error({ title: 'bpm pipe res' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: e });
-//         throw e;
-//     });
-//     req.pipe(x).on('error', function (err) {
-//         logger.error({ title: 'bpm pipe' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: err });
-//         throw err;
-//     });
-// });
+app.all('/bpm/api/*', function (req, res) {
+    var x = request(config.bpmurl + req.url.replace('/bpm/api/', ''));
+    x.pipe(res).on('error', function (e) {
+        logger.error({ title: 'bpm pipe res' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: e });
+        throw e;
+    });
+    req.pipe(x).on('error', function (err) {
+        logger.error({ title: 'bpm pipe' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: err });
+        throw err;
+    });
+});
 app.all('/ehs/gate/*', function (req, res) {
     var x = request(config.hrrest + req.url.replace('/ehs/gate/', 'api/Gate/'));
     console.log(config.hrrest + req.url.replace('/ehs/gate/', 'api/Gate/'));
