@@ -675,10 +675,10 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/ths/BoMon', angularAMD.route({
-                templateUrl: "forms/ths/BoMon/search.html",
+            .when('/THS/BoMon', angularAMD.route({
+                templateUrl: "forms/THS/BoMon/searchBM.html",
                 controller: 'BoMonController',
-                controllerUrl: 'controllers/ths/BoMonController',
+                controllerUrl: 'controllers/THS/BoMonController',
                 caseInsensitiveMatch: true,
                 resolve: {
                     User: function (AuthenticationLoader) {
