@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-27.
- */
+
  define( ['app','angular'],function(app,angular){
     app.factory('interceptor',['$rootScope', '$q','$location','notifyService',function($rootScope, $q,$location,notifyService){
 

@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-08-03.
- */
+
 module.exports = function(app,request,config,express) {
 
     var GateRoute = require('./../routes/GateGuestRoute');

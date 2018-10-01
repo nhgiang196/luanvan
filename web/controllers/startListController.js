@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-6.
- */
+
 define( ['myapp'],function(myapp){
 
     myapp.controller("startListController",['$scope','EngineApi',function($scope,EngineApi){

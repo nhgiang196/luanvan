@@ -1,9 +1,4 @@
-/**
- * Created by wang.chen on 2016/12/16.
- */
-/**
- * Created by wang.chen on 2016/12/16.
- */
+
 define(['app', 'angular', 'moment'], function (app, angular, moment) {
     app.directive("autoComplete", ['GateGuest', 'Notifications', 'Auth', function (GateGuest, Notifications, Auth) {
         return {

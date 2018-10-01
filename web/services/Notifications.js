@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-7.
- */
+
 define( ['app','angular'],function(app,angular){
     app.service('Notifications',['$filter','$timeout','$rootScope',function($filter,$timeout,$rootScope){
         return {

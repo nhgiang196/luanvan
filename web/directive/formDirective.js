@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-4.
- */
+
 define(['app', 'bpmn'], function (app, Bpmn) {
     app.directive('showUser', ['$resource', 'EngineApi', function ($resource, EngineApi) {
         return function (scope, element, attrs) {

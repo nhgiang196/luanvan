@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-08-03.
- */
+
     var sworm = require('sworm');
     var config = require('./../config.json');
     var log = require('log4js').getLogger("Filter");

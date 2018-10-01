@@ -1,0 +1,139 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li ul {
+        display: none;
+        border: 1px solid #000000;
+        margin-left: -3px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+    <legend>
+        <h3>{{'VoucherQuery'|translate}}</h3>
+    </legend>
+    <div class="col-sm-12 form-group">
+        <div class="form-group search-table">
+            <!-- formgroup -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'dateFrom'|translate}}</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" name="dateFrom" ng-model="id" />
+                </div>
+                <label class="col-sm-2 control-label">{{'dateTo'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" name="dateTo" ng-model="ten" />
+                </div>
+            </div>
+            <!-- button -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
+
+                <div class="col-sm-3">
+                    <select class="form-control" name="s_status" ng-model="status" ng-options="s.id as s.name for s in statuslist">
+                        <option value="">{{'Show All' | translate}}</option>
+                        Flowchart </select>
+                </div>
+                <div class="col-sm-2">
+                    <label></label>
+                </div>
+                <div class="col-sm-3">
+                    <!-- <label>
+                        <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
+                    </label> -->
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%;">
+        <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-core
+            ui-grid-exporter></div>
+    </div>
+
+
+
+    <!-- MODAL  -->
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static" data-keyboard="false">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" name="form"  novalidate> </form>      
+            <div class="modal-body"  style="padding-bottom:3px">
+                    <form class="form-horizontal " role="form" name="formCompany"  novalidate>
+                    <H4 style="background-color: #ececec; padding:3px">{{'CompanyInformation'|translate}}</H4>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'CompanyName'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="comp_name"  ng-model="recod.comp_name" required/>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'CompanyCode'|translate}}</label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="comp_code"  ng-model="recod.comp_code" required/>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Type'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" type="text" name="type" ng-model="recod.type"   required
+                                 ng-options="t.id as t.name for t in types"></select>
+                        </div>
+
+                        <label class="col-sm-2 control-label">*{{'Phone'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="phone" ng-model="recod.phone"  required/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Email'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" name="email" ng-model="recod.email"  required/>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'Address'|translate}}</label>
+
+                        <div class="col-sm-4">
+                            <textarea class="form-control" type="text" name="address"  ng-model="recod.address"   required />
+                        </div>
+                    </div>
+              
+            </div>        
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid" >
+                    {{'saveSubmit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
+            </div>
+        </form>
+        </div>
+
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+
+
+</form>

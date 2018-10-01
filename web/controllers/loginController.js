@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-27.
- */
+
 define(['myapp', 'angular'], function (myapp) {
     myapp.controller('logoutController', ['$scope', '$location', '$cookieStore', function ($scope, $location, $cookieStore) {
 

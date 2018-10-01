@@ -1,8 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-6.
- * 任务列表，代理任务，重要任务的区别
- *
- */
+
 define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
     myapp.controller("todoController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Forms', 'EngineApi', 'User', 'Notifications', '$q',
         function ($scope, $http, $compile, $routeParams, $resource, $location, Forms, EngineApi, User, Notifications, $q) {

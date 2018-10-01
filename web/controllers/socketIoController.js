@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2014/10/17.
- */
+
 
 define( ['app','angular'],function(app,angular){
     app.controller("socketIoController",['$scope','$routeParams','$resource','$location','Notifications',function($scope,$routeParams,$resource,$location,Notifications){

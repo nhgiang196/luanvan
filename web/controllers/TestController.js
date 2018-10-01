@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-08-25.
- */
+
 define(['myapp', 'angular'], function(myapp, angular) {
     myapp.controller("TestController", ['$scope', 'EngineApi', '$http', '$timeout', 'Notifications', '$compile', '$filter', 'Auth', '$upload', '$resource', '$translatePartialLoader', '$translate',
         function ($scope, EngineApi, $http, $timeout, Notifications, $compile, $filter, Auth, $upload, $resource, $translatePartialLoader, $translate) {

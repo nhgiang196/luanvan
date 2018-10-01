@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-13.
- */
+
 // var FormsHistroy = require('./../models/forms.js');
 
 

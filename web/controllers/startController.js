@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-5.
- */
+
 define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
     myapp.controller("startController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Forms', 'EngineApi', 'Notifications', '$rootScope', 'Auth', '$translatePartialLoader', '$translate', function ($scope, $http, $compile, $routeParams, $resource, $location, Forms, EngineApi, Notifications, $rootScope, Auth, $translatePartialLoader, $translate) {
         $http.defaults.headers.common['Authorization'] = Auth.username;

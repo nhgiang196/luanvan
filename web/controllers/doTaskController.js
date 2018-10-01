@@ -1,8 +1,4 @@
 
-/**
- * Created by wangyanyan on 14-3-6.
- *
- */
 define(['myapp', 'angular','bpmn'], function(myapp, angular,Bpmn) {
     myapp.controller("doTaskController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Forms', 'Notifications', 'EngineApi','Auth','GateGuest', function($scope, $http, $compile, $routeParams, $resource, $location, Forms, Notifications, EngineApi,Auth,GateGuest) {
         var taskid = $routeParams.taskid,

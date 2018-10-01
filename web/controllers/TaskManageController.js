@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2015-08-03.
- */
+
 define( ['myapp','angular','bpmn'],function(myapp,angular,Bpmn){
     myapp.controller("TaskManageController",['$scope','$http','$compile','$routeParams','$resource','$location','Forms','EngineApi','User','Notifications',
         function($scope,$http,$compile,$routeParams,$resource,$location,Forms,EngineApi,User,Notifications){

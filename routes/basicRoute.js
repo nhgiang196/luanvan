@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-07-28.
- */
+
 var log = require('log4js').getLogger("basicRoute");
 var sworm = require('sworm');
 // var FormsProject = require('./../models/forms.js');

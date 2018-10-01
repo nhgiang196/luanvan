@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-08-02.
- */
+
 define( ['myapp','angular','bpmn'],function(myapp,angular,Bpmn) {
     myapp.controller("RepositoryController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Forms', 'EngineApi', 'User','Notifications','$upload',
         function ($scope, $http, $compile, $routeParams, $resource, $location, Forms, EngineApi, User,Notifications,$upload) {

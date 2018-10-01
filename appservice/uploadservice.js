@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-08-24.
- */
+
 
 module.exports =  function(app,request,config,express) {
  var log = require('log4js').getLogger("uploadservice");

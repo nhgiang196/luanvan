@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-13.
- */
+
 define( ['myapp','angular'],function(myapp,angular){
     myapp.controller("formMaintainController",['$scope','$http','$compile','$routeParams','$resource','$location','Notifications','EngineApi','User',
         function($scope,$http,$compile,$routeParams,$resource,$location,Notifications,EngineApi,User){

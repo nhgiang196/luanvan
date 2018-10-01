@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-5-19.
- */
+
 
 define( ['myapp','bpmn'],function(myapp,Bpmn,basicService){
 myapp.controller("historyController",['$scope','EngineApi','$location','Forms','BasicService','$filter','$http','$resource','Notifications','User',function($scope,EngineApi,$location,Forms,BasicService,$filter,$http,$resource,Notifications,User){

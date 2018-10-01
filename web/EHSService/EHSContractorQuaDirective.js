@@ -1,6 +1,4 @@
-/**
- * Created by wang.chen on 2017/2/21.
- */
+
 define(['app', 'angular'], function (app, angular) {
     app.directive('mycontractorqua', ['$resource', '$http', '$filter', 'Notifications', 'ConQuaService', '$routeParams', '$translate',function ($resource, $http, $filter, Notifications, ConQuaService, $routeParams,$translate) {
         return {

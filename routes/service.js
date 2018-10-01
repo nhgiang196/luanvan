@@ -1,6 +1,3 @@
-/**
- * Created by wangyanyan on 14-5-21.  bpm 的设置
- */
 
 var request = require('request');
 var config = require('./../config.json')["development"];

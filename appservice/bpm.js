@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2016-07-25.
- */
+
 
 module.exports = function(app,request,config,express) {
     var log = require('log4js').getLogger("bpm");

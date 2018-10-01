@@ -1,6 +1,4 @@
-/**
- * Created by wang.chen on 2016/11/30.
- */
+
 define(['app', 'angular'], function (app, angular) {
     app.service("DictionaryApi", ['$resource', '$q', 'Auth', '$location', function ($resource, $q, Auth, $location) {
         function DictionaryApi() {

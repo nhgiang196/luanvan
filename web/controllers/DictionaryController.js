@@ -1,6 +1,4 @@
-/**
- * Created by wang.chen on 2016/11/30.
- */
+
 define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller("DictionaryController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Forms', 'DictionaryApi', 'User', 'Notifications', '$q',
         function ($scope, $http, $compile, $routeParams, $resource, $location, Forms, DictionaryApi, User, Notifications, $q) {

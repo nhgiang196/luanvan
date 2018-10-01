@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-7.
- */
+
 define( ['myapp','angular'],function(myapp,angular){
     myapp.controller("taskCompletedController",['$scope','EngineApi','$routeParams','$timeout','$location'
         ,function($scope,EngineApi,$routeParams,$timeout,$location){

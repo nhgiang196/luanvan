@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2017/2/18.
- */
+
 define(['app', 'angular'], function (app, angular) {
     app.directive('myContractor', ['$resource', '$http', '$filter', 'Notifications', 'ConQuaService', '$routeParams', function ($resource, $http, $filter, Notifications, ConQuaService, $routeParams) {
         return {

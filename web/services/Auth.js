@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-27.
- */
+
 define( ['app','angular'],function(app,angular){
     app.service("Auth",[ '$rootScope','$cookieStore', function($rootScope,$cookieStore) {
        var user=null;

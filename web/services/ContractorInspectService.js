@@ -1,6 +1,4 @@
-/**
- * Created by wang.chen on 2016/12/5.
- */
+
 
 define(['app','angular'],function(app,angular){
     app.service("ContractorInspectService",["$resource",function($resource){

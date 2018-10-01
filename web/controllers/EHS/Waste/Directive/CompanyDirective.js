@@ -1,6 +1,4 @@
-/**
- * Created by ptanh on 4/14/2018.
- */
+
 define(['myapp', 'angular'], function (myapp, angular) {
     myapp.directive('createCompany', ['CompanyService', 'Auth', '$q',
         function (CompanyService, Auth, $q) {

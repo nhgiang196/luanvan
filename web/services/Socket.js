@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 2014/10/17.
- */
+
 define( ['app','angular'],function(app,angular){
     app.service('socket',['$filter','$timeout','$rootScope',function($filter,$timeout,$rootScope){
         var socket = io.connect(window.location.origin);

@@ -107,7 +107,9 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- addlogo -->
-                <a class="navbar-brand" href="/"><img src="/css/image/" style="opacity: 1; transition: opacity 1s; width:28px;">CTLV</a>
+                <a class="navbar-brand" href="/">
+                    <!-- <img src="/css/image/" style="opacity: 1; transition: opacity 1s; width:28px;"> -->
+                    THS</a>
                 <span class="element-divider"></span>
             </div>
             <div class="collapse navbar-collapse bs-navbar-collapse">
@@ -121,21 +123,21 @@
                         <ul class="dropdown-menu" role="menu">
 
                             <li>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/GiangVien')">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('GV','/ths/GiangVien')">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Giảng viên'| translate}} </span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/HocVien') ">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('HV','/ths/HocVien') ">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Học viên'| translate}} </span></a>
 
                                 <div class="divider"></div>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/BoMon')"><span
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('BM','ths/BoMon')"><span
                                         class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
                                     <span> {{'Bộ môn'| translate}}</span></a>
                                 <a href="#/ths/NienKhoa"> <span class=" glyphicon glyphicon-bookmark"
                                         style="color: #563d7c"></span><span>{{'Niên khóa'| translate}}
                                     </span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/DonViNgoai')"><span
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('DV','ths/DonViNgoai')"><span
                                         class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
                                     <span> {{'Đơn vị ngoài'| translate}}</span></a>
                             </li>
@@ -148,18 +150,18 @@
                         <ul class="dropdown-menu" role="menu">
 
                             <li>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/DangKyLuanVan')">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('DK','/ths/DangKyLuanVan')">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Đăng ký luận văn'| translate}} </span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/QuanLyDeTai') ">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('DT','/ths/QuanLyDeTai') ">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Quản lý đề tài'| translate}} </span></a>
 
                                 <div class="divider"></div>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/import')"><span
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('CN','ths/ChuyenNganh')"><span
                                         class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
                                     <span> {{'Chuyên ngành'| translate}}</span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('FEPVContratorImport','ths/import')"><span
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('CM','ths/ChuyenMon')"><span
                                         class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
                                     <span> {{'Lĩnh vực'| translate}}</span></a>
                             </li>
@@ -172,10 +174,10 @@
                         <ul class="dropdown-menu" role="menu">
 
                             <li>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GateContractorInfoProcessQuery','/ths/HDDC')">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('DC','/ths/HDDC')">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Hội đồng đề cương'| translate}} </span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('GatethsProcessQuery','/ths/HDLV') ">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('LV','/ths/HDLV') ">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
                                     <span> {{'Hội đồng bảo vệ luận văn'| translate}} </span></a>
                             </li>

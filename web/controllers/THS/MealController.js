@@ -1,6 +1,3 @@
-/**
- * Created by phkhoi on 07-Sep-17.
- */
 
 define(['myapp', 'angular'], function (myapp, angular) {
     myapp.directive('uploadFile', ['OAServices', 'Notifications', function (OAServices, Notifications) {

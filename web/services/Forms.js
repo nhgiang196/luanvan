@@ -1,6 +1,4 @@
-/**
- * Created by wangyanyan on 14-3-3.
- */
+
 define( ['app','angular'],function(app,angular){
     app.service("Forms", function() {
         var booleanTypeConverter = function(value) {

@@ -1,6 +1,4 @@
-/**
- * Created by wang.chen on 2016/11/10.
- */
+
 define( ['app','angular'],function(app,angular){
     app.service("GateGuest",[ '$resource','$q','Auth','$location','$translate', function($resource,$q,Auth,$location,$translate) {
         function GateGuest(){

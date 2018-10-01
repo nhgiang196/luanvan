@@ -1,6 +1,3 @@
-/**
- * Created by Just1n on 2014/7/22.
- */
 
 define( ['myapp','angular','bpmn'],function(myapp,angular,Bpmn){
     myapp.controller("processlogController",['$scope','$http','$compile','$routeParams','$resource','$location','Forms','EngineApi','Notifications','$rootScope','Auth','$anchorScroll',function($scope,$http,$compile,$routeParams,$resource,$location,Forms,EngineApi,Notifications,$rootScope,Auth,$anchorScroll){
