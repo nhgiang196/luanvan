@@ -566,7 +566,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/HocVien', angularAMD.route({
-                templateUrl: "forms/ths/HocVien/search.html",
+                templateUrl: "forms/ths/HocVien/searchHV.html",
                 controller: 'HocVienController',
                 controllerUrl: 'controllers/ths/HocVienController',
                 caseInsensitiveMatch: true,
@@ -577,7 +577,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/GiangVien', angularAMD.route({
-                templateUrl: "forms/ths/GiangVien/search.html",
+                templateUrl: "forms/ths/GiangVien/searchGV.html",
                 controller: 'GiangVienController',
                 controllerUrl: 'controllers/ths/GiangVienController',
                 caseInsensitiveMatch: true,
@@ -588,7 +588,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/DeTaiLuanVan', angularAMD.route({
-                templateUrl: "forms/ths/DeTaiLuanVan/search.html",
+                templateUrl: "forms/ths/DeTaiLuanVan/searchDT.html",
                 controller: 'DeTaiLuanVanController',
                 controllerUrl: 'controllers/ths/DeTaiLuanVanController',
                 caseInsensitiveMatch: true,
@@ -599,7 +599,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/HDDC', angularAMD.route({
-                templateUrl: "forms/ths/HDDC/search.html",
+                templateUrl: "forms/ths/HDDC/searchDC.html",
                 controller: 'HDDCController',
                 controllerUrl: 'controllers/ths/HDDCController',
                 caseInsensitiveMatch: true,
@@ -610,7 +610,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/HDLV', angularAMD.route({
-                templateUrl: "forms/ths/HDLV/search.html",
+                templateUrl: "forms/ths/HDLV/searchLV.html",
                 controller: 'HDLVController',
                 controllerUrl: 'controllers/ths/HDLVController',
                 caseInsensitiveMatch: true,
@@ -621,7 +621,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/DangKyDeTai', angularAMD.route({
-                templateUrl: "forms/ths/DangKyDeTai/search.html",
+                templateUrl: "forms/ths/DangKyDeTai/searchDK.html",
                 controller: 'DangKyDeTaiController',
                 controllerUrl: 'controllers/ths/DangKyDeTaiController',
                 caseInsensitiveMatch: true,
@@ -632,7 +632,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/ChuyenMon', angularAMD.route({
-                templateUrl: "forms/ths/ChuyenMon/search.html",
+                templateUrl: "forms/ths/ChuyenMon/searchCM.html",
                 controller: 'ChuyenMonController',
                 controllerUrl: 'controllers/ths/ChuyenMonController',
                 caseInsensitiveMatch: true,
@@ -643,7 +643,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/ChuyenNganh', angularAMD.route({
-                templateUrl: "forms/ths/ChuyenNganh/search.html",
+                templateUrl: "forms/ths/ChuyenNganh/searchCN.html",
                 controller: 'ChuyenNganhController',
                 controllerUrl: 'controllers/ths/ChuyenNganhController',
                 caseInsensitiveMatch: true,
@@ -654,7 +654,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/DonViNgoai', angularAMD.route({
-                templateUrl: "forms/ths/DonViNgoai/search.html",
+                templateUrl: "forms/ths/DonViNgoai/searchDV.html",
                 controller: 'DonViNgoaiController',
                 controllerUrl: 'controllers/ths/DonViNgoaiController',
                 caseInsensitiveMatch: true,
@@ -665,7 +665,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/ths/NienKhoa', angularAMD.route({
-                templateUrl: "forms/ths/NienKhoa/search.html",
+                templateUrl: "forms/ths/NienKhoa/searchNK.html",
                 controller: 'NienKhoaController',
                 controllerUrl: 'controllers/ths/NienKhoaController',
                 caseInsensitiveMatch: true,
@@ -675,8 +675,8 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/THS/BoMon', angularAMD.route({
-                templateUrl: "forms/THS/BoMon/searchBM.html",
+            .when('/ths/BoMon', angularAMD.route({
+                templateUrl: "forms/ths/BoMon/searchBM.html",
                 controller: 'BoMonController',
                 controllerUrl: 'controllers/THS/BoMonController',
                 caseInsensitiveMatch: true,
