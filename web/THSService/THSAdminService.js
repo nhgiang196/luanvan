@@ -38,7 +38,7 @@ define([
                 },
                 getall: {
                     method: 'GET',
-                    params: { operation: 'GetAll' },
+                    params: { operation: 'GetBasic' },
                     isArray: true
                 },
             })

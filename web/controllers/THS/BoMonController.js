@@ -76,6 +76,13 @@ define([
           cellTooltip: true,
           visible: true
         },
+        {
+          field: "status",
+          displayName: $translate.instant("Status"),
+          minWidth: 150,
+          cellTooltip: true,
+          visible: true
+        },
       ];
       /**
       * Query Grid setting
@@ -174,15 +181,15 @@ define([
       $scope.Search = function () {
         var deferred = $q.defer();
         // if (!$scope.checkErr()) 
-        var deferred = $q.defer();
+        // var deferred = $q.defer();
         // var query = SearchList();
-        var query = { table: 'BoMon' }
+        var query = {  };
+        query.table= "BoMon";
         THSAdminService.GetAll(
           query,
           function (res) {
-            $scope.gridOptions.data = res.TableData;
-            $scope.gridOptions.totalItems = res.TableCount[0];
-            //deferred.resolve(data);
+            $scope.gridOptions.data = res;
+            deferred.resolve(data);
           },
           function (error) {
             deferred.reject(error);
@@ -211,7 +218,6 @@ define([
             if (resultRows.length == 1) {
               if (resultRows[0].Status != "X") {
                 if (resultRows[0].UserID == Auth.username) {
-
                   $("#myModal").modal("show");
                 } else {
                   Notifications.addError({
@@ -233,6 +239,13 @@ define([
             }
           },
           order: 2
+        },
+        {
+          title: $translate.instant("OnOff"),
+          action: function () {
+
+          },
+          order: 3
         },
         {
           title: $translate.instant("Delete"),
@@ -260,7 +273,7 @@ define([
               });
             }
           },
-          order: 3
+          order: 4
         }
         // , {
         //     title: $translate.instant('PrintReport'),
@@ -298,15 +311,15 @@ define([
        */
       function saveInitData() {
         var note = {};
-        note.CompID = $scope.recod.comp_id || '';
-        note.CompName = $scope.recod.comp_name;
+        note.BM = $scope.recod.id ;
+        note.TenBM = $scope.recod.ten || '';
         return note;
       }
       /**
        * Update status by updateByID
        */
       function updateByID(data) {
-        CompanyService.UpdateCompany(data, function (res) {
+        THSAdminService.cudBoMon(data, function (res) {
           if (res.Success) {
             $scope.Search();
             $('#myModal').modal('hide');
@@ -330,8 +343,8 @@ define([
       /**
        * Save Company
        */
-      function SaveCompany(data) {
-        CompanyService.CreateCompany(data, function (res) {
+      function Save(data) {
+        THSAdminService.cudBoMon(data, function (res) {
           console.log(res)
           if (res.Success) {
             $scope.Search();
@@ -362,13 +375,13 @@ define([
         var status = $scope.status;
         switch (status) {
           case 'N':
-            SaveCompany(note);
+            Save(note);
             break;
           case 'M':
             updateByID(note);
             break;
           default:
-            SaveCompany(note);
+            Save(note);
             break;
         }
 
