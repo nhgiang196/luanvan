@@ -1,4 +1,3 @@
-
 define(["myapp", "angular"], function(myapp, angular) {
   myapp.directive("createVoucher", [
     "VoucherService",
