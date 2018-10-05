@@ -14,8 +14,7 @@ define([
                     method: 'GET',
                     params: {
                         operation: 'BoMon'
-                    },
-                    isArray: true
+                    }
                 },
                 chuyennganh: {
                     method: 'GET',
@@ -24,23 +23,34 @@ define([
                 nienkhoa: {
                     method: 'GET',
                     params: { operation: 'NienKhoa' },
-                    isArray: true
+
                 },
                 linhvucchuyenmon: {
                     method: 'GET',
                     params: { operation: 'LinhVucChuyenMon' },
-                    isArray: true
                 }, 
                 donvingoai: {
                     method: 'GET',
                     params: { operation: 'DonViNgoai' },
-                    isArray: true
                 },
                 getall: {
+                    method: 'GET',
+                    params: { operation: 'GetAll' },
+                    isArray: true
+                },
+                getbasic: {
                     method: 'GET',
                     params: { operation: 'GetBasic' },
                     isArray: true
                 },
+            })
+        }
+        THSAdminService.prototype.GetBasic = function (query, callback) {
+            this.GetInfoBasic.getbasic(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
             })
         }
         THSAdminService.prototype.GetAll = function (query, callback) {
