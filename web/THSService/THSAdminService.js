@@ -77,7 +77,7 @@ define([
                 callback(null, ex);
             })
         }
-        THSAdminService.prototype.cudLinhVucChuyenMon = function (query, callback) {
+        THSAdminService.prototype.cudChuyenMon = function (query, callback) {
             this.GetInfoBasic.linhvucchuyenmon(query).$promise.then(function (data) {
                 callback(data);
             }, function (ex) {

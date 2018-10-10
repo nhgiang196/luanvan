@@ -45,50 +45,50 @@ app.use(function (req, res, next) {
     console.log("req url:" + url + " method:" + req.method + " IP:" + req.connection.remoteAddress);
     //  console.log(code);
 
-    //Xác thực bằng IP
-    if (!req.session['username']) {
-        console.log("start querystring");
-        var query = querystring.parse(URL.parse(req.url).query);
-        //  console.log(query);
-        var autosession = query.Token;
-        var code = query.code;
-        if (code) {
-            console.log("ateam cas log" + code);
-            var autourl = 'http://ateamma01.feg.com.tw/oauth2/getUserInfo?code=' + code;
-            request(
-                {
-                    method: 'GET', uri: autourl
-                }
-                , function (error, response, body) {
-                    if (error) {
-                        console.log(error);
-                        res.send(response.statusCode, error);
-                    } else {
-                        if (response.statusCode == 200) {
-                            var userinfo = JSON.parse(body);
-                            req.session['username'] = userinfo.UserId;
-                            if (userinfo.UserId) {
-                                if (userinfo.UserId.indexOf("fepv") >= 0) {
-                                    req.session['username'] = userinfo.UserId.toLocaleUpperCase();
-                                }
-                            }
-                            if (!req.session['username']) {
-                                return res.send(response.statusCode, "no seesion Wrong userName and password");
-                            }
-                            req.session['email'] = userinfo.Email || "";
-                            req.session['nickname'] = userinfo.UserName;
-                            req.session['isAuthorize'] = true;
-                            next();
-                        } else {
-                            return res.send(response.statusCode, "200 Wrong userName and password");
+    // //Xác thực bằng IP
+    // if (!req.session['username']) {
+    //     console.log("start querystring");
+    //     var query = querystring.parse(URL.parse(req.url).query);
+    //     //  console.log(query);
+    //     var autosession = query.Token;
+    //     var code = query.code;
+    //     if (code) {
+    //         console.log("ateam cas log" + code);
+    //         var autourl = 'http://ateamma01.feg.com.tw/oauth2/getUserInfo?code=' + code;
+    //         request(
+    //             {
+    //                 method: 'GET', uri: autourl
+    //             }
+    //             , function (error, response, body) {
+    //                 if (error) {
+    //                     console.log(error);
+    //                     res.send(response.statusCode, error);
+    //                 } else {
+    //                     if (response.statusCode == 200) {
+    //                         var userinfo = JSON.parse(body);
+    //                         req.session['username'] = userinfo.UserId;
+    //                         if (userinfo.UserId) {
+    //                             if (userinfo.UserId.indexOf("fepv") >= 0) {
+    //                                 req.session['username'] = userinfo.UserId.toLocaleUpperCase();
+    //                             }
+    //                         }
+    //                         if (!req.session['username']) {
+    //                             return res.send(response.statusCode, "no seesion Wrong userName and password");
+    //                         }
+    //                         req.session['email'] = userinfo.Email || "";
+    //                         req.session['nickname'] = userinfo.UserName;
+    //                         req.session['isAuthorize'] = true;
+    //                         next();
+    //                     } else {
+    //                         return res.send(response.statusCode, "200 Wrong userName and password");
 
-                        }
-                    }
-                });
-        } else {
-            console.log("no code");
-        }
-    }
+    //                     }
+    //                 }
+    //             });
+    //     } else {
+    //         console.log("no code");
+    //     }
+    // }
     //Xác thực bằng đăng nhập
     if (url != "/authorize/login?" && url != "/authorize/loginCode") {
         console.log("no log loginCode");
@@ -102,8 +102,6 @@ app.use(function (req, res, next) {
         }
     }
     next();
-    //访问的日志记录下来
-
 });
 
 
