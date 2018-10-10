@@ -3,7 +3,7 @@ define([
     "angular"], function (myapp, angular) {
         myapp.controller("ChuyenMonController", ["$filter", "Notifications", "Auth", "EngineApi", "THSAdminService", "$translate", "$q", "$scope",
             function ($filter, Notifications, Auth, EngineApi, THSAdminService, $translate, $q, $scope) {
-                $scope.flowkey = 'ANK';
+                $scope.flowkey = 'ACM';
                 $scope.username = Auth.username;
                 formVariables = $scope.formVariables = [];
                 historyVariable = $scope.historyVariable = [];
@@ -36,38 +36,17 @@ define([
                 */
                 var col = [
                     {
-                        field: "nk",
+                        field: "cm",
                         minWidth: 120,
-                        displayName: $translate.instant("nk"),
+                        displayName: $translate.instant("cm"),
                         cellTooltip: true,
                         visible: true,
                         // cellTemplate:
-                        //   '<a href="#/waste/ChuyenMon/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
+                        //   '<a href="#/waste/ChuyenMon/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blacm">{{COL_FIELD}}</a>'
                     },
                     {
-                        field: "nkten",
-                        displayName: $translate.instant("nkten"),
-                        minWidth: 100,
-                        cellTooltip: true,
-                        visible: true
-                    },
-                    {
-                        field: "nknam",
-                        displayName: $translate.instant("nknam"),
-                        minWidth: 150,
-                        cellTooltip: true,
-                        visible: true
-                    },
-                    {
-                        field: "nktungay",
-                        displayName: $translate.instant("nktungay"),
-                        minWidth: 100,
-                        cellTooltip: true,
-                        visible: true
-                    },
-                    {
-                        field: "nkdenngay",
-                        displayName: $translate.instant("nkdenngay"),
+                        field: "cmten",
+                        displayName: $translate.instant("cmten"),
                         minWidth: 100,
                         cellTooltip: true,
                         visible: true
@@ -100,11 +79,8 @@ define([
                 * Query Grid setting
                 */
                 function LoadDetails(entity) {
-                    $scope.recod.nk = entity.nk;
-                    $scope.recod.nkten = entity.nkten;
-                    $scope.recod.nknam = entity.nknam;
-                    $scope.recod.nktungay = entity.nktungay;
-                    $scope.recod.nkdenngay = entity.nkdenngay;
+                    $scope.recod.cm = entity.cm;
+                    $scope.recod.cmten = entity.cmten;
                 }
                 $scope.gridOptions = {
                     columnDefs: col,
@@ -127,13 +103,13 @@ define([
                     enablePaginationControls: true,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
-                        EngineApi.getTcodeLink().get(
+                        EngineApi.getTcodeLicm().get(
                             {
                                 userid: Auth.username,
                                 tcode: $scope.flowkey
                             },
-                            function (linkres) {
-                                if (linkres.IsSuccess) {
+                            function (licmres) {
+                                if (licmres.IsSuccess) {
                                     gridApi.core.addToGridMenu(gridApi.grid, gridMenu);
                                 }
                             }
@@ -272,7 +248,7 @@ define([
                 $scope.Search = function () {
                     // var query = SearchList();
                     var query = {};
-                    query.table = "ChuyenMon";
+                    query.table = "LinhVucChuyenMon";
                     THSAdminService.GetAll(
                         query,
                         function (res) {
@@ -340,11 +316,8 @@ define([
                  */
                 function saveInitData() {
                     var note = {};
-                    note.nk = $scope.recod.nk;
-                    note.nkten = $scope.recod.nkten || '';
-                    note.nknam = $scope.recod.nknam || '';
-                    note.nktungay = $scope.recod.nktungay || '';
-                    note.nkdenngay = $scope.recod.nkdenngay || '';
+                    note.cm = $scope.recod.cm;
+                    note.cmten = $scope.recod.cmten || '';
                     if ($scope.status == 'M')
                         note.action = 'update';
                     else note.action = 'create';

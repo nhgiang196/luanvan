@@ -1,6 +1,6 @@
-define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'], function (myapp, angular) {
-    myapp.controller('DeTaiLuanVanController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'VoucherService', 'WasteItemService', 'CompanyService', '$translate', '$q', '$scope', '$routeParams',
-        function ($filter, Notifications, Auth, EngineApi, VoucherService, WasteItemService, CompanyService, $translate, $q, $scope, $routeParams) {
+define(['myapp', 'controllers/THS/Directive/DeTaiLuanVanDirective', 'angular'], function (myapp, angular) {
+    myapp.controller('DeTaiLuanVanController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'THSAdminService', 'DeTaiLuanVanService', '$translate', '$q', '$scope', '$routeParams',
+        function ($filter, Notifications, Auth, EngineApi, THSAdminService, DeTaiLuanVanService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             $scope.recod = {};
             $scope.onlyOwner = true;
@@ -40,48 +40,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     'message': 'Loading failed: ' + error
                 });
             });
-            /**
-             * Load VoucherDetail
-             */
-            function loadVoucherDetail(id) {
-                var deferred = $q.defer();
-                VoucherService.FindByID({
-                    VoucherID: id
-                }, function (data) {
-                    $scope.recod.voucher_id = data.VoucherID;
-                    $scope.recod.owner_comp = data.OwnerComp;
-                    $scope.recod.process_comp = data.ProcessComp;
-                    $scope.recod.voucher_number = data.VoucherNumber; //$scope.recod.voucher_number;
-                    $scope.recod.depart_req = data.DepartReq;
-                    $scope.recod.depart_process = data.DepartProcess;
-                    $scope.recod.internal_phone = data.InternalPhone;
-                    $scope.recod.location = data.Location;
-                    // $scope.recod.date_out = data.DateOut;
-                    $scope.recod.date_out = $filter('date')(data.DateOut, 'yyyy-MM-dd');
-                    $scope.recod.date_complete = $filter('date')(data.DateComplete, 'yyyy-MM-dd');
-                    $scope.recod.return_reason = data.ReturnReason;
-                    $scope.recod.create_time = data.CreateTime;
-                    $scope.wasteItems = [];
-                    $scope.processcomp_reupdate_wastelist(data.ProcessComp);
-                    data.VoucherDetails.forEach(element => {
-                        var x = {};
-                        var item = full_lsWastItems.filter(x => x.WasteID === element.WasteID);
-                        if (item.length > 0) {
-                            x.method_name = item[0].MethodDescription;
-                            x.waste_name = item[0].WasteDescription;
-                            x.Quantity = element.Quantity;
-                            x.Weight = element.Weight;
-                            x.WasteID = element.WasteID;
-                            $scope.wasteItems.push(x);
-                        }
-                    })
-                    console.log(data);
-                    deferred.resolve(data);
-                }, function (error) {
-                    deferred.reject(error);
-                })
-                return deferred.promise;
-            }
+
 
             /**
              * Load Department into Combobox
@@ -89,17 +48,17 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
             function loadDepartment() {
                 var deferred = $q.defer();
                 var query = {
-                    DepartType: 'Department',
+                    Table: 'table1',
                     lang: lang
                 };
-                VoucherService.GetDepartment(query, function (data) {
+                THSAdminService.GetBasic(query, function (data) {
                     $scope.departments = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
                 })
-                query.DepartType = 'CenterDepartment';
-                VoucherService.GetDepartment(query, function (data) {
+                query.Table = 'CenterDepartment';
+                THSAdminService.GetBasic(query, function (data) {
                     $scope.cdepartments = data;
                     deferred.resolve(data);
                 }, function (error) {
@@ -138,9 +97,9 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
              * Define All Columns in UI Grid
              */
             var col = [{
-                field: 'VoucherID',
+                field: 'lv',
                 minWidth: 120,
-                displayName: $translate.instant('VoucherID'),
+                displayName: $translate.instant('lv'),
                 cellTooltip: true,
                 visible: true,
                 cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
@@ -250,7 +209,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                         'userid': Auth.username,
                         'tcode': 'M1'
                     }, function (linkres) {
-                        if(linkres.IsSuccess){
+                        if (linkres.IsSuccess) {
                             gridApi.core.addToGridMenu(gridApi.grid, gridMenu);
                         }
                     });
@@ -265,7 +224,48 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     });
                 }
             };
-
+            /**
+                         * Load VoucherDetail
+                         */
+            function loadVoucherDetail(id) {
+                var deferred = $q.defer();
+                DeTaiLuanVanService.FindByID({
+                    lv: id
+                }, function (data) {
+                    $scope.recod.voucher_id = data.lv;
+                    $scope.recod.owner_comp = data.OwnerComp;
+                    $scope.recod.process_comp = data.ProcessComp;
+                    $scope.recod.voucher_number = data.VoucherNumber; //$scope.recod.voucher_number;
+                    $scope.recod.depart_req = data.DepartReq;
+                    $scope.recod.depart_process = data.DepartProcess;
+                    $scope.recod.internal_phone = data.InternalPhone;
+                    $scope.recod.location = data.Location;
+                    // $scope.recod.date_out = data.DateOut;
+                    $scope.recod.date_out = $filter('date')(data.DateOut, 'yyyy-MM-dd');
+                    $scope.recod.date_complete = $filter('date')(data.DateComplete, 'yyyy-MM-dd');
+                    $scope.recod.return_reason = data.ReturnReason;
+                    $scope.recod.create_time = data.CreateTime;
+                    $scope.wasteItems = [];
+                    $scope.processcomp_reupdate_wastelist(data.ProcessComp);
+                    data.Details.forEach(element => {
+                        var x = {};
+                        var item = full_lsWastItems.filter(x => x.WasteID === element.WasteID);
+                        if (item.length > 0) {
+                            x.method_name = item[0].MethodDescription;
+                            x.waste_name = item[0].WasteDescription;
+                            x.Quantity = element.Quantity;
+                            x.Weight = element.Weight;
+                            x.WasteID = element.WasteID;
+                            $scope.wasteItems.push(x);
+                        }
+                    })
+                    console.log(data);
+                    deferred.resolve(data);
+                }, function (error) {
+                    deferred.reject(error);
+                })
+                return deferred.promise;
+            }
             /**
              *search list function
              */
@@ -278,7 +278,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 query.pageSize = paginationOptions.pageSize || '';
                 query.dateFrom = $scope.dateFrom || '';
                 query.dateTo = $scope.dateTo || '';
-                query.VoucherID = '';
+                query.lv = '';
                 query.VoucherNumber = $scope.voucher_number || '';
                 query.ProcessComp = $scope.process_comp || '';
                 query.DepartProcess = $scope.depart_process || '';
@@ -293,48 +293,6 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 return query;
             }
 
-            function deleteById(id) {
-                var data = {
-                    VoucherID: id
-                };
-                VoucherService.DeleteByVoucherID(data, function (res) {
-                    if (res.Success) {
-                        $scope.Search();
-                        $('#myModal').modal('hide');
-                        $('#messageModal').modal('hide');
-                        $('#nextModal').modal('hide');
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('saveError') + res.Message
-                        });
-                    }
-
-                },
-                    function (error) {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('saveError') + error
-                        });
-                    })
-            }
-            /**
-             *Search function for Button Search
-             */
-            $scope.Search = function () {
-                var deferred = $q.defer();
-                if (!$scope.checkErr()) {
-                    var deferred = $q.defer();
-                    var query = SearchList();
-                    VoucherService.Search(query, function (res) {
-                        $scope.gridOptions.data = res.TableData;
-                        $scope.gridOptions.totalItems = res.TableCount[0];
-                        //deferred.resolve(data);
-                    }, function (error) {
-                        deferred.reject(error);
-                    })
-                }
-            }
 
             var gridMenu = [{
                 title: $translate.instant('Create'),
@@ -357,7 +315,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
                             if (resultRows[0].UserID == Auth.username) {
-                                var querypromise = loadVoucherDetail(resultRows[0].VoucherID);
+                                var querypromise = loadVoucherDetail(resultRows[0].lv);
                                 $("#ProcessComp").prop('disabled', true); //disable ProcessComp text
                                 $scope.company = full_lsCompany;
                                 querypromise.then(function () {
@@ -399,8 +357,8 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
                     if (resultRows[0].UserID == Auth.username) {
                         if (resultRows.length == 1) {
-                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].VoucherID)) {
-                                deleteById(resultRows[0].VoucherID);
+                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
+                                deleteById(resultRows[0].lv);
                             }
                         } else {
                             Notifications.addError({
@@ -422,7 +380,7 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
 
                     if (resultRows.length == 1) {
-                        var href = '#/waste/Voucher/print/' + resultRows[0].VoucherID;
+                        var href = '#/waste/Voucher/print/' + resultRows[0].lv;
                         window.open(href);
                     } else {
                         Notifications.addError({
@@ -434,6 +392,53 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
                 order: 4
             }
             ];
+
+
+            function deleteById(id) {
+                var data = {
+                    lv: id
+                };
+                DeTaiLuanVanService.DeleteBylv(data, function (res) {
+                    if (res.Success) {
+                        $scope.Search();
+                        $('#myModal').modal('hide');
+                        $('#messageModal').modal('hide');
+                        $('#nextModal').modal('hide');
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('saveError') + res.Message
+                        });
+                    }
+
+                },
+                    function (error) {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('saveError') + error
+                        });
+                    })
+            }
+            /**
+             *Search function for Button Search
+             */
+            $scope.Search = function () {
+                var deferred = $q.defer();
+                if (!$scope.checkErr()) {
+                    var deferred = $q.defer();
+                    var query = SearchList();
+                    DeTaiLuanVanService.Search(query, function (res) {
+                        $scope.gridOptions.data = res;
+                        // $scope.gridOptions.data` = res.TableData[0];
+                        // $scope.gridOptions.totalItems = res.TableCount[0];
+                        //deferred.resolve(data);
+                    }, function (error) {
+                        deferred.reject(error);
+                    })
+                }
+            }
+
+
             /**
              * Trigger option changedValue
              * @param {change value} item 
@@ -448,8 +453,6 @@ define(['myapp', 'controllers/EHS/Waste/Directive/VoucherDirective', 'angular'],
 
             }
             /**
-             * Các Hàm để thêm, xóa Waste item trong param table (VoucherDetail)
-             * Function to add, delete wasteitem in param table (Voucherdetail)
              */
             $scope.addWasteItem = function () {
                 if ($scope.gd != null || $scope.gd != {}) {

@@ -1,3 +1,3 @@
-define(['./GiangVienService', './QuanLyDeTaiService', './HDDCService', './HDLVService', './THSAdminService'], function () {
+define(['./GiangVienService', './DeTaiLuanVanService', './HDDCService', './HDLVService', './THSAdminService'], function () {
 
 })
