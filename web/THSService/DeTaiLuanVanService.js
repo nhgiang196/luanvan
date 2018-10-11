@@ -8,7 +8,7 @@ define([
 ], function (app, angular) {
     app.service('DeTaiLuanVanService', ['$resource', '$q', 'Auth', '$location', '$translate', function ($resource, $q, Auth, $location, $translate) {
         function DeTaiLuanVanService() {
-            this.GetInfoBasic = $resource('/ths/waste/DeTaiLuanVanController/:operation', {}, {
+            this.GetInfoBasic = $resource('/ths/DeTaiLuanVanController/:operation', {}, {
                 search:
                 {
                     method: 'GET',

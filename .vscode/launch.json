@@ -5,7 +5,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Website Belling",
-            "url": "http://localhost:843",
+            "url": "http://localhost:1234",
             "sourceMaps": true,
             "webRoot": "${workspaceRoot}/web"
         }

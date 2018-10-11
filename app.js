@@ -308,7 +308,7 @@ app.all('/ths/*', function (req, res) {
     req.pipe(x);
 });
 
-var server = http.createServer(app).listen("843", function () {
+var server = http.createServer(app).listen(config.port, function () {
     console.log('server start');
 });
 

@@ -5,12 +5,14 @@ define( ['app','angular'],function(app,angular){
         var username = null;
         var nickname=null;
         var email=null;
+        var bm=null;
         function saveUser(data,callback) {
 
             if (data){
                 authentication.username = data.username;
                 authentication.nickname= data.nickname;
                 authentication.email=data.email;
+                authentication.bm=data.bm;
                 $cookieStore.put('username',data.username);
                 console.log(data.nickname);
               callback("OK");
@@ -23,6 +25,7 @@ define( ['app','angular'],function(app,angular){
             name:nickname,
             username: username,
             email:email,
+            bm:bm,
             saveUser:saveUser,
             isLoggedIn: function(user) {
 
@@ -47,7 +50,8 @@ define( ['app','angular'],function(app,angular){
         return {
             name: data.name,
             username: data.username,
-            email:data.email
+            email:data.email,
+            bm:data.bm
         };
     }
     app.factory("AuthenticationLoader",['Auth','$location','$q','$resource','$cookieStore','$http','$rootScope','EngineApi','Notifications','$translate'

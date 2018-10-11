@@ -2621,7 +2621,7 @@ var io = ('undefined' === typeof module ? {} : module.exports);
           WEB_SOCKET_SWF_LOCATION = path.join('/');
         }
 
-        if (port !== 843) {
+        if (port !== config.port) {
           WebSocket.loadFlashPolicyFile('xmlsocket://' + options.host + ':' + port);
         }
 

@@ -344,9 +344,10 @@ define([
                             $('#myModal').modal('hide');
                             $('#messageModal').modal('hide');
                             $('#nextModal').modal('hide');
-                        }
-                        else {
-                            Notifications.addError({ 'status': 'error', 'message': $translate.instant('saveError') + res.Message });
+                            Notifications.addError({
+                                'status': 'information',
+                                'message': $translate.instant('saveSucess') + res.Message
+                            });
                         }
                     }, function (error) {
                         Notifications.addError({ 'status': 'error', 'message': $translate.instant('saveError') + error });
@@ -362,10 +363,9 @@ define([
                             $('#myModal').modal('hide');
                             $('#messageModal').modal('hide');
                             $('#nextModal').modal('hide');
-                        } else {
                             Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('saveError') + res.Message
+                                'status': 'information',
+                                'message': $translate.instant('updateSucess') + res.Message
                             });
                         }
                     },
