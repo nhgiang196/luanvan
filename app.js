@@ -124,6 +124,7 @@ app.get('/authorize/isLogin', function (req, res) {
         username = req.session['username'];
         nickname = req.session['nickname'];
         email = req.session['email'];
+        bm = req.session['bm'];
         if (!username) {
             res.send(401, 'Wrong user or password');
             return;

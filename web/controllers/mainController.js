@@ -127,9 +127,9 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
                 }
                 //判断权限但不启动工作流
                 $scope.btCheckAuth = function (key, url) {
-                    console.log('maincontroller:'+User);
-                    console.log('maincontroller:'+key);
-                    console.log('maincontroller:'+url);
+                    console.log('maincontroller\btCheckAuth:'+User);
+                    console.log('maincontroller\btCheckAuth:'+key);
+                    console.log('maincontroller\btCheckAuth:'+url);
                     EngineApi.getTcodeLink().get({
                         "userid": User,
                         "tcode": key

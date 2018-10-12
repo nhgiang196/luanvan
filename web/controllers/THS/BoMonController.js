@@ -134,7 +134,7 @@ define([
                         action: function () {
                             $scope.reset();
                             $scope.status = "N";
-                            $('#key').prop('disabled',false);
+                            $('#key').prop('disabled', false);
                             $("#myModal").modal("show");
                         },
                         order: 1
@@ -149,7 +149,7 @@ define([
                                     // if (resultRows[0].UserID == Auth.username) {
                                     var entity = resultRows[0];
                                     LoadDetails(entity);
-                                    $('#key').prop('disabled',true);
+                                    $('#key').prop('disabled', true);
                                     $("#myModal").modal("show");
                                     // } else {
                                     //     Notifications.addError({
@@ -262,8 +262,8 @@ define([
                         }
                     );
                 };
-                function changestatusbyId(id){
-                    THSAdminService.cudBoMon({ action: 'changestatus',bm: id, ten:''}, function (res) {
+                function changestatusbyId(id) {
+                    THSAdminService.cudBoMon({ action: 'changestatus', bm: id, ten: '' }, function (res) {
                         if (res.Success)
                             Notifications.addError({
                                 status: "infor",

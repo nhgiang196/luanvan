@@ -109,7 +109,7 @@ define( ['app','angular'],function(app,angular){
                     });
                 }
                 else if(!Auth.username & !Token){
-                    var authapp =      $resource("/authorize/:operation/:id", { username: "@id" }, {
+                    var authapp = $resource("/authorize/:operation/:id", { username: "@id" }, {
                         isLogin: { method: 'GET', params : {operation: "isLogin" }}
                     });
                     authapp.isLogin(function(data){
@@ -132,7 +132,7 @@ define( ['app','angular'],function(app,angular){
                     });
                 }else{
                   //  delay.resolve({username:Auth.username,name:Auth.name,email:Auth.email});
-                    console.log("--222---");
+                    // console.log("--222---");
                    if( $cookieStore.get('username')){
                        delay.resolve( $cookieStore.get('username'));
 
