@@ -183,51 +183,39 @@
                         </div>
                     </div>
                     <H4 style="background-color: #ececec; padding: 5px">{{'Hướng dẫn luận văn'|translate}}</H4>
-                    <form class="form-horizontal" role="form" name="formdetail" novalidate>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.nk"  required />
-                        </div>
-                        <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.nk"  required />
-                        </div>
-                    </div>
+                    <form class="form-horizontal" role="form" name="formDetail" novalidate>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'gv'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="item.gv"  required />
+                            <input class="form-control" type="text" ng-model="items.gv"  required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'gvhoten'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="item.gvhoten"  required />
+                            <input class="form-control" type="text" ng-model="items.gvhoten"  required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'vaitro'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="item.vaitro"  required />
+                            <input class="form-control" type="text" ng-model="items.vaitro"  required />
                         </div>
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4">
-                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formCompany.$invalid">
+                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
                                 {{'Add'|translate}}
                             </button>
                         </div>
                     </div>
                 </form>
                 <table id="temptable" ng-table="tableParams" class="table table-bordered table-striped ">
-                    <!-- <thead>
+                    <thead>
                         <tr>
-                            <td  width="35%">ItemName</td>
-                            <td width="35%">MethodName</td>
-                            <td width="10%">Quantity</td>
-                            <td width="10%">Weight</td>
-                            <td width="10%">Action</td>
+                            <td  width="20%">gv</td>
+                            <td width="40%">gvten</td>
+                            <td width="30%">vaitro</td>
                         </tr>
-                    </thead> -->
-                    <tr ng-repeat="item in detail_lsgv">
+                    </thead>
+                    <tr ng-repeat="item in detaillist">
                         <td title="gv" width="20%">
                             {{item.gv}}
                         </td>

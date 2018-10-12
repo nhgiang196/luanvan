@@ -119,7 +119,7 @@ app.post('/authorize/logout', function (req, res) {
     req.session.destroy(function (e) { res.status(200).send('ok'); });
 })
 app.get('/authorize/isLogin', function (req, res) {
-    var username, nickname, email;
+    var username, nickname, email, bm;
     if (req.session != null && req.session['isAuthorize'] != null && req.session['isAuthorize'] != false) {
         username = req.session['username'];
         nickname = req.session['nickname'];

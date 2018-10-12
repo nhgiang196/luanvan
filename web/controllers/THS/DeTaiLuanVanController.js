@@ -38,7 +38,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 name: $translate.instant('StatusX')
             }
             ];
-            $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh()]).then(function (result) {
+            $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(),loadGiangVien()]).then(function (result) {
             }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
@@ -52,10 +52,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'HocVien',
-                    lang: lang
+                    lang: lang,
+                    bm: Auth.bm
+
                 };
                 THSAdminService.GetBasic(query, function (data) {
-                    console.log(data);
+                    //console.log(data)
                     $scope.lshv = data;
                     deferred.resolve(data);
                 }, function (error) {
@@ -66,10 +68,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'LinhVucChuyenMon',
-                    lang: lang
+                    lang: lang,
+                    bm: Auth.bm
                 };
                 THSAdminService.GetBasic(query, function (data) {
-                    console.log(data);
+                    //console.log(data)
                     $scope.lscm = data;
                     deferred.resolve(data);
                 }, function (error) {
@@ -80,11 +83,27 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'ChuyenNganh',
-                    lang: lang
+                    lang: lang,
+                    bm: Auth.bm
                 };
                 THSAdminService.GetBasic(query, function (data) {
-                    console.log(data);
+                    //console.log(data)
                     $scope.lscn = data;
+                    deferred.resolve(data);
+                }, function (error) {
+                    deferred.resolve(error);
+                })
+            }
+            function loadGiangVien() {
+                var deferred = $q.defer();
+                var query = {
+                    Table: 'GiangVien',
+                    lang: lang,
+                    bm: Auth.bm
+                };
+                THSAdminService.GetBasic(query, function (data) {
+                    //console.log(data)
+                    $scope.lsgv = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
@@ -197,7 +216,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.recod.cn = lscn.filter(x => x.cnten == data.Header[0].cnten)[0].cn;
                     $scope.recod.cm = lscm.filter(x => x.cmten == data.Header[0].cmten)[0].cm;
                     $scope.recod.hvhoten = lshv.filter(x => x.hvhoten == data.Header[0].hvhoten)[0].hv;
-                    $scope.detail_lsgv = [];
+                    $scope.detaillist = [];
                     data.Details.forEach(element => {
                         var x = {};
                         var item = lsgv.filter(x => x.gv === element.gv);
@@ -205,7 +224,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                             x.gv = item[0].gv;
                             x.gvhoten = item[0].gvhoten;
                             x.vaitro = element.vaitro;
-                            $scope.detail_lsgv.push(x);
+                            $scope.detaillist.push(x);
                         }
                     })
                 }, function (error) {
@@ -448,26 +467,26 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /** 
              */
             $scope.addItem = function () {
-                if ($scope.gd != null || $scope.gd != {}) {
-                    var data = $scope.wasteItems.filter(x => x.waste_name === $scope.gd.waste_name);
+                if ($scope.items != null || $scope.items != {}) {
+                    var data = $scope.lsgv.filter(x => x.gvhoten === $scope.items.gvhoten);
 
                     if (data.length != 0) {
-                        alert($scope.gd.waste_name + ": " + $translate.instant('waste_name_existed'));
-                        $scope.gd = {};
+                        alert($scope.items + ": " + $translate.instant('waste_name_existed'));
+                        $scope.items = {};
                     } else {
-                        if ($scope.gd.Quantity < 0 || $scope.gd.Weight <= 0) {
-                            alert($scope.gd.waste_name + ": " + $translate.instant('positive_quantity_weight'));
-                            $scope.gd.Quantity = null;
-                            $scope.gd.Weight = null;
+                        if ($scope.items.Quantity < 0 || $scope.items.Weight <= 0) {
+                            alert($scope.items + ": " + $translate.instant('positive_quantity_weight'));
+                            $scope.items.Quantity = null;
+                            $scope.items.Weight = null;
                         } else {
-                            $scope.wasteItems.push($scope.gd);
-                            $scope.gd = {};
+                            $scope.detaillist.push($scope.items);
+                            $scope.items = {};
                         }
                     }
                 }
             };
             $scope.deleteItem = function (index) {
-                $scope.wasteItems.splice(index, 1);
+                $scope.detaillist.splice(index, 1);
 
             };
 
