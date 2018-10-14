@@ -129,7 +129,7 @@ app.get('/authorize/isLogin', function (req, res) {
             res.send(401, 'Wrong user or password');
             return;
         } else {
-            res.send({ username: req.session['username'], nickname: req.session['nickname'], email: req.session['email'] });
+            res.send({ username: req.session['username'], nickname: req.session['nickname'], email: req.session['email'], bm: req.session['bm'] });
             return;
         }
     }
@@ -157,6 +157,7 @@ app.post('/authorize/login', express.bodyParser(), function (req, res) {
             req.session['email'] = userinfo.email;
             req.session['username'] = userinfo.username;
             req.session['nickname'] = userinfo.nickname;
+            req.session['bm'] = userinfo.bm;
             console.log(req.session['nickname']);
             req.session['isAuthorize'] = true;
             res.send(b);

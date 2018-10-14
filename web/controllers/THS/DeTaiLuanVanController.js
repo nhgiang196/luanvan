@@ -13,6 +13,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 totalItems: 0,
                 sort: null
             };
+            $scope.detaillist = [];
             $("#key").prop('disabled', true);
             $scope.recod = {};
 
@@ -26,20 +27,27 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.lscm = [];
             $scope.lscn = [];
             $scope.statuslist = [{
-                id: 'N',
-                name: $translate.instant('StatusN')
-            },
-            {
-                id: 'M',
-                name: $translate.instant('StatusM')
-            },
-            {
-                id: 'X',
-                name: $translate.instant('StatusX')
-            }
+                    id: 'N',
+                    name: $translate.instant('StatusN')
+                },
+                {
+                    id: 'M',
+                    name: $translate.instant('StatusM')
+                },
+                {
+                    id: 'X',
+                    name: $translate.instant('StatusX')
+                },
+                {
+                    id: "1",
+                    name: $translate.instant("Status1")
+                },
+                {
+                    id: "0",
+                    name: $translate.instant("Status0")
+                },
             ];
-            $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(),loadGiangVien()]).then(function (result) {
-            }, function (error) {
+            $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(), loadGiangVien()]).then(function (result) {}, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -53,56 +61,67 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var query = {
                     Table: 'HocVien',
                     lang: lang,
-                    bm: Auth.bm
 
                 };
+                if (Auth.nickname = 'Administrator')
+                    query.bm = '';
+                else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
-                    //console.log(data)
+                    console.log(data)
                     $scope.lshv = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
                 })
             }
+
             function loadLinhVucChuyenMon() {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'LinhVucChuyenMon',
-                    lang: lang,
-                    bm: Auth.bm
+                    lang: lang
                 };
+                if (Auth.nickname = 'Administrator')
+                    query.bm = '';
+                else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
-                    //console.log(data)
+                    console.log(data)
                     $scope.lscm = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
                 })
             }
+
             function loadChuyenNganh() {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'ChuyenNganh',
                     lang: lang,
-                    bm: Auth.bm
                 };
+                if (Auth.nickname = 'Administrator')
+                    query.bm = '';
+                else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
-                    //console.log(data)
+                    console.log(data)
                     $scope.lscn = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
                 })
             }
+
             function loadGiangVien() {
                 var deferred = $q.defer();
                 var query = {
                     Table: 'GiangVien',
                     lang: lang,
-                    bm: Auth.bm
                 };
+                if (Auth.nickname = 'Administrator')
+                    query.bm = Auth.bm;
+                else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
-                    //console.log(data)
+                    console.log(data)
                     $scope.lsgv = data;
                     deferred.resolve(data);
                 }, function (error) {
@@ -112,8 +131,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /**
              * Define All Columns in UI Grid
              */
-            var col = [
-                {
+            var col = [{
                     field: 'lv',
                     minWidth: 120,
                     displayName: $translate.instant('lv'),
@@ -183,7 +201,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     cellTooltip: true
                 },
                 {
-                    field: "status",
+                    field: 'status',
                     displayName: $translate.instant("Status"),
                     minWidth: 150,
                     cellTooltip: true,
@@ -192,7 +210,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 },
             ];
             $scope.getStatus = function (Status) {
-                var statLen = $filter('filter')($scope.StatusList, { 'id': Status });
+                var statLen = $filter('filter')($scope.statuslist, {
+                    'id': Status
+                });
                 if (statLen.length > 0) {
                     return statLen[0].name;
                 } else {
@@ -203,7 +223,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
              * Load detail
              */
             function loadDetails(entity) {
-                DeTaiLuanVanService.FindByID({ lv: entity.lv }, function (data) {
+                DeTaiLuanVanService.FindByID({
+                    lv: entity.lv
+                }, function (data) {
                     $scope.recod.lv = data.Header[0].lv;
                     $scope.recod.qd = data.Header[0].qd;
                     $scope.recod.hv = data.Header[0].hv;
@@ -278,61 +300,44 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }
             };
             var gridMenu = [{
-                title: $translate.instant('Create'),
-                action: function () {
-                    $scope.reset();
-                    $scope.status = 'N';
-                    // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
-                    $('#myModal').modal('show');
-                },
-                order: 1
-            }, {
-                title: $translate.instant('Update'),
-                action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.recod.comp_id = resultRows
-                    $scope.status = 'M'; //Set update Status
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].UserID == Auth.username) {
-                                var querypromise = loadDetails(resultRows[0].lv);
-                                // $scope.company = full_lsCompany;
-                                querypromise.then(function () {
-                                    $('#myModal').modal('show');
-                                }, function (error) {
+                    title: $translate.instant('Create'),
+                    action: function () {
+                        $scope.reset();
+                        $scope.status = 'N';
+                        // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
+                        $('#myModal').modal('show');
+                    },
+                    order: 1
+                }, {
+                    title: $translate.instant('Update'),
+                    action: function () {
+                        var resultRows = $scope.gridApi.selection.getSelectedRows();
+                        $scope.recod.comp_id = resultRows
+                        $scope.status = 'M'; //Set update Status
+                        if (resultRows.length == 1) {
+                            if (resultRows[0].Status != 'X') {
+                                if (resultRows[0].UserID == Auth.username) {
+                                    var querypromise = loadDetails(resultRows[0].lv);
+                                    // $scope.company = full_lsCompany;
+                                    querypromise.then(function () {
+                                        $('#myModal').modal('show');
+                                    }, function (error) {
+                                        Notifications.addError({
+                                            'status': 'error',
+                                            'message': error
+                                        });
+                                    })
+                                } else {
                                     Notifications.addError({
                                         'status': 'error',
-                                        'message': error
-                                    });
-                                })
-                            }
-                            else {
-                                Notifications.addError({ 'status': 'error', 'message': $translate.instant('ModifyNotBelongUserID') })
-                            }
-                        }
-                        else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
-                },
-                order: 2
-            },
-            {
-                title: $translate.instant('Delete'),
-                action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    if (resultRows[0].UserID == Auth.username) {
-                        if (resultRows.length == 1) {
-                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
-                                deleteById(resultRows[0].lv);
+                                        'message': $translate.instant('ModifyNotBelongUserID')
+                                    })
+                                }
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('Modified_to_X')
+                                });
                             }
                         } else {
                             Notifications.addError({
@@ -340,13 +345,33 @@ define(['myapp', 'angular'], function (myapp, angular) {
                                 'message': $translate.instant('Select_ONE_MSG')
                             });
                         }
-                    }
-                    else {
-                        Notifications.addError({ 'status': 'error', 'message': $translate.instant('ModifyNotBelongUserID') })
-                    }
+                    },
+                    order: 2
                 },
-                order: 3
-            },
+                {
+                    title: $translate.instant('Delete'),
+                    action: function () {
+                        var resultRows = $scope.gridApi.selection.getSelectedRows();
+                        if (resultRows[0].UserID == Auth.username) {
+                            if (resultRows.length == 1) {
+                                if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
+                                    deleteById(resultRows[0].lv);
+                                }
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('Select_ONE_MSG')
+                                });
+                            }
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+                    },
+                    order: 3
+                },
                 // {
                 //     title: $translate.instant('PrintReport'),
                 //     action: function () {
@@ -364,21 +389,22 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 //     order: 4
                 // }
             ];
+
             function deleteById(id) {
                 var data = {
                     lv: id
                 };
                 DeTaiLuanVanService.Delete(data, function (res) {
-                    if (res.Success) {
-                        $scope.Search();
-                        $('#myModal').modal('hide');
-                        Notifications.addError({
-                            'status': 'information',
-                            'message': $translate.instant('deleteSuccess') + res.Message
-                        });
+                        if (res.Success) {
+                            $scope.Search();
+                            $('#myModal').modal('hide');
+                            Notifications.addError({
+                                'status': 'information',
+                                'message': $translate.instant('deleteSuccess') + res.Message
+                            });
 
-                    }
-                },
+                        }
+                    },
                     function (error) {
                         Notifications.addError({
                             'status': 'error',
@@ -388,7 +414,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             /**
              *search list function
-            */
+             */
             function SearchList() {
                 var query = {
                     // userID: Auth.username,
@@ -472,17 +498,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
                     if (data.length != 0) {
                         alert($scope.items + ": " + $translate.instant('waste_name_existed'));
-                        $scope.items = {};
+                        // $scope.items = {};
                     } else {
-                        if ($scope.items.Quantity < 0 || $scope.items.Weight <= 0) {
-                            alert($scope.items + ": " + $translate.instant('positive_quantity_weight'));
-                            $scope.items.Quantity = null;
-                            $scope.items.Weight = null;
-                        } else {
-                            $scope.detaillist.push($scope.items);
-                            $scope.items = {};
-                        }
+                        $scope.detaillist.push($scope.items);
+                        $scope.items = {};
                     }
+
                 }
             };
             $scope.deleteItem = function (index) {
@@ -521,7 +542,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         });
                     }
                 }, function (error) {
-                    Notifications.addError({ 'status': 'error', 'message': $translate.instant('saveError') + error });
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('saveError') + error
+                    });
                 })
             }
             /**
@@ -529,15 +553,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             function updateByID(data) {
                 DeTaiLuanVanService.Update(data, function (res) {
-                    if (res.Success) {
-                        $('#myModal').modal('hide');
-                        $scope.Search();
-                        Notifications.addError({
-                            'status': 'information',
-                            'message': $translate.instant('updateSucess') + res.Message
-                        });
-                    }
-                },
+                        if (res.Success) {
+                            $('#myModal').modal('hide');
+                            $scope.Search();
+                            Notifications.addError({
+                                'status': 'information',
+                                'message': $translate.instant('updateSucess') + res.Message
+                            });
+                        }
+                    },
                     function (error) {
                         Notifications.addError({
                             'status': 'error',
@@ -564,5 +588,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         break;
                 }
             };
-        }])
+        }
+    ])
 })
