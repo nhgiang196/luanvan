@@ -103,7 +103,7 @@ define([
                     enablePaginationControls: true,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
-                        EngineApi.getTcodeLicm().get(
+                        EngineApi.getTcodeLink().get(
                             {
                                 userid: Auth.username,
                                 tcode: $scope.flowkey

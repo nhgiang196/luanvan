@@ -119,7 +119,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'lv'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" id="key" type="text" ng-model="recod.lv" required />
+                            <input class="form-control key" type="text" ng-model="recod.lv" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'lvten'|translate}}</label>
                         <div class="col-sm-4">
@@ -129,17 +129,17 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'lvloai'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" id="key" type="text" ng-model="recod.lvloai" required />
+                            <input class="form-control"  type="text" ng-model="recod.lvloai" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.cm" required />
+                            <select class="form-control" ng-model="recod.cm" ng-options="s.cm as s.cm+'-'+s.cmten for s in lscm"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'lvluutru'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" id="key" type="text" ng-model="recod.lvluutru" required />
+                            <input class="form-control"  type="text" ng-model="recod.lvluutru" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'lvngaynop'|translate}}</label>
                         <div class="col-sm-4">
@@ -150,7 +150,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'lvtomtat'|translate}}</label>
                         <div class="col-sm-4">
-                            <textarea class="form-control" id="key" type="text" ng-model="recod.lvtomtat" required />
+                            <textarea class="form-control"  type="text" ng-model="recod.lvtomtat" required />
                             </div>
                     </div>
 
@@ -159,27 +159,31 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'hv'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.hv"  required />
+                            <input class="form-control keyM" type="text" ng-model="recod.hv"  required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'hvhoten'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.hvhoten"  required />
+                            <select class="keyM" style="width:100%"  ui-select2 ng-model="recod.hv" ng-change="changedValueHV(recod.hv)" required>
+                                <option ng-repeat="value in lshv" value="{{value.hv}}">
+                                    {{value.hvhoten}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'qd'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.qd"  required />
+                            <input class="form-control keyM"  type="text" ng-model="recod.qd"  required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'cn'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.cn"  required />
+                            <select class="form-control keyM" id="cn" ng-change="changedValueCN(recod.cn)"  ng-model="recod.cn" ng-options="s.cn as s.cnten for s in lscn"></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.nk"  required />
+                            <input class="form-control key" type="text" ng-model="recod.nk"  required />
                         </div>
                     </div>
                     <H4 style="background-color: #ececec; padding: 5px">{{'Hướng dẫn luận văn'|translate}}</H4>
@@ -187,17 +191,25 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'gv'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="items.gv"  required />
+                            <input class="form-control" type="text" ng-model="items.gv" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'gvhoten'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="items.gvhoten"  required />
+                                <select id="gvhoten" style="width:100%" ui-select2 ng-model="items.gv" required>
+                                        <option ng-repeat="value in lsgv" value="{{value.gv}}">
+                                            {{value.gvhoten}}
+                                        </option>
+                                    </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'vaitro'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="items.vaitro"  required />
+                        <!-- <label class="col-sm-2 control-label">*{{'vaitro'|translate}}</label> -->
+                        <div class="col-sm-6">
+                                <!-- <select class="form-control key" ng-init="items.vaitro='GV1'" ng-model="items.vaitro">
+                                    <option value="GV1">Giảng viên hướng dẫn chính</option>
+                                    <option value="GV2">Giảng viên hướng dẫn phụ</option>
+                                </select> -->
+
                         </div>
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4">
@@ -222,8 +234,8 @@
                         <td title="'gvhoten'" width="40%">
                             {{item.gvhoten}}
                         </td>
-                        <td title="'vaitro'" width="30%">
-                            {{item.vaitro}}
+                        <td title="'vaitrohuongdan'" width="30%">
+                            {{item.vaitrohuongdan}}
                         </td>
                         <td width="10%">
                             <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
@@ -232,7 +244,7 @@
                 </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">
+                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
                         {{'saveSubmit'|translate}}
                     </button>
                     <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
