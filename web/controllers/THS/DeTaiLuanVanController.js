@@ -16,7 +16,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.detaillist = [];
             $(".key").prop('disabled', true);
             $scope.recod = {};
-
             /**
              * Init data
              */
@@ -60,7 +59,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var query = {
                     Table: 'HocVien',
                     lang: lang,
-
                 };
                 if (Auth.nickname = 'Administrator')
                     query.bm = '';
@@ -73,7 +71,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     deferred.resolve(error);
                 })
             }
-
             function loadLinhVucChuyenMon() {
                 var deferred = $q.defer();
                 var query = {
@@ -91,7 +88,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     deferred.resolve(error);
                 })
             }
-
             function loadChuyenNganh() {
                 var deferred = $q.defer();
                 var query = {
@@ -110,7 +106,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     deferred.resolve(error);
                 })
             }
-
             function loadGiangVien() {
                 var deferred = $q.defer();
                 var query = {
@@ -133,23 +128,30 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             var col = [{
                 field: 'lv',
-                minWidth: 120,
+                minWidth: 80,
                 displayName: $translate.instant('lv'),
                 cellTooltip: true,
                 visible: true,
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
             },
             {
-                field: 'cmten',
-                displayName: $translate.instant('cmten'),
-                minWidth: 120,
+                field: 'status',
+                displayName: $translate.instant("Status"),
+                minWidth: 110,
                 cellTooltip: true,
-                visible: true
+                visible: true,
+                cellTemplate: '<span >{{grid.appScope.getStatus(row.entity.status)}}</span>'
             },
             {
                 field: 'qd',
-                minWidth: 100,
+                minWidth: 80,
                 displayName: $translate.instant('qd'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvhoten',
+                minWidth: 150,
+                displayName: $translate.instant('hvhoten'),
                 cellTooltip: true
             },
             {
@@ -159,33 +161,29 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 cellTooltip: true
             },
             {
-                field: 'hvhoten',
-                minWidth: 100,
-                displayName: $translate.instant('hvhoten'),
-                cellTooltip: true
+                field: 'lvten',
+                displayName: $translate.instant('lvten'),
+                minWidth: 150,
+                cellTooltip: true,
+                visible: true
+            },
+            {
+                field: 'cmten',
+                displayName: $translate.instant('cmten'),
+                minWidth: 120,
+                cellTooltip: true,
+                visible: true
             },
             {
                 field: 'lvloai',
-                minWidth: 100,
+                minWidth: 80,
                 displayName: $translate.instant('lvloai'),
                 cellTooltip: true
             },
             {
                 field: 'nk',
-                minWidth: 100,
+                minWidth: 50,
                 displayName: $translate.instant('nk'),
-                cellTooltip: true
-            },
-            {
-                field: 'lvten',
-                minWidth: 100,
-                displayName: $translate.instant('lvten'),
-                cellTooltip: true
-            },
-            {
-                field: 'lvtomtat',
-                minWidth: 100,
-                displayName: $translate.instant('lvtomtat'),
                 cellTooltip: true
             },
             {
@@ -196,17 +194,33 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'lvluutru',
-                minWidth: 100,
+                minWidth: 70,
                 displayName: $translate.instant('lvluutru'),
                 cellTooltip: true
             },
             {
-                field: 'status',
-                displayName: $translate.instant("Status"),
-                minWidth: 150,
-                cellTooltip: true,
-                visible: true,
-                cellTemplate: '<span >{{grid.appScope.getStatus(row.entity.status)}}</span>'
+                field: 'createby',
+                minWidth: 80,
+                displayName: $translate.instant('createby'),
+                cellTooltip: true
+            },
+            {
+                field: 'ctime',
+                minWidth: 100,
+                displayName: $translate.instant('ctime'),
+                cellTooltip: true
+            },
+            {
+                field: 'modifyby',
+                minWidth: 80,
+                displayName: $translate.instant('modifyby'),
+                cellTooltip: true
+            },
+            {
+                field: 'mtime',
+                minWidth: 100,
+                displayName: $translate.instant('mtime'),
+                cellTooltip: true
             },
             ];
             $scope.getStatus = function (Status) {
@@ -227,26 +241,13 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     lv: mylv
                 }, function (data) {
                     // $scope.lshv = full_lshv.filter(x => x.lv == null); //Chưa có luận văn trong niên khóa và ngành hiện tại
-                    
                     // var templist = full_lshv.filter(x => x.lv == data.Header[0].lv)[0];
                     // $scope.lshv.push(templist);
                     // $scope.lscn = full_lscn.filter(x=>x.cn== data.Header[0].cn);
                     //-----------------
-                    $scope.lshv = full_lshv; 
-                    $scope.lscn = full_lscn.filter(x=>x.cn== data.Header[0].cn);
+                    $scope.lshv = full_lshv;
+                    $scope.lscn = full_lscn.filter(x => x.cn == data.Header[0].cn);
                     $scope.recod = data.Header[0];
-                    // $scope.recod.lv = data.Header[0].lv;
-                    // $scope.recod.qd = data.Header[0].qd;
-                    // $scope.recod.hv = data.Header[0].hv;
-                    // $scope.recod.lvloai = data.Header[0].lvloai;
-                    // $scope.recod.nk = data.Header[0].nk;
-                    // $scope.recod.lvten = data.Header[0].lvten;
-                    // $scope.recod.lvtomtat = data.Header[0].lvtomtat;
-                    // $scope.recod.lvngaynop = data.Header[0].lvngaynop;
-                    // $scope.recod.lvluutru = data.Header[0].lvluutru;;
-                    // $scope.recod.cm = data.Header[0].cm;
-                    // // $scope.recod.hvhoten = lshv.filter(x => x.hvhoten == data.Header[0].hvhoten)[0].hv;
-                    
                     $scope.detaillist = [];
                     data.Details.forEach(element => {
                         var x = {};
@@ -315,8 +316,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.status = 'N';
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
-
-
                     $('#myModal').modal('show');
                 },
                 order: 1
@@ -328,7 +327,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
                             // if (resultRows[0].UserID == Auth.username) {
-
                             // $(".keyM").prop('disabled', true);
                             loadDetails(resultRows[0].lv);
                             // $scope.company = full_lsCompany;
@@ -358,23 +356,24 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 title: $translate.instant('Delete'),
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    if (resultRows[0].UserID == Auth.username) {
-                        if (resultRows.length == 1) {
-                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
-                                deleteById(resultRows[0].lv);
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Select_ONE_MSG')
-                            });
+                    // if (resultRows[0].UserID == Auth.username) {
+                    if (resultRows.length == 1) {
+                        if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
+                            deleteById(resultRows[0]);
+
                         }
                     } else {
                         Notifications.addError({
                             'status': 'error',
-                            'message': $translate.instant('ModifyNotBelongUserID')
-                        })
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
                     }
+                    // } else {
+                    //     Notifications.addError({
+                    //         'status': 'error',
+                    //         'message': $translate.instant('ModifyNotBelongUserID')
+                    //     })
+                    // }
                 },
                 order: 3
             },
@@ -395,28 +394,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 //     order: 4
                 // }
             ];
-
-            function deleteById(id) {
+            function deleteById(entity) {
                 var data = {
-                    lv: id
+                    lv: entity.lv,
+                    createby: entity.createby
                 };
                 DeTaiLuanVanService.Delete(data, function (res) {
                     if (res.Success) {
-                        $scope.Search();
+                        Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Delete_Success_MSG') });
+                        $timeout(function () { $scope.Search() }, 1000);
                         $('#myModal').modal('hide');
-                        Notifications.addError({
-                            'status': 'information',
-                            'message': $translate.instant('deleteSuccess') + res.Message
-                        });
-
                     }
-                },
-                    function (error) {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('deleteError') + error
-                        });
-                    })
+                }, function (error) {
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('deleteError') + error
+                    });
+                })
             }
             /**
              *search list function
@@ -433,7 +427,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.cn = '';
                 query.hvten = '';
                 query.lvten = '';
-
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 // if ($scope.onlyOwner == true)
@@ -458,7 +451,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }, function (error) {
                     deferred.reject(error);
                 })
-
             }
             /**
              * Trigger option changedValue
@@ -488,7 +480,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.reset = function () {
                 $scope.recod = {};
-                $scope.detaillist = []; 
+                $scope.detaillist = [];
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -511,13 +503,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
             //     }
             //     return false;
             // };
-
             /** 
              */
             $scope.addItem = function () {
                 if ($scope.items != null || $scope.items != {}) {
                     var data = $scope.detaillist.filter(x => x.gv === $scope.items.gv);
-
                     if (data.length != 0) {
                         alert($scope.items + ": " + $translate.instant('waste_name_existed'));
                         // $scope.items = {};
@@ -529,17 +519,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         myitem.vaitrohuongdan = 'Giảng viên hướng dẫn ' + ($scope.detaillist.length == 0 ? 'chính' : 'phụ');
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
-
                     }
-
                 }
             };
             $scope.deleteItem = function (index) {
                 $scope.detaillist.splice(index, 1);
-
             };
-
-
             // ------------- DIRECTIVE -------------
             function saveInitData() {
                 var note = {};
@@ -554,6 +539,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.lvten = $scope.recod.lvten || '';
                 note.lvngaynop = $scope.recod.lvngaynop || '';
                 note.lvluutru = $scope.recod.lvluutru || '';
+                note.createby = Auth.username;
                 note.HuongDans = $scope.detaillist;
                 return note;
             }
@@ -599,7 +585,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         });
                     })
             }
-
             /**
              * save submit
              */
