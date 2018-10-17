@@ -36,14 +36,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 id: 'X',
                 name: $translate.instant('StatusX')
             },
-            {
-                id: "1",
-                name: $translate.instant("Status1")
-            },
-            {
-                id: "0",
-                name: $translate.instant("Status0")
-            },
             ];
             $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(), loadGiangVien()]).then(function (result) { }, function (error) {
                 Notifications.addError({
@@ -188,7 +180,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'lvngaynop',
-                minWidth: 100,
+                minWidth: 105,
+                maxWidth: 105,
                 displayName: $translate.instant('lvngaynop'),
                 cellTooltip: true
             },
@@ -206,9 +199,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'ctime',
-                minWidth: 100,
+                minWidth: 120,
                 displayName: $translate.instant('ctime'),
-                cellTooltip: true
+                cellTooltip: true,
+                cellTemplate: '<span >{{grid.appScope.getDate(row.entity.ctime)}}</span>'
             },
             {
                 field: 'modifyby',
@@ -218,11 +212,19 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'mtime',
-                minWidth: 100,
+                minWidth: 120,
                 displayName: $translate.instant('mtime'),
-                cellTooltip: true
+                cellTooltip: true,
+                cellTemplate: '<span >{{grid.appScope.getDate(row.entity.mtime)}}</span>'
             },
             ];
+            $scope.getDate = function (date) {
+                if (date != '')
+                    return $filter('date')(date, 'yyyy-MM-dd hh:mm');
+                else {
+                    return date;
+                }
+            };
             $scope.getStatus = function (Status) {
                 var statLen = $filter('filter')($scope.statuslist, {
                     'id': Status
@@ -254,7 +256,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         var item = $scope.lsgv.filter(x => x.gv === element.gv);
                         if (item.length > 0) {
                             x.gv = item[0].gv;
-                            x.gvhoten = item[0].gvhoten;
+                            x.gvhoten = item[0].gv + '-' + item[0].gvhoten;
+                            x.gvchucdanh = item[0].gvchucdanh;
                             x.vaitrohuongdan = element.vaitrohuongdan;
                             $scope.detaillist.push(x);
                         }
@@ -326,17 +329,16 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.status = 'M'; //Set update Status
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
-                            // if (resultRows[0].UserID == Auth.username) {
-                            // $(".keyM").prop('disabled', true);
-                            loadDetails(resultRows[0].lv);
-                            // $scope.company = full_lsCompany;
-                            $('#myModal').modal('show');
-                            // } else {
-                            //     Notifications.addError({
-                            //         'status': 'error',
-                            //         'message': $translate.instant('ModifyNotBelongUserID')
-                            //     })
-                            // }
+                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                                // $(".keyM").prop('disabled', true);
+                                loadDetails(resultRows[0].lv);
+                                $('#myModal').modal('show');
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('ModifyNotBelongUserID')
+                                })
+                            }
                         } else {
                             Notifications.addError({
                                 'status': 'error',
@@ -403,7 +405,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     if (res.Success) {
                         Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Delete_Success_MSG') });
                         $timeout(function () { $scope.Search() }, 1000);
-                        $('#myModal').modal('hide');
                     }
                 }, function (error) {
                     Notifications.addError({
@@ -421,12 +422,13 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     // lang: lang,
                     // bm: Auth.bm
                 };
-                query.lv = '';
-                query.cm = '';
-                query.qd = '';
-                query.cn = '';
-                query.hvten = '';
-                query.lvten = '';
+                query.lv = $scope.lv || '';
+                query.cm = $scope.cm || '';
+                query.qd = $scope.qd || '';
+                query.cn = $scope.cn || '';
+                query.hv = $scope.hv || '';
+                query.bm = $scope.bm || '';
+                query.status = $scope.s_status || '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 // if ($scope.onlyOwner == true)
@@ -456,7 +458,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
              * Trigger option changedValue
              * @param {change value} item
              */
-            $scope.changedValueHV = function (hv) {
+            $scope.changeValueHV = function (hv) {
                 //console.log(item);
                 $scope.recod.nk = '';
                 $scope.lscn = [];
@@ -474,9 +476,13 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     })
                 }
             }
-            $scope.changedValueCN = function (cn) {
+            $scope.changeValueCN = function (cn) {
                 var data = $scope.lshv.filter(x => x.hv === $scope.recod.hv && x.cn === cn);
                 $scope.recod.nk = data[0].nk;
+            }
+            $scope.changeCheckValue = function () {
+                $scope.lshv = full_lshv.filter(x => $scope.check.value1? x.lv ==null:true
+                    &&  $scope.check.value2? x.bm ==Auth.bm:true);
             }
             $scope.reset = function () {
                 $scope.recod = {};
@@ -512,10 +518,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         alert($scope.items + ": " + $translate.instant('waste_name_existed'));
                         // $scope.items = {};
                     } else {
-                        var myitem = {};
+                        var myitem = {}
                         myitem.lv = '';
                         myitem.gv = $scope.items.gv;
                         myitem.gvhoten = $('#gvhoten option:selected').text();
+                        myitem.gvchucdanh = $scope.lsgv.filter(x => x.gv === $scope.items.gv)[0].gvchucdanh;
                         myitem.vaitrohuongdan = 'Giảng viên hướng dẫn ' + ($scope.detaillist.length == 0 ? 'chính' : 'phụ');
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
@@ -550,12 +557,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 DeTaiLuanVanService.Create(data, function (res) {
                     console.log(res)
                     if (res.Success) {
-                        $scope.Search();
                         $('#myModal').modal('hide');
-                        Notifications.addError({
-                            'status': 'information',
-                            'message': $translate.instant('saveSucess') + res.Message
-                        });
+                        Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                        $timeout(function () { $scope.Search() }, 1000);
                     }
                 }, function (error) {
                     Notifications.addError({
@@ -571,11 +575,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 DeTaiLuanVanService.Update(data, function (res) {
                     if (res.Success) {
                         $('#myModal').modal('hide');
-                        $scope.Search();
-                        Notifications.addError({
-                            'status': 'information',
-                            'message': $translate.instant('updateSucess') + res.Message
-                        });
+                        Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                        $timeout(function () { $scope.Search() }, 1000);
                     }
                 },
                     function (error) {
