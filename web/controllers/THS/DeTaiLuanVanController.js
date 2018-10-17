@@ -265,7 +265,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }, function (error) {
                     Notifications.addError({
                         'status': 'error',
-                        'message': $translate.instant('loadHuongDanerror') + error
+                        'message': $translate.instant('load_error') + error
                     });
                 })
             }
@@ -277,6 +277,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
+                enableFiltering : true,
                 showGridFooter: false,
                 enableGridMenu: true,
                 exporterMenuPdf: false,
@@ -286,7 +287,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 multiSelect: false,
                 paginationPageSizes: [50, 100, 200, 500],
                 paginationPageSize: 50,
-                enableFiltering: false,
                 exporterOlderExcelCompatibility: true,
                 useExternalPagination: true,
                 enablePagination: true,
@@ -482,7 +482,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.changeCheckValue = function () {
                 $scope.lshv = full_lshv.filter(x => $scope.check.value1? x.lv ==null:true
-                    &&  $scope.check.value2? x.bm ==Auth.bm:true);
+                    &&  $scope.check.value2? x.bm==Auth.bm:true);
             }
             $scope.reset = function () {
                 $scope.recod = {};
