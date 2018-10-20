@@ -11,26 +11,26 @@ define([
             this.GetInfoBasic = $resource('/ths/THSAdminController/:operation', {}, {
                 bomon:
                 {
-                    method: 'GET',
+                    method: 'POST',
                     params: {
                         operation: 'BoMon'
                     }
                 },
                 chuyennganh: {
-                    method: 'GET',
+                    method: 'POST',
                     params: { operation: 'ChuyenNganh' }
                 },
                 nienkhoa: {
-                    method: 'GET',
+                    method: 'POST',
                     params: { operation: 'NienKhoa' },
 
                 },
                 linhvucchuyenmon: {
-                    method: 'GET',
+                    method: 'POST',
                     params: { operation: 'LinhVucChuyenMon' },
                 }, 
                 donvingoai: {
-                    method: 'GET',
+                    method: 'POST',
                     params: { operation: 'DonViNgoai' },
                 },
                 getall: {

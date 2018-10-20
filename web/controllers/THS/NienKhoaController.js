@@ -120,7 +120,7 @@ define([
                     multiSelect: false,
                     paginationPageSizes: [50, 100, 200, 500],
                     paginationPageSize: 50,
-                    enableFiltering: false,
+                    enableFiltering: true,
                     exporterOlderExcelCompatibility: true,
                     useExternalPagination: true,
                     enablePagination: true,
@@ -202,7 +202,7 @@ define([
                             var resultRows = $scope.gridApi.selection.getSelectedRows();
                             if (resultRows.length == 1) {
                                 if (resultRows[0].status != "X") {
-                                    changestatusbyId(resultRows[0].bm);
+                                    changestatusbyId(resultRows[0].nk);
                                 } else {
                                     Notifications.addError({
                                         status: "error",
@@ -219,24 +219,6 @@ define([
                         },
                         order: 3
                     },
-                    {
-                        title: $translate.instant("Delete"),
-                        action: function () {
-                            var resultRows = $scope.gridApi.selection.getSelectedRows();
-                            // if (resultRows[0].UserID == Auth.username) {
-                            if (resultRows.length == 1) {
-                                if (confirm($translate.instant("Delete_IS_MSG") + ":" + resultRows[0].bm)) {
-                                    deleteById(resultRows[0].bm);
-                                }
-                            } else {
-                                Notifications.addError({
-                                    status: "error",
-                                    message: $translate.instant("Select_ONE_MSG")
-                                });
-                            }
-                        },
-                        order: 4
-                    }
                     // , {
                     //     title: $translate.instant('PrintReport'),
                     //     action: function () {
@@ -287,7 +269,7 @@ define([
                     );
                 };
                 function changestatusbyId(id) {
-                    THSAdminService.cudNienKhoa({ action: 'changestatus', bm: id, ten: '' }, function (res) {
+                    THSAdminService.cudNienKhoa({ action: 'changestatus', nk: id, ten: '' }, function (res) {
                         if (res.Success)
                             Notifications.addError({
                                 status: "infor",
@@ -303,7 +285,7 @@ define([
                 function deleteById(id) {
                     var data = {
                         action: 'remove',
-                        bm: id,
+                        nk: id,
                         ten: '',
                     };
                     THSAdminService.cudNienKhoa(data, function (res) {

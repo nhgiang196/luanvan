@@ -38,7 +38,7 @@ define([
                     {
                         field: "dv",
                         minWidth: 120,
-                        displayName: $translate.instant("bm"),
+                        displayName: $translate.instant("dv"),
                         cellTooltip: true,
                         visible: true,
                         // cellTemplate:
@@ -120,7 +120,7 @@ define([
                     multiSelect: false,
                     paginationPageSizes: [50, 100, 200, 500],
                     paginationPageSize: 50,
-                    enableFiltering: false,
+                    enableFiltering: true,
                     exporterOlderExcelCompatibility: true,
                     useExternalPagination: true,
                     enablePagination: true,
@@ -202,7 +202,7 @@ define([
                             var resultRows = $scope.gridApi.selection.getSelectedRows();
                             if (resultRows.length == 1) {
                                 if (resultRows[0].status != "X") {
-                                    changestatusbyId(resultRows[0].bm);
+                                    changestatusbyId(resultRows[0].dv);
                                 } else {
                                     Notifications.addError({
                                         status: "error",
@@ -219,24 +219,6 @@ define([
                         },
                         order: 3
                     },
-                    {
-                        title: $translate.instant("Delete"),
-                        action: function () {
-                            var resultRows = $scope.gridApi.selection.getSelectedRows();
-                            // if (resultRows[0].UserID == Auth.username) {
-                            if (resultRows.length == 1) {
-                                if (confirm($translate.instant("Delete_IS_MSG") + ":" + resultRows[0].bm)) {
-                                    deleteById(resultRows[0].bm);
-                                }
-                            } else {
-                                Notifications.addError({
-                                    status: "error",
-                                    message: $translate.instant("Select_ONE_MSG")
-                                });
-                            }
-                        },
-                        order: 4
-                    }
                     // , {
                     //     title: $translate.instant('PrintReport'),
                     //     action: function () {
@@ -287,7 +269,7 @@ define([
                     );
                 };
                 function changestatusbyId(id) {
-                    THSAdminService.cudDonViNgoai({ action: 'changestatus', bm: id, ten: '' }, function (res) {
+                    THSAdminService.cudDonViNgoai({ action: 'changestatus', dv: id, ten: '' }, function (res) {
                         if (res.Success)
                             Notifications.addError({
                                 status: "infor",
@@ -299,35 +281,6 @@ define([
                             message: $translate.instant("Change status Fail")
                         });
                     });
-                }
-                function deleteById(id) {
-                    var data = {
-                        action: 'remove',
-                        bm: id,
-                        ten: '',
-                    };
-                    THSAdminService.cudDonViNgoai(data, function (res) {
-                        if (res.Success) {
-                            $scope.Search();
-                            $("#myModal").modal("hide");
-                            Notifications.addError({
-                                status: "infor",
-                                message: $translate.instant("Delete Success") + res.Data
-                            });
-                        } else {
-                            Notifications.addError({
-                                status: "error",
-                                message: $translate.instant("saveError") + res.Message
-                            });
-                        }
-                    },
-                        function (error) {
-                            Notifications.addError({
-                                status: "error",
-                                message: $translate.instant("saveError") + error
-                            });
-                        }
-                    );
                 }
 
                 $scope.clear = function () {

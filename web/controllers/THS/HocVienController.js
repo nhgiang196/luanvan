@@ -205,7 +205,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering: true,
+                enableFiltering: false,
                 showGridFooter: false,
                 enableGridMenu: true,
                 enableSelectAll: false,

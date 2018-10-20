@@ -96,7 +96,7 @@ define([
                     multiSelect: false,
                     paginationPageSizes: [50, 100, 200, 500],
                     paginationPageSize: 50,
-                    enableFiltering: false,
+                    enableFiltering: true,
                     exporterOlderExcelCompatibility: true,
                     useExternalPagination: true,
                     enablePagination: true,
@@ -178,7 +178,7 @@ define([
                             var resultRows = $scope.gridApi.selection.getSelectedRows();
                             if (resultRows.length == 1) {
                                 if (resultRows[0].status != "X") {
-                                    changestatusbyId(resultRows[0].bm);
+                                    changestatusbyId(resultRows[0].cm);
                                 } else {
                                     Notifications.addError({
                                         status: "error",
@@ -195,35 +195,19 @@ define([
                         },
                         order: 3
                     },
-                    {
-                        title: $translate.instant("Delete"),
-                        action: function () {
-                            var resultRows = $scope.gridApi.selection.getSelectedRows();
-                            // if (resultRows[0].UserID == Auth.username) {
-                            if (resultRows.length == 1) {
-                                if (confirm($translate.instant("Delete_IS_MSG") + ":" + resultRows[0].bm)) {
-                                    deleteById(resultRows[0].bm);
-                                }
-                            } else {
-                                Notifications.addError({
-                                    status: "error",
-                                    message: $translate.instant("Select_ONE_MSG")
-                                });
-                            }
-                        },
-                        order: 4
-                    }
-                    // , {
-                    //     title: $translate.instant('PrintReport'),
+                    // {
+                    //     title: $translate.instant("Delete"),
                     //     action: function () {
                     //         var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    //         // if (resultRows[0].UserID == Auth.username) {
                     //         if (resultRows.length == 1) {
-                    //             var href = '#/waste/ChuyenMon/print/' + resultRows[0].BM;
-                    //             window.open(href);
+                    //             if (confirm($translate.instant("Delete_IS_MSG") + ":" + resultRows[0].cm)) {
+                    //                 deleteById(resultRows[0].cm);
+                    //             }
                     //         } else {
                     //             Notifications.addError({
-                    //                 'status': 'error',
-                    //                 'message': $translate.instant('Select_ONE_MSG')
+                    //                 status: "error",
+                    //                 message: $translate.instant("Select_ONE_MSG")
                     //             });
                     //         }
                     //     },
@@ -263,7 +247,7 @@ define([
                     );
                 };
                 function changestatusbyId(id) {
-                    THSAdminService.cudChuyenMon({ action: 'changestatus', bm: id, ten: '' }, function (res) {
+                    THSAdminService.cudChuyenMon({ action: 'changestatus', cm: id, ten: '' }, function (res) {
                         if (res.Success)
                             Notifications.addError({
                                 status: "infor",
@@ -279,7 +263,7 @@ define([
                 function deleteById(id) {
                     var data = {
                         action: 'remove',
-                        bm: id,
+                        cm: id,
                         ten: '',
                     };
                     THSAdminService.cudChuyenMon(data, function (res) {

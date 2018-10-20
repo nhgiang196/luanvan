@@ -2,6 +2,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller('DeTaiLuanVanController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'THSAdminService', 'DeTaiLuanVanService', '$translate', '$q', '$scope', '$routeParams',
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, DeTaiLuanVanService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
+            var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
             $scope.flowkey = "MLV";
             $scope.recod = {};
             $scope.onlyOwner = true;
@@ -52,7 +53,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'HocVien',
                     lang: lang,
                 };
-                if (Auth.nickname = 'Administrator')
+                if (isAdmin)
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
@@ -69,7 +70,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'LinhVucChuyenMon',
                     lang: lang
                 };
-                if (Auth.nickname = 'Administrator')
+                if (isAdmin)
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
@@ -86,7 +87,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'ChuyenNganh',
                     lang: lang,
                 };
-                if (Auth.nickname = 'Administrator')
+                if (isAdmin)
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
@@ -104,7 +105,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'GiangVien',
                     lang: lang,
                 };
-                if (Auth.nickname = 'Administrator')
+                if (isAdmin)
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
@@ -277,7 +278,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering : true,
+                enableFiltering : false,
                 showGridFooter: false,
                 enableGridMenu: true,
                 exporterMenuPdf: false,
@@ -317,6 +318,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
+                    $scope.check.value1=true;
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');
@@ -327,6 +329,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
                     $scope.status = 'M'; //Set update Status
+                    $scope.check.value1=false;
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
                             if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
@@ -482,7 +485,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.changeCheckValue = function () {
                 $scope.lshv = full_lshv.filter(x => $scope.check.value1? x.lv ==null:true
-                    &&  $scope.check.value2? x.bm==Auth.bm:true);
+                    // &&  $scope.check.value2? x.bm==Auth.bm:x.bm!=Auth.bm
+                    );
             }
             $scope.reset = function () {
                 $scope.recod = {};

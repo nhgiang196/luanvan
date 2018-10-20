@@ -105,14 +105,14 @@ define([
                     multiSelect: false,
                     paginationPageSizes: [50, 100, 200, 500],
                     paginationPageSize: 50,
-                    enableFiltering: false,
+                    enableFiltering: true,
                     exporterOlderExcelCompatibility: true,
                     useExternalPagination: true,
                     enablePagination: true,
                     enablePaginationControls: true,
                     onRegisterApi: function (gridApi) {
                         $scope.gridApi = gridApi;
-                        EngineApi.getTcodeLicn().get(
+                        EngineApi.getTcodeLink().get(
                             {
                                 userid: Auth.username,
                                 tcode: $scope.flowkey
@@ -204,24 +204,6 @@ define([
                         },
                         order: 3
                     },
-                    {
-                        title: $translate.instant("Delete"),
-                        action: function () {
-                            var resultRows = $scope.gridApi.selection.getSelectedRows();
-                            // if (resultRows[0].UserID == Auth.username) {
-                            if (resultRows.length == 1) {
-                                if (confirm($translate.instant("Delete_IS_MSG") + ":" + resultRows[0].bm)) {
-                                    deleteById(resultRows[0].bm);
-                                }
-                            } else {
-                                Notifications.addError({
-                                    status: "error",
-                                    message: $translate.instant("Select_ONE_MSG")
-                                });
-                            }
-                        },
-                        order: 4
-                    }
                     // , {
                     //     title: $translate.instant('PrintReport'),
                     //     action: function () {

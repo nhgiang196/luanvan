@@ -96,7 +96,7 @@ define([
                     multiSelect: false,
                     paginationPageSizes: [50, 100, 200, 500],
                     paginationPageSize: 50,
-                    enableFiltering: false,
+                    enableFiltering: true,
                     exporterOlderExcelCompatibility: true,
                     useExternalPagination: true,
                     enablePagination: true,
@@ -263,7 +263,7 @@ define([
                     );
                 };
                 function changestatusbyId(id) {
-                    THSAdminService.cudBoMon({ action: 'changestatus', bm: id, ten: '' }, function (res) {
+                    THSAdminService.cudBoMon({ action: 'changestatus', bm: id }, function (res) {
                         if (res.Success)
                             Notifications.addError({
                                 status: "infor",
@@ -320,9 +320,9 @@ define([
                 function saveInitData() {
                     var note = {};
                     note.bm = $scope.recod.id;
-                    note.ten = $scope.recod.ten || '';
+                    note.tenbm = $scope.recod.ten || '';
                     if ($scope.status == 'M')
-                        note.action = 'update';
+                    note.action = 'update';
                     else note.action = 'create';
                     return note;
                 }
