@@ -12,14 +12,16 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 totalItems: 0,
                 sort: null
             };
+
+            
             $scope.detaillist = [];
             $(".key").prop('disabled', true);
             $scope.recod = {};
             /**
              * Init data
              */
-            // var full_lscn = [];
             $scope.lscn = [];
+            $scope.lsnk = [];
             $scope.statuslist = [{
                     id: 'N',
                     name: $translate.instant('StatusN')
@@ -33,7 +35,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     name: $translate.instant('StatusX')
                 },
             ];
-            $q.all([loadChuyenNganh()]).then(function (result) {}, function (error) {
+            $q.all([loadChuyenNganh(),loadNienKhoa()]).then(function (result) {}, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -43,6 +45,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
              * Load Combobox
              * */
 
+            function loadNienKhoa() {
+                var deferred = $q.defer();
+                var query = {
+                    Table: 'NienKhoa',
+                    lang: lang,
+                };
+                if (Auth.nickname = 'Administrator')
+                    query.bm = '';
+                else query.bm = Auth.bm;
+                THSAdminService.GetBasic(query, function (data) {
+                    console.log(data)
+                    $scope.lsnk = data;
+                    deferred.resolve(data);
+                }, function (error) {
+                    deferred.resolve(error);
+                })
+            }
             function loadChuyenNganh() {
                 var deferred = $q.defer();
                 var query = {
@@ -54,8 +73,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
                     console.log(data)
-                    full_lscn = data;
-                    // $scope.lscn = data;
+                    $scope.lscn = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
@@ -71,7 +89,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     displayName: $translate.instant('hv'),
                     cellTooltip: true,
                     visible: true,
-                    headerCellClass: 'header-filtered',
                     filter: {
                         condition: function (searchTerm, cellValue) {
                             return cellValue.match(/a/);
@@ -185,16 +202,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 HocVienService.FindByID({
                     hv: id
                 }, function (data) {
-                    $scope.recod = data.Header[0];
+                    $scope.recod = data.Headers[0];
                     $scope.detaillist = [];
                     data.Details.forEach(element => {
                         var x = {};
-                        var item = $scope.lscn.filter(x => x.cn === element.cn);
-                        if (item.length > 0) {
-                            x.cn = item[0].cn;
-                            x.cnten = item[0].cnten;
+                            x.cn = element.cn;
+                            x.cnten = element.cn+'-'+element.cnten;
+                            x.bm = element.bm;
+                            x.nk = element.nk;
                             $scope.detaillist.push(x);
-                        }
                     })
                 }, function (error) {
                     Notifications.addError({
@@ -404,7 +420,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         var myitem = {}
                         myitem.hv = '';
                         myitem.cn = $scope.items.cn;
-                        myitem.cnten = $('#cnten option:selected').text();
+                        myitem.bm = $scope.lscn.filter(x=>x.cn==myitem.cn)[0].bm;
+                        myitem.nk = $scope.items.nk;
+                        myitem.cnten = $('#cn option:selected').text();
+                        myitem.nkten = $('#nk option:selected').text();
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
                     }
@@ -417,18 +436,17 @@ define(['myapp', 'angular'], function (myapp, angular) {
             function saveInitData() {
                 var note = {};
                 note.hv = $scope.recod.hv || '';
-                note.cm = $scope.recod.cm || '';
-                note.qd = $scope.recod.qd || '';
-                note.cn = $scope.recod.cn || '';
-                note.hv = $scope.recod.hv || '';
-                note.lvloai = $scope.recod.lvloai || '';
-                note.lvtomtat = $scope.recod.lvtomtat || '';
-                note.nk = $scope.recod.nk || '';
-                note.lvten = $scope.recod.lvten || '';
-                note.lvngaynop = $scope.recod.lvngaynop || '';
-                note.lvluutru = $scope.recod.lvluutru || '';
+                note.hvhoten = $scope.recod.hvhoten || '';
+                note.hvgioitinh = $scope.recod.hvgioitinh || '';
+                note.hvngaysinh = $scope.recod.hvngaysinh || '';
+                note.hvngaydkdt = $scope.recod.hvngaydkdt || '';
+                note.hvngaydkbv = $scope.recod.hvngaydkbv || '';
+                note.hvquequan = $scope.recod.hvquequan || '';
+                note.hvsodienthoai = $scope.recod.hvsodienthoai || '';
+                note.hveil = $scope.recod.hveil || '';
+                note.hvhinhanh = $scope.recod.hvhinhanh || '';
                 note.createby = Auth.username;
-                note.HuongDans = $scope.detaillist;
+                note.HocCNs = $scope.detaillist;
                 return note;
             }
             /**
