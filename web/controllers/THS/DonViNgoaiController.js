@@ -271,10 +271,8 @@ define([
                 function changestatusbyId(id) {
                     THSAdminService.cudDonViNgoai({ action: 'changestatus', dv: id, ten: '' }, function (res) {
                         if (res.Success)
-                            Notifications.addError({
-                                status: "infor",
-                                message: $translate.instant("Change Status Success")
-                            });
+                        Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                        $timeout(function () { $scope.Search() }, 1000);
                     }, function (error) {
                         Notifications.addError({
                             status: "error",
@@ -310,14 +308,9 @@ define([
                     THSAdminService.cudDonViNgoai(data, function (res) {
                         console.log(res)
                         if (res.Success) {
-                            $scope.Search();
                             $('#myModal').modal('hide');
-                            $('#messageModal').modal('hide');
-                            $('#nextModal').modal('hide');
-                            Notifications.addError({
-                                'status': 'information',
-                                'message': $translate.instant('saveSucess') + res.Message
-                            });
+                            Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                            $timeout(function () { $scope.Search() }, 1000);
                         }
                     }, function (error) {
                         Notifications.addError({ 'status': 'error', 'message': $translate.instant('saveError') + error });
@@ -329,14 +322,9 @@ define([
                 function updateByID(data) {
                     THSAdminService.cudDonViNgoai(data, function (res) {
                         if (res.Success) {
-                            $scope.Search();
                             $('#myModal').modal('hide');
-                            $('#messageModal').modal('hide');
-                            $('#nextModal').modal('hide');
-                            Notifications.addError({
-                                'status': 'information',
-                                'message': $translate.instant('updateSucess') + res.Message
-                            });
+                            Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                            $timeout(function () { $scope.Search() }, 1000);
                         }
                     },
                         function (error) {

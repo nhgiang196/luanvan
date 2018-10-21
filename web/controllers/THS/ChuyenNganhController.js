@@ -256,45 +256,14 @@ define([
                 function changestatusbyId(id) {
                     THSAdminService.cudChuyenNganh({ action: 'changestatus', bm: id, ten: '' }, function (res) {
                         if (res.Success)
-                            Notifications.addError({
-                                status: "infor",
-                                message: $translate.instant("Change Status Success")
-                            });
+                        Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                        $timeout(function () { $scope.Search() }, 1000);
                     }, function (error) {
                         Notifications.addError({
                             status: "error",
                             message: $translate.instant("Change status Fail")
                         });
                     });
-                }
-                function deleteById(id) {
-                    var data = {
-                        action: 'remove',
-                        bm: id,
-                        ten: '',
-                    };
-                    THSAdminService.cudChuyenNganh(data, function (res) {
-                        if (res.Success) {
-                            $scope.Search();
-                            $("#myModal").modal("hide");
-                            Notifications.addError({
-                                status: "infor",
-                                message: $translate.instant("Delete Success") + res.Data
-                            });
-                        } else {
-                            Notifications.addError({
-                                status: "error",
-                                message: $translate.instant("saveError") + res.Message
-                            });
-                        }
-                    },
-                        function (error) {
-                            Notifications.addError({
-                                status: "error",
-                                message: $translate.instant("saveError") + error
-                            });
-                        }
-                    );
                 }
 
                 $scope.clear = function () {
@@ -322,14 +291,9 @@ define([
                     THSAdminService.cudChuyenNganh(data, function (res) {
                         console.log(res)
                         if (res.Success) {
-                            $scope.Search();
                             $('#myModal').modal('hide');
-                            $('#messageModal').modal('hide');
-                            $('#nextModal').modal('hide');
-                            Notifications.addError({
-                                'status': 'information',
-                                'message': $translate.instant('saveSucess') + res.Message
-                            });
+                            Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                            $timeout(function () { $scope.Search() }, 1000);
                         }
                     }, function (error) {
                         Notifications.addError({ 'status': 'error', 'message': $translate.instant('saveError') + error });
@@ -341,14 +305,9 @@ define([
                 function updateByID(data) {
                     THSAdminService.cudChuyenNganh(data, function (res) {
                         if (res.Success) {
-                            $scope.Search();
                             $('#myModal').modal('hide');
-                            $('#messageModal').modal('hide');
-                            $('#nextModal').modal('hide');
-                            Notifications.addError({
-                                'status': 'information',
-                                'message': $translate.instant('updateSucess') + res.Message
-                            });
+                            Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
+                            $timeout(function () { $scope.Search() }, 1000);
                         }
                     },
                         function (error) {

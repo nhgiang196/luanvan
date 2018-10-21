@@ -94,6 +94,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     cellTooltip: true
                 },
                 {
+                    field: 'cnten',
+                    minWidth: 100,
+                    displayName: $translate.instant('cnten'),
+                    cellTooltip: true
+                },
+                {
                     field: 'hvgioitinh',
                     minWidth: 100,
                     displayName: $translate.instant('hvgioitinh'),
@@ -353,15 +359,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     // bm: Auth.bm
                 };
                 query.hv = $scope.hv || '';
-                query.hvhoten = $scope.hvhoten || '';
-                query.hvgioitinh = $scope.hvgioitinh || '';
-                query.hvngaysinh = $scope.hvngaysinh || '';
-                query.hvngaydkdt = $scope.hvngaydkdt || '';
-                query.chvngaydkbvm = $scope.hvngaydkbv || '';
-                query.hvquequan = $scope.hvquequan || '';
-                query.hvsodienthoai = $scope.hvsodienthoai || '';
-                query.hveil = $scope.hveil || '';
                 query.cn = $scope.cn || '';
+                query.nk = $scope.nk || '';
                 query.status = $scope.s_status || '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';

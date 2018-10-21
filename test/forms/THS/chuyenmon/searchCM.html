@@ -83,31 +83,14 @@
                     <form class="form-horizontal " role="form" name="formCompany" novalidate>
                         <H4 style="background-color: #ececec; padding:3px">{{'chuyenmonInformation'|translate}}</H4>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
+                            <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
                             <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nk" required />
+                                <input class="form-control" id="key" type="text" ng-model="recod.cm" required />
                             </div>
-                            <label class="col-sm-2 control-label">*{{'nkten'|translate}}</label>
+                            <label class="col-sm-2 control-label">*{{'cmten'|translate}}</label>
                             <div class="col-sm-4">
-                                <input class="form-control" type="text" ng-model="recod.nkten" required />
+                                <input class="form-control" type="text" ng-model="recod.cmten" required />
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nknam'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nknam" required />
-                            </div>
-                            <label class="col-sm-2 control-label">*{{'nktungay'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" type="text" ng-model="recod.nktungay" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nkdenngay'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nkdenngay" required />
-                            </div>
-                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">
