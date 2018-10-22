@@ -111,12 +111,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     cellTooltip: true
                 },
                 {
-                    field: 'cnten',
-                    minWidth: 100,
-                    displayName: $translate.instant('cnten'),
-                    cellTooltip: true
-                },
-                {
                     field: 'hvgioitinh',
                     minWidth: 100,
                     displayName: $translate.instant('hvgioitinh'),
