@@ -5,7 +5,7 @@ define([
 ], function (app, angular) {
     app.service('HDDCService', ['$resource', '$q', 'Auth', '$location', '$translate', function ($resource, $q, Auth, $location, $translate) {
         function HDDCService() {
-            this.GetInfoBasic = $resource('/ths/HDDCController/:operation', {}, {
+            this.GetInfoBasic = $resource('/ths/HDBVDCController/:operation', {}, {
                 search:
                 {
                     method: 'GET',
