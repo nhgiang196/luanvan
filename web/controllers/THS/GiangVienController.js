@@ -123,6 +123,18 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 cellTooltip: true
             },
             {
+                field: 'dv',
+                minWidth: 100,
+                displayName: $translate.instant('dv'),
+                cellTooltip: true
+            },
+            {
+                field: 'bm',
+                minWidth: 100,
+                displayName: $translate.instant('bm'),
+                cellTooltip: true
+            },
+            {
                 field: 'gvgioitinh',
                 minWidth: 100,
                 displayName: $translate.instant('gvgioitinh'),
@@ -227,12 +239,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 GiangVienService.FindByID({
                     gv: id
                 }, function (data) {
-                    $scope.recod = data.Headers[0];
+                    $scope.recod = data.Header[0];
                     $scope.detaillist = [];
                     data.Details.forEach(element => {
                         var x = {};
                         x.cm = element.cm;
-                        x.cnten = element.cmten;
+                        x.cmten = element.cmten;
                         $scope.detaillist.push(x);
                     })
                 }, function (error) {
@@ -402,6 +414,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.bm = $scope.bm || '';
                 query.cm = $scope.cm || '';
                 query.dv = $scope.dv || '';
+                query.gvquoctich = $scope.gvquoctich || '';
                 query.status = $scope.s_status || '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';

@@ -63,16 +63,23 @@
                 <div class="col-sm-3">
                     <input class="form-control" type="text" ng-model="gv" />
                 </div>
+                <label class="col-sm-2 control-label">{{'bm'|translate}}</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" ng-model="bm" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">{{'cm'|translate}}</label>
                 <div class="col-sm-3">
                     <input class="form-control" type="text" ng-model="cm" />
                 </div>
+                <label class="col-sm-2 control-label">{{'dv'|translate}}</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" ng-model="dv" />
+                </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{'nk'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="nk" />
-                </div>
+                <div class="col-sm-5"></div>
                 <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="s_status" ng-change="Search()" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
@@ -125,17 +132,26 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'gvgioitinh'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control " type="text" ng-model="recod.gvgioitinh" required />
+                            <select class="form-control " type="text" ng-model="recod.gvgioitinh" required >
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
                         </div>
                         <label class="col-sm-2 control-label">*{{'gvchucdanh'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="recod.gvchucdanh" required />
+                            <select class="form-control " type="text" ng-model="recod.gvchucdanh" required >
+                            <option value="THS">Thạc sĩ</option>
+                            <option value="TS">Tiến sĩ</option>
+                            <option value="PGSTS">Phó giáo sư - tiến sĩ</option>
+                            <option value="PGS">Phó giáo sư</option>
+                            <option value="GS">Giáo sư</option>
+                        </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'gvnamcongtac'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control " type="text" ng-model="recod.gvnamcongtac" required />
+                            <input date-picker class="form-control " type="text" ng-model="recod.gvnamcongtac" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'gvquoctich'|translate}}</label>
                         <div class="col-sm-4">
