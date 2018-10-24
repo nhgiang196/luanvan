@@ -54,7 +54,7 @@
            float: left;
        }
     </style>
-<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+<form  ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
     <legend>
         <h3>{{'detailuanvanQuery'|translate}}</h3>
     </legend>

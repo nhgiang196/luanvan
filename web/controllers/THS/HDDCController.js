@@ -2,7 +2,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller('HDDCController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'THSAdminService', 'HDDCService', '$translate', '$q', '$scope', '$routeParams',
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, HDDCService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
-            $scope.flowkey = "MHV";
+            $scope.flowkey = "MDC";
             $scope.recod = {};
             $scope.onlyOwner = true;
             $scope.status = '';
@@ -12,16 +12,25 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 totalItems: 0,
                 sort: null
             };
-
-
+            $scope.cthd = [];
+            $scope.cthd[0] = {};
+            $scope.cthd[1] = {};
+            $scope.cthd[2] = {};
+            $scope.cthd[3] = {};
+            $scope.cthd[4] = {};
+            $scope.cthd[0].vaitro = 'Chủ tịch hội đồng';
+            $scope.cthd[1].vaitro = 'Ủy viên';
+            $scope.cthd[2].vaitro = 'Thư ký';
+            $scope.cthd[3].vaitro = 'Phản biện 1';
+            $scope.cthd[4].vaitro = 'Phản biện 2';
             $scope.detaillist = [];
             $(".key").prop('disabled', true);
             $scope.recod = {};
             /**
              * Init data
              */
-            $scope.lscm = [];
-            $scope.lsdv = [];
+            $scope.lsgv = [];
+            $scope.lsdt = [];
             $scope.statuslist = [{
                 id: 'N',
                 name: $translate.instant('StatusN')
@@ -35,7 +44,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 name: $translate.instant('StatusX')
             },
             ];
-            $q.all([loadChuyenMon(),loadBoMon(),loadDonViNgoai()]).then(function (result) { }, function (error) {
+            $q.all([loadGiangVien(),loadLuanVan()]).then(function (result) { }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -45,10 +54,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
              * Load Combobox
              * */
 
-            function loadBoMon() {
+            function loadGiangVien() {
                 var deferred = $q.defer();
                 var query = {
-                    Table: 'BoMon',
+                    Table: 'GiangVien',
                     lang: lang,
                 };
                 if (Auth.nickname = 'Administrator')
@@ -56,16 +65,16 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
                     console.log(data)
-                    $scope.lsbm = data;
+                    $scope.lsgv = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
                 })
             }
-            function loadDonViNgoai() {
+            function loadLuanVan() {
                 var deferred = $q.defer();
                 var query = {
-                    Table: 'DonViNgoai',
+                    Table: 'DeTaiLuanVan',
                     lang: lang,
                 };
                 if (Auth.nickname = 'Administrator')
@@ -73,24 +82,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
                     console.log(data)
-                    $scope.lsdv = data;
-                    deferred.resolve(data);
-                }, function (error) {
-                    deferred.resolve(error);
-                })
-            }
-            function loadChuyenMon() {
-                var deferred = $q.defer();
-                var query = {
-                    Table: 'LinhVucChuyenMon',
-                    lang: lang,
-                };
-                if (Auth.nickname = 'Administrator')
-                    query.bm = '';
-                else query.bm = Auth.bm;
-                THSAdminService.GetBasic(query, function (data) {
-                    console.log(data)
-                    $scope.lscm = data;
+                    $scope.lsdt = data;
                     deferred.resolve(data);
                 }, function (error) {
                     deferred.resolve(error);
@@ -198,11 +190,21 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     dc: id
                 }, function (data) {
                     $scope.recod = data.Header[0];
+                    $scope.cthd[0] = data.CTHDDC[0];
+                    $scope.cthd[1] = data.CTHDDC[1];
+                    $scope.cthd[2] = data.CTHDDC[2];
+                    $scope.cthd[3] = data.CTHDDC[3];
+                    $scope.cthd[4] = data.CTHDDC[4];
                     $scope.detaillist = [];
-                    data.Details.forEach(element => {
+                    data.HDDC.forEach(element => {
                         var x = {};
-                        x.cm = element.cm;
-                        x.cmten = element.cmten;
+                        x.lvten = element.lvten;
+                        x.diem = element.diem;
+                        x.lanbaove = element.lanbaove;
+                        x.sophieudat = element.sophieudat;
+                        x.ketqua = element.ketqua;
+                        x.sophieudat = element.sophieudat;
+                        x.ykien = element.ykien;
                         $scope.detaillist.push(x);
                     })
                 }, function (error) {
@@ -258,7 +260,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-                    $scope.recod.dv='TCT';
                     $('#myModal').modal('show');
                 },
                 order: 1
@@ -364,9 +365,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             function SearchList() {
                 var query = {
-                    // userID: Auth.username,
-                    // lang: lang,
-                    // bm: Auth.bm
                 };
                 query.dc = $scope.dc || '';
                 query.tungay = $scope.bm || '';
@@ -404,7 +402,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.addItem = function () {
                 if ($scope.items != null || $scope.items != {}) {
-                    var data = $scope.detaillist.filter(x => x.cm === $scope.items.cm);
+                    var data = $scope.detaillist.filter(x => x.lv === $scope.items.lv);
                     if (data.length != 0) {
                         alert($scope.items + ": " + $translate.instant('waste_name_existed'));
                         // $scope.items = {};
@@ -412,7 +410,13 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         var myitem = {}
                         myitem.dc = '';
                         myitem.cm = $scope.items.cm;
-                        myitem.cmten = $('#cm option:selected').text();
+                        myitem.lv = $scope.items.lv;
+                        myitem.lvten = $('#lv option:selected').text();
+                        myitem.diem = $scope.items.diem;
+                        myitem.lanbaove = $scope.items.lanbaove;
+                        myitem.sophieudat = $scope.items.sophieudat;
+                        myitem.ketqua = $scope.items.ketqua;
+                        myitem.ykien = $scope.items.ykien;
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
                     }
@@ -424,21 +428,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
             // ------------- DIRECTIVE -------------
             function saveInitData() {
                 var note = {};
-                note.dc = $scope.recod.dc || '';
-                note.dv = $scope.recod.dv || '';
-                note.bm = $scope.recod.bm || '';
-                note.gvhoten = $scope.recod.gvhoten || '';
-                note.gvgioitinh = $scope.recod.gvgioitinh || '';
-                note.gvchucdanh = $scope.recod.gvchucdanh || '';
-                note.gvnamcongtac = $scope.recod.gvnamcongtac || '';
-                note.gvquoctich = $scope.recod.gvquoctich || '';
-                note.gvngaysinh = $scope.recod.gvngaysinh || '';
-                note.gvnoio = $scope.recod.gvnoio || '';
-                note.gvsodienthoai = $scope.recod.gvsodienthoai || '';
-                note.gveil = $scope.recod.gveil || '';
-                note.gvhinhanh = $scope.recod.gvhinhanh || '';
+                note.dc  = $scope.recod.dc  || '';
+                note.dcten = $scope.recod.dcten || '';
+                note.dcngaythanhlap = $scope.recod.dcngaythanhlap || '';
+                note.dcngayketthuc = $scope.recod.dcngayketthuc || '';
+                note.dcdiadiem = $scope.recod.dcdiadiem || '';
+                note.dcthoigian = $scope.recod.dcthoigian || '';
                 note.createby = Auth.username;
-                note.CMGVs = $scope.detaillist;
+                note.CTHDDCs = $scope.cthd;
+                note.HDDCs = $scope.detaillist;
                 return note;
             }
             /**

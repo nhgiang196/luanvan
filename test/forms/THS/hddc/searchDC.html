@@ -22,33 +22,6 @@
         table {
                width: 100%;
            }
-    
-           thead, tbody, tr, td, th { display: block; }
-    
-           tr:after {
-               content: ' ';
-               display: block;
-           visibility: hidden;
-           clear: both;
-       }
-    
-       thead th {
-           height: 30px;
-    
-           /* text-align: left; */
-       }
-    
-       tbody {
-           height: 120px;
-           overflow-y: auto;
-       }
-    
-    
-       tbody td,
-       thead th {
-           /* width: auto; */
-           float: left;
-       }
     </style>
 <form></form>
 <form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form"
@@ -59,33 +32,25 @@
     <div class="col-sm-12 form-group">
         <div class="form-group search-table">
             <div class="form-group">
+                <label class="col-sm-2 control-label">{{'tungay'|translate}}</label>
+                <div class="col-sm-3">
+                    <input date-picker class="form-control" type="text" ng-model="tungay" />
+                </div>
+                <label class="col-sm-2 control-label">{{'denngay'|translate}}</label>
+                <div class="col-sm-3">
+                    <input date-picker class="form-control" type="text" ng-model="denngay" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label">{{'dc'|translate}}</label>
                 <div class="col-sm-3">
                     <input class="form-control" type="text" ng-model="dc" />
                 </div>
-                <label class="col-sm-2 control-label">{{'bm'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="bm" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'cm'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="cm" />
-                </div>
-                <label class="col-sm-2 control-label">{{'dv'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="dv" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-5"></div>
                 <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
                 <div class="col-sm-3">
                     <select class="form-control" name="s_status" ng-change="Search()" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
                         <option value="">{{'Show All' | translate}}</option>
                     </select>
-                </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-5"></div>
@@ -95,7 +60,7 @@
                 <div class="col-sm-3">
                     <!-- <label>
                             <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                        </label> -->
+                    </label> -->
                 </div>
                 <div class="col-sm-1">
                     <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
@@ -145,61 +110,59 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'dcdiadiem'|translate}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control " type="text" ng-model="recod.dcdiadiem" required>
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
-                            </select>
+                            <input class="form-control " type="text" ng-model="recod.dcdiadiem" required />
                         </div>
                         <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
                         <div class="col-sm-4">
-                            <input date-picker class="form-control " type="text" ng-model="recod.dcthoigian" required />
+                            <input date-picker time="true" class="form-control" type="text" ng-model="recod.dcthoigian"
+                                required />
                         </div>
                     </div>
 
                     <H4 style="background-color: #ececec; padding: 5px">{{'chitiethddc'|translate}}</H4>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'chucdanh_gv________'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'Chủ tịch hội đồng'|translate}}</label>
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[0].gv" required>
-                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'___'}" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvten}}
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">*{{'chucdanh_gv________'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'Ủy viên'|translate}}</label>
                         <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[1].gv" required>
-                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'___'}" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvten}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'chucdanh_gv______'|translate}}</label>
-                        <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[2].gv" required>
-                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'___'}" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvten}}
-                                </option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 control-label">*{{'chucdanh_gv________'|translate}}</label>
-                        <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[3].gv" required>
-                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'___'}" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvten}}
+                            <select ui-select-2 style="width:100%"  ng-model="cthd[1].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'chucdanh_gv________'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'Thư ký'|translate}}</label>
                         <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[4].gv" required>
-                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'___'}" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvten}}
+                            <select ui-select-2 style="width:100%" ng-model="cthd[2].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'} " value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'Phản biện 1'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" ng-model="cthd[3].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Phản biện 2'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" ng-model="cthd[4].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -213,15 +176,15 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'lv'|translate}}</label>
                         <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="cm" ng-model="items.lv" required>
-                                <option ng-repeat="value in lslv" value="{{value.lv}}">
+                            <select ui-select-2 style="width:100%" id="lv" ng-model="items.lv" required>
+                                <option ng-repeat="value in lsdt" value="{{value.lv}}">
                                     {{value.lv}}-{{value.lvten}}
                                 </option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="items.diem" required />
+                            <input class="form-control" type="text" ng-model="items.diem" min="0" max="10" required />
                         </div>
                     </div>
                     <div class="form-group">
@@ -240,12 +203,15 @@
 
                         <label class="col-sm-2 control-label">*{{'ketqua'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control" type="text" ng-model="items.ketqua" required />
+                            <select class="form-control " type="text" ng-model="items.ketqua" required >
+                                    <option value="D">Đạt</option>
+                                    <option value="K">Không đạt</option>
+                                </select>
                         </div>
                         <label class="col-sm-2 control-label">*{{'ykien'|translate}}</label>
                         <div class="col-sm-4">
                             <textarea class="form-control" type="text" ng-model="items.ykien" required />
-                        </div>
+                            </div>
                     </div>
 
                     <div class="form-group">
@@ -259,17 +225,33 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="40%">cm</th>
-                                <th width="50%">cmten</th>
+                                <th width="20%">lvten</th>
+                                <th width="10%">diem</th>
+                                <th width="10%">lanbaove</th>
+                                <th width="10%">sophieudat</th>
+                                <th width="15%">ketqua</th>
+                                <th width="25%">ykien</th>
                                 <th width="10%"></th>
                             </tr>
                         </thead>
                         <tr ng-repeat="item in detaillist">
-                            <td title="cm" width="40%">
-                                {{item.cm}}
+                            <td title="lvten" width="20%">
+                                {{item.lvten}}
                             </td>
-                            <td title="cten" width="50%">
-                                {{item.cmten}}
+                            <td title="diem" width="10%">
+                                {{item.diem}}
+                            </td>
+                            <td title="lanbaove" width="10%">
+                                {{item.lanbaove}}
+                            </td>
+                            <td title="sophieudat" width="10%">
+                                {{item.sophieudat}}
+                            </td>
+                            <td title="ketqua" width="15%">
+                                {{item.ketqua}}
+                            </td>
+                            <td title="ykien" width="25%">
+                                {{item.ykien}}
                             </td>
                             <td width="10%">
                                 <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
