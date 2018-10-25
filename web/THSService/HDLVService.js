@@ -1,10 +1,11 @@
+
 define([
     'app',
     'angular'
 ], function (app, angular) {
     app.service('HDLVService', ['$resource', '$q', 'Auth', '$location', '$translate', function ($resource, $q, Auth, $location, $translate) {
         function HDLVService() {
-            this.GetInfoBasic = $resource('/ths/HDLVController/:operation', {}, {
+            this.GetInfoBasic = $resource('/ths/HDBVLVController/:operation', {}, {
                 search:
                 {
                     method: 'GET',

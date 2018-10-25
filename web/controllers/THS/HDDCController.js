@@ -191,14 +191,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }, function (data) {
                     $scope.recod = data.Header[0];
                     $scope.cthd[0] = data.CTHDDC[0];
-                    $scope.cthd[1] = data.CTHDDC[1];
-                    $scope.cthd[2] = data.CTHDDC[2];
-                    $scope.cthd[3] = data.CTHDDC[3];
-                    $scope.cthd[4] = data.CTHDDC[4];
+                    $scope.cthd[3] = data.CTHDDC[1];
+                    $scope.cthd[4] = data.CTHDDC[2];
+                    $scope.cthd[2] = data.CTHDDC[3];
+                    $scope.cthd[1] = data.CTHDDC[4];
                     $scope.detaillist = [];
                     data.HDDC.forEach(element => {
                         var x = {};
-                        x.lvten = element.lvten;
+                        x.lv = element.lv;
+                        x.lvten = element.lv+'-'+element.lvten;
                         x.diem = element.diem;
                         x.lanbaove = element.lanbaove;
                         x.sophieudat = element.sophieudat;
@@ -222,7 +223,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering: false,
+                enableFiltering: true,
                 showGridFooter: false,
                 enableGridMenu: true,
                 enableSelectAll: false,
@@ -367,6 +368,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var query = {
                 };
                 query.dc = $scope.dc || '';
+                query.lv = $scope.lv || '';
+                query.gv = $scope.gv || '';
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';

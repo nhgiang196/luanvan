@@ -1,57 +1,65 @@
 <style>
     .modal-lg {
-        width: 900px;
-    }
-    .form-table {
-        width: 100%;
-        display: inline-block;
-        padding: 15px 0px;
-        margin-bottom: 15px;
-    }
-    .form-group {
-        margin-bottom: 5px
-    }
-    li {
-        list-style-type: none;
-    }
-    li ul {
-        display: none;
-        border: 1px solid #000000;
-        margin-left: -3px;
-    }
-</style>
-<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+            width: 900px;
+        }
+        .form-table {
+            width: 100%;
+            display: inline-block;
+            padding: 15px 0px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 5px
+        }
+        li {
+            list-style-type: none;
+        }
+        li ul {
+            display: none;
+            border: 1px solid #000000;
+            margin-left: -3px;
+        }
+        table {
+               width: 100%;
+           }
+    </style>
+<form></form>
+<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form"
+    style="padding-top:30px">
     <legend>
-        <h3>{{'detailuanvanQuery'|translate}}</h3>
+        <h3>{{'giangvienQuery'|translate}}</h3>
     </legend>
     <div class="col-sm-12 form-group">
         <div class="form-group search-table">
-            <!-- formgroup -->
-            <!-- <div class="form-group">
-                <label class="col-sm-2 control-label">{{'dateFrom'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" name="dateFrom" ng-model="id" />
-                </div>
-                <label class="col-sm-2 control-label">{{'dateTo'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" name="dateTo" ng-model="ten" />
-                </div>
-            </div> -->
-            <!-- button -->
             <div class="form-group">
+                <label class="col-sm-2 control-label">{{'tungay'|translate}}</label>
+                <div class="col-sm-3">
+                    <input date-picker class="form-control" type="text" ng-model="tungay" />
+                </div>
+                <label class="col-sm-2 control-label">{{'denngay'|translate}}</label>
+                <div class="col-sm-3">
+                    <input date-picker class="form-control" type="text" ng-model="denngay" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'hd'|translate}}</label>
+                <div class="col-sm-3">
+                    <input class="form-control" type="text" ng-model="hd" />
+                </div>
                 <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
                 <div class="col-sm-3">
-                    <select class="form-control" name="s_status" ng-model="status" ng-options="s.id as s.name for s in statuslist">
+                    <select class="form-control" name="s_status" ng-change="Search()" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
                         <option value="">{{'Show All' | translate}}</option>
-                        Flowchart
                     </select>
-                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5"></div>
                 <div class="col-sm-2">
                     <label></label>
                 </div>
                 <div class="col-sm-3">
                     <!-- <label>
-                        <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
+                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
                     </label> -->
                 </div>
                 <div class="col-sm-1">
@@ -65,60 +73,205 @@
         <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns
             ui-grid-core ui-grid-exporter></div>
     </div>
-
 </form>
-
-
-
-
-
-    <!-- MODAL  -->
-    <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
-        data-keyboard="false">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" name="form"
-                    novalidate> </form>
-                <div class="modal-body" style="padding-bottom:3px">
-                    <form class="form-horizontal " role="form" name="formCompany" novalidate>
-                        <H4 style="background-color: #ececec; padding:3px">{{'detailuanvanInformation'|translate}}</H4>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nk" required />
-                            </div>
-                            <label class="col-sm-2 control-label">*{{'nkten'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" type="text" ng-model="recod.nkten" required />
-                            </div>
+<!-- MODAL  -->
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" name="form" novalidate>
+            </form>
+            <div class="modal-body" style="padding-bottom:3px">
+                <form class="form-horizontal" role="form" name="main_form" novalidate>
+                    <H4 style="background-color: #ececec; padding:3px">{{'hdhdInformation'|translate}}</H4>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'hd'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control key" type="text" ng-model="recod.hd" required />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nknam'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nknam" required />
-                            </div>
-                            <label class="col-sm-2 control-label">*{{'nktungay'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" type="text" ng-model="recod.nktungay" required />
-                            </div>
+                        <label class="col-sm-2 control-label">*{{'hdten'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" ng-model="recod.hdten" required />
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'nkdenngay'|translate}}</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.nkdenngay" required />
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">
-                        {{'saveSubmit'|translate}}
-                    </button>
-                    <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
-                </div>
+                    </div>
 
-</div>
-<!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'hdngaythanhlap'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input date-picker class="form-control " type="text" ng-model="recod.hdngaythanhlap"
+                                required />
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'hdngayketthuc'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input date-picker class="form-control " type="text" ng-model="recod.hdngayketthuc"
+                                required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'hddiadiem'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control " type="text" ng-model="recod.hddiadiem" required />
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'hdthoigian'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input date-picker time="true" class="form-control" type="text" ng-model="recod.hdthoigian"
+                                required />
+                        </div>
+                    </div>
+
+                    <H4 style="background-color: #ececec; padding: 5px">{{'chitiethdhd'|translate}}</H4>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Chủ tịch hội đồng'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" id="gv" ng-model="cthd[0].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'Ủy viên'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%"  ng-model="cthd[1].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Thư ký'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" ng-model="cthd[2].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'} " value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'Phản biện 1'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" ng-model="cthd[3].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'Phản biện 2'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" ng-model="cthd[4].gv" required>
+                                <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}" value="{{value.gv}}">
+                                    {{value.gv}}-{{value.gvhoten}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <form></form>
+                    <form class="form-horizontal" role="form" name="formDetail" novalidate></form>
+                    <H4 style="background-color: #ececec; padding: 5px">{{'lv_hdhd'|translate}}</H4>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'lv'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select ui-select-2 style="width:100%" id="lv" ng-model="items.lv" required>
+                                <option ng-repeat="value in lsdt" value="{{value.lv}}">
+                                    {{value.lv}}-{{value.lvten}}
+                                </option>
+                            </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" ng-model="items.diem" min="0" max="10" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">*{{'lanbaove'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" ng-model="items.lanbaove" required />
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'sophieudat'|translate}}</label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" ng-model="items.sophieudat" required />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">*{{'ketqua'|translate}}</label>
+                        <div class="col-sm-4">
+                            <select class="form-control " type="text" ng-model="items.ketqua" required >
+                                    <option value="D">Đạt</option>
+                                    <option value="K">Không đạt</option>
+                                </select>
+                        </div>
+                        <label class="col-sm-2 control-label">*{{'ykien'|translate}}</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" type="text" ng-model="items.ykien" required />
+                            </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-4">
+                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
+                                {{'Add'|translate}}
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="20%">lvten</th>
+                                <th width="10%">diem</th>
+                                <th width="10%">lanbaove</th>
+                                <th width="10%">sophieudat</th>
+                                <th width="15%">ketqua</th>
+                                <th width="25%">ykien</th>
+                                <th width="10%"></th>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="item in detaillist">
+                            <td title="lvten" width="20%">
+                                {{item.lvten}}
+                            </td>
+                            <td title="diem" width="10%">
+                                {{item.diem}}
+                            </td>
+                            <td title="lanbaove" width="10%">
+                                {{item.lanbaove}}
+                            </td>
+                            <td title="sophieudat" width="10%">
+                                {{item.sophieudat}}
+                            </td>
+                            <td title="ketqua" width="15%">
+                                {{item.ketqua}}
+                            </td>
+                            <td title="ykien" width="25%">
+                                {{item.ykien}}
+                            </td>
+                            <td width="10%">
+                                <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có
+                    dấu *'|translate}}</label>
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
+                    {{'saveSubmit'|translate}}
+                </button>
+                <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
+            </div>
+
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
 </div>
 </form>
