@@ -13,11 +13,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 sort: null
             };
             $scope.cthd = [];
-            $scope.cthd[0] = {};
-            $scope.cthd[1] = {};
-            $scope.cthd[2] = {};
-            $scope.cthd[3] = {};
-            $scope.cthd[4] = {};
+            $scope.cthd[0] = {}; $scope.cthd[0].gv = '';
+            $scope.cthd[1] = {}; $scope.cthd[1].gv = '';
+            $scope.cthd[2] = {}; $scope.cthd[2].gv = '';
+            $scope.cthd[3] = {}; $scope.cthd[3].gv = '';
+            $scope.cthd[4] = {}; $scope.cthd[4].gv = '';
             $scope.cthd[0].vaitro = 'Chủ tịch hội đồng';
             $scope.cthd[1].vaitro = 'Ủy viên';
             $scope.cthd[2].vaitro = 'Thư ký';
@@ -44,7 +44,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 name: $translate.instant('StatusX')
             },
             ];
-            $q.all([loadGiangVien(),loadLuanVan()]).then(function (result) { }, function (error) {
+            $q.all([loadGiangVien(), loadLuanVan()]).then(function (result) { }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -53,7 +53,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /**
              * Load Combobox
              * */
-
             function loadGiangVien() {
                 var deferred = $q.defer();
                 var query = {
@@ -91,7 +90,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /**
              * Define All Columns in UI Grid
              */
-
             var col = [{
                 field: 'hd',
                 minWidth: 80,
@@ -190,16 +188,16 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     hd: id
                 }, function (data) {
                     $scope.recod = data.Header[0];
-                    $scope.cthd[0] = data.CTHDLV[0];
-                    $scope.cthd[3] = data.CTHDLV[1];
-                    $scope.cthd[4] = data.CTHDLV[2];
-                    $scope.cthd[2] = data.CTHDLV[3];
-                    $scope.cthd[1] = data.CTHDLV[4];
+                    $scope.cthd[0] = data.CTHDLV[0] || {};
+                    $scope.cthd[3] = data.CTHDLV[1]|| {};
+                    $scope.cthd[4] = data.CTHDLV[2]|| {};
+                    $scope.cthd[2] = data.CTHDLV[3]|| {};
+                    $scope.cthd[1] = data.CTHDLV[4]|| {};
                     $scope.detaillist = [];
                     data.HDLV.forEach(element => {
                         var x = {};
                         x.lv = element.lv;
-                        x.lvten = element.lv+'-'+element.lvten;
+                        x.lvten = element.lv + '-' + element.lvten;
                         x.diem = element.diem;
                         x.lanbaove = element.lanbaove;
                         x.sophieudat = element.sophieudat;
@@ -260,6 +258,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 title: $translate.instant('Create'),
                 action: function () {
                     $scope.reset();
+                    $scope.cthd[0].gv = '';
+                    $scope.cthd[1].gv = '';
+                    $scope.cthd[2].gv = '';
+                    $scope.cthd[3].gv = '';
+                    $scope.cthd[4].gv = '';
                     $scope.status = 'N';
                     $('#myModal').modal('show');
                 },
@@ -304,7 +307,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     if (resultRows.length == 1) {
                         if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].hd)) {
                             deleteById(resultRows[0]);
-
                         }
                     } else {
                         Notifications.addError({
@@ -338,7 +340,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 //     order: 4
                 // }
             ];
-
             function deleteById(entity) {
                 var data = {
                     hd: entity.hd,
@@ -368,6 +369,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var query = {
                 };
                 query.hd = $scope.hd || '';
+                query.lv = $scope.lv || '';
+                query.gv = $scope.gv || '';
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';
@@ -429,7 +432,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             // ------------- DIRECTIVE -------------
             function saveInitData() {
                 var note = {};
-                note.hd  = $scope.recod.hd  || '';
+                note.hd = $scope.recod.hd || '';
                 note.hdten = $scope.recod.hdten || '';
                 note.hdngaythanhlap = $scope.recod.hdngaythanhlap || '';
                 note.hdngayketthuc = $scope.recod.hdngayketthuc || '';
@@ -489,8 +492,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /**
              * save submit
              */
+            function checkerror() {
+                var cthd = $scope.cthd;
+                for (var i = 0; i < cthd.length-1; i++) {
+                    for (var j = i+1; j < cthd.length; j++) {
+                        if (cthd[i].gv == cthd[j].gv) {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('saveGVerror')
+                            });
+                            return true;
+                        }
+                    }
+                }
+            }
             $scope.saveSubmit = function () {
                 var note = saveInitData();
+                if (checkerror()) return;
                 var status = $scope.status;
                 switch (status) {
                     case 'N':

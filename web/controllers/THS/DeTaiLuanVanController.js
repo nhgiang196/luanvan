@@ -278,7 +278,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering : false,
+                enableFiltering : true,
                 showGridFooter: false,
                 enableGridMenu: true,
                 exporterMenuPdf: false,
