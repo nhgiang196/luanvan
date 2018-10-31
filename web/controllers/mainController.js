@@ -30,7 +30,6 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
                 // getProxyUser();
                 if (User) {
 
-                    //代理人 的任务
                     // EngineApi.getProxyUser().get({
                     //     'userid': User
                     // }).$promise.then(function (leavers) {
@@ -125,7 +124,6 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
                         }
                     })
                 }
-                //判断权限但不启动工作流
                 $scope.btCheckAuth = function (key, url) {
                     console.log('maincontroller\btCheckAuth:'+User);
                     console.log('maincontroller\btCheckAuth:'+key);

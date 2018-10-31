@@ -43,6 +43,30 @@ define([
                     params: { operation: 'GetBasic' },
                     isArray: true
                 },
+                grant: {
+                    method: 'POST',
+                    params: { operation: 'GrantVoke' }
+                },
+                findbyid: {
+                    method: 'POST',
+                    params: { operation: 'FindByID' }
+                },
+            })
+        }
+        THSAdminService.prototype.FindByID = function (query, callback) {
+            this.GetInfoBasic.findbyid(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
+            })
+        }
+        THSAdminService.prototype.GrantVoke = function (query, callback) {
+            this.GetInfoBasic.grant(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
             })
         }
         THSAdminService.prototype.GetBasic = function (query, callback) {
