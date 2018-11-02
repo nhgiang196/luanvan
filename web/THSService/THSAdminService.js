@@ -49,7 +49,8 @@ define([
                 },
                 findbyid: {
                     method: 'POST',
-                    params: { operation: 'FindByID' }
+                    params: { operation: 'FindByID' },
+                    isArray : true
                 },
             })
         }
