@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-sm-1">
                         <label>
-                            <input name="grant" type="checkbox" ng-model="grant"> {{'grant'|translate}}
+                            <input name="grant" type="checkbox" ng-model="grantoption"> {{'grantvoke'|translate}}
                         </label>
                     </div>
                     <div class="col-sm-1">
@@ -104,7 +104,8 @@
     <thead>
         <tr>
             <th width="20%">tcode</th>
-            <th width="60%">tcname</th>
+            <th width="30%">tcname</th>
+            <th width="30%">usergrant</th>
             <th width="10%">grantvoke</th>
             <th width="10%"></th>
         </tr>
@@ -113,14 +114,17 @@
         <td title="tcode" width="20%">
             {{item.tcode}}
         </td>
-        <td title="'tcname'" width="60%">
+        <td title="'tcname'" width="30%">
             {{item.tcname}}
+        </td>
+        <td title="'usergrant'" width="30%">
+            {{item.usergrant}}
         </td>
         <td title="'grantvoke'" width="10%">
             {{item.grantvoke}}
         </td>
         <td width="10%">
-            <a ng-hide="item.grantvoke && !isAdmin" ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Revoke'|translate}}</a>
+            <a ng-hide="username!=item.usergrant && item.usergrant!='' && !isAdmin" ng-click="deleteItem(item.tcode)" class="btn-xs btn btn-danger">{{'Revoke'|translate}}</a>
         </td>
     </tr>
 </table>

@@ -4,6 +4,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
         function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
             var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
             $scope.isAdmin = isAdmin;
+            $scope.username = Auth.username + '-' + Auth.nickname;
             $scope.lstc = [];
             $scope.lsgv = [];
             $scope.btCheckAuth = function (key, url) {
@@ -25,7 +26,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 $scope.detaillist = [];
                 query = {};
                 query.table = 'PhanQuyen';
-                query.user = $scope.gv; 
+                query.user = $scope.gv;
                 THSAdminService.FindByID(query, function (data) {
                     $scope.detaillist = data;
                 }, function (error) {
@@ -74,32 +75,48 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.addItem = function () {
                 if ($scope.gv != '' && $scope.tc != '') {
+
                     var data = $scope.detaillist.filter(x => x.tcode === $scope.tc);
-                    if (data.length != 0) {
-                        alert($scope.items + ": " + $translate.instant('tcode existed'));
+                    if ($scope.gv == Auth.username)
+                        Notifications.addError({ 'status': 'error', 'message': "You can't grant yourself" });
+                    else if (data.length != 0) {
+                        Notifications.addError({ 'status': 'error', 'message': "Existed tcode" });
                     } else {
                         query = {
                             action: 'grant',
-                            user: Auth.username,
+                            user: $scope.gv,
                             tcode: $scope.tc,
-                            grantoption: $scope.grantvoke
+                            grantoption: $scope.grantoption || 'False',
+                            usergrant: Auth.username
                         };
                         THSAdminService.GrantVoke(query, function () {
-                            var myitem = {}
-                            myitem.gv = '';
-                            myitem.cm = $scope.items.cm;
-                            myitem.cmten = $('#cm option:selected').text();
-                            $scope.detaillist.push(myitem);
-                            $scope.items = {};
+                            $scope.gv_change();
                         }, function (err) {
                             Notifications.addError({ 'status': 'error', 'message': "You do not have permission！" });
                         })
                     }
                 }
+                else Notifications.addError({ 'status': 'error', 'message': "Grant who?" });
 
             };
-            $scope.deleteItem = function (index) {
-                $scope.detaillist.splice(index, 1);
+            $scope.deleteItem = function (mtcode) {
+                if ($scope.gv == Auth.username)
+                    Notifications.addError({ 'status': 'error', 'message': "You can't revoke yourself" });
+                else {
+                    query = {
+                        action: 'revoke',
+                        user: $scope.gv,
+                        tcode: mtcode,
+                        grantoption: $scope.grantoption || 'False',
+                        usergrant: Auth.username
+                    };
+                    THSAdminService.GrantVoke(query, function () {
+                        $scope.gv_change();
+                    }, function (err) {
+                        Notifications.addError({ 'status': 'error', 'message': "You do not have permission！" });
+                    })
+
+                }
             };
         }]);
 });
