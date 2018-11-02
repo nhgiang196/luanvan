@@ -91,7 +91,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
-                    console.log(data)
+                    console.log(data);
                     full_lscn = data;
                     // $scope.lscn = data;
                     deferred.resolve(data);

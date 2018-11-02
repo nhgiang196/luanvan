@@ -1,6 +1,6 @@
-
 <style>
-    .theme-img.boxshadow, .theme-img-s.boxshadow {
+    .theme-img.boxshadow,
+    .theme-img-s.boxshadow {
         background-color: #FFF;
         -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -12,6 +12,7 @@
         -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     }
+
     .browser-bar-xl {
         display: block;
         height: 6px;
@@ -21,6 +22,7 @@
         -moz-border-radius: 2px 2px 0 0;
         border-radius: 2px 2px 0 0;
     }
+
     img {
         max-width: 100%;
         width: auto\9;
@@ -29,32 +31,98 @@
         vertical-align: middle;
         -ms-interpolation-mode: bicubic;
     }
-    h1.featured, h2.featured {
+
+    h1.featured,
+    h2.featured {
         font-size: 20px;
         margin-bottom: 10px;
     }
+
     #main-footer {
         margin-top: 20px;
         background: #E6E6E6;
         color: #64686D;
     }
+
+    .panel {
+        margin-bottom: 5px !important;
+    }
+
+    .list {
+        cursor: pointer;
+    }
 </style>
-<div class="container" >
-  <div class="row" style="padding-top: 20px; ">
-    <div class="col-md-3"   style="  padding-left:0px; ">
-        <div ng-include="'views/formSetting/formMenu.html'"></div>
-    </div>
-    <div class="col-md-9">
+<div class="container">
+    <form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form"
+        style="padding-top:30px">
+        <legend>
+            <h3>{{'phanquyenQuery'|translate}}</h3>
+        </legend>
+        <div class="col-sm-12 form-group">
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label">{{'Người dùng'|translate}}</label>
+                    <div class="col-sm-3">
+                        <select ui-select-2 style="width:100%" id="gv" ng-model="gv" ng-change="gv_change()" required>
+                            <option ng-repeat="value in lsgv" value="{{value.gv}}">
+                                {{value.gv}}-{{value.gvhoten}}
+                            </option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">{{'tcodes'|translate}}</label>
+                    <div class="col-sm-3">
+                        <select ui-select-2 style="width:100%" id="tc" ng-model="tc" required>
+                            <option ng-repeat="value in lstc" value="{{value.tcode}}">
+                                {{value.tcode}}-{{value.tcname}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1">
+                        <label>
+                            <input name="grant" type="checkbox" ng-model="grant"> {{'grant'|translate}}
+                        </label>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-primary" ng-click="addItem()">{{'grant'|translate}}
+                        </button>
+                    </div>
+                </div>
 
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab" id="AHome">Home</a></li>
-            </ul>
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div class="tab-pane active" id="home"></div>
+                <div class="form-group">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-2">
+                        <label></label>
+                    </div>
+
+
+                </div>
             </div>
-
-         </div>
-   </div>
+        </div>
+</div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th width="20%">tcode</th>
+            <th width="60%">tcname</th>
+            <th width="10%">grantvoke</th>
+            <th width="10%"></th>
+        </tr>
+    </thead>
+    <tr ng-repeat="item in detaillist">
+        <td title="tcode" width="20%">
+            {{item.tcode}}
+        </td>
+        <td title="'tcname'" width="60%">
+            {{item.tcname}}
+        </td>
+        <td title="'grantvoke'" width="10%">
+            {{item.grantvoke}}
+        </td>
+        <td width="10%">
+            <a ng-hide="item.grantvoke && !isAdmin" ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Revoke'|translate}}</a>
+        </td>
+    </tr>
+</table>
+<!-- mynode1231231213123122 -->
 </div>
