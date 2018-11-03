@@ -45,22 +45,22 @@ define(['myapp', 'angular'], function (myapp) {
                                 params: { operation: "login" }
                             }
                         });
-                    var authapp = $resource('/authorize/:operation/:id', { username: '@id' },
-                        { login: { method: 'POST', params: { operation: "login" } } });
+
+                    // var authapp = $resource('/authorize/:operation/:id', { username: '@id' },
+                    //     { login: { method: 'POST', params: { operation: "login" } } });
                     var ttt = authapp.login({ username: $scope.username, password: $scope.password || '' }).$promise.then(function (data) {
                         Auth.saveUser(data, function (resauth) {
                             if (resauth) {
-
                                 $location.url('/');
                             } else {
-                                alert('登入失败'); ``
+                                // Notifications.addError({ 'status': 'error', 'message': 'WRONG USERNAME AND PASSWORD' });
                             }
                         });
 
                     }, function (err) {
-                        console.log(err);
+                        console.log('LOGINCONTROLLER: '+ err);
                         Notifications.addError({ 'status': 'error', 'message': err });
-                        // alert('登入失败:'+err.data+'，登录失败三次用户被锁定！');
+                        
                     });
                 }
                 else {

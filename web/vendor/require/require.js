@@ -155,15 +155,15 @@ var requirejs, require, define;
      *
      * @returns {Error}
      */
-    function makeError(id, msg, err, requireModules) {
-        var e = new Error(msg + '\nhttp://requirejs.org/docs/errors.html#' + id);
-        e.requireType = id;
-        e.requireModules = requireModules;
-        if (err) {
-            e.originalError = err;
-        }
-        return e;
-    }
+    // function makeError(id, msg, err, requireModules) {
+    //     var e = new Error(msg + '\nhttp://requirejs.org/docs/errors.html#' + id);
+    //     e.requireType = id;
+    //     e.requireModules = requireModules;
+    //     if (err) {
+    //         e.originalError = err;
+    //     }
+    //     return e;
+    // }
 
     if (typeof define !== 'undefined') {
         //If a define is already in play via another AMD loader,
