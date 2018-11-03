@@ -151,18 +151,21 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
         function ($scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User) {
         $scope.sumbit = function () {
             if ($scope.oldP && $scope.newPassword && User) {
-                var UpdatePassword = $resource("/ehs/gate/Checker/UpdatePassword", {}, {
+                var UpdatePassword = $resource("/ths/THSAdminController/ChangePassword", {}, {
                     update: {
                         method: 'POST'
                     }
                 });
                 UpdatePassword.update({
                     "username": User,
-                    "oldP": $scope.oldP,
-                    "newPassword": $scope.newPassword
+                    "pass": $scope.oldP,
+                    "newpass": $scope.newPassword
                 }).$promise.then(function (data) {
-                    console.log(data);
-                    alert("Password reset complete");
+                    console.log(data.message);
+                    if (data.Data != null && data.Data!='')
+                        alert("Password reset complete");
+                    else
+                        alert("You enter the wrong password");
                 }, function (errResponse) {
                     console.log(errResponse);
                     Notifications.addError({

@@ -130,14 +130,14 @@
                                     <span> {{'Học viên'| translate}} </span></a>
 
                                 <div class="divider"></div>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('BM','THS/BoMon')"><span
-                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('BM','THS/BoMon')"><span class=" glyphicon glyphicon-bookmark"
+                                        style="color: #563d7c"></span>
                                     <span> {{'Bộ môn'| translate}}</span></a>
-                                <a href="#/THS/NienKhoa"> <span class=" glyphicon glyphicon-bookmark"
-                                        style="color: #563d7c"></span><span>{{'Niên khóa'| translate}}
+                                <a href="#/THS/NienKhoa"> <span class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span><span>{{'Niên
+                                        khóa'| translate}}
                                     </span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('DV','THS/DonViNgoai')"><span
-                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('DV','THS/DonViNgoai')"><span class=" glyphicon glyphicon-bookmark"
+                                        style="color: #563d7c"></span>
                                     <span> {{'Đơn vị ngoài'| translate}}</span></a>
                             </li>
                         </ul>
@@ -157,11 +157,11 @@
                                     <span> {{'Quản lý đề tài'| translate}} </span></a>
 
                                 <div class="divider"></div>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('CN','THS/ChuyenNganh')"><span
-                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('CN','THS/ChuyenNganh')"><span class=" glyphicon glyphicon-bookmark"
+                                        style="color: #563d7c"></span>
                                     <span> {{'Chuyên ngành'| translate}}</span></a>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('CM','THS/ChuyenMon')"><span
-                                        class=" glyphicon glyphicon-bookmark" style="color: #563d7c"></span>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('CM','THS/ChuyenMon')"><span class=" glyphicon glyphicon-bookmark"
+                                        style="color: #563d7c"></span>
                                     <span> {{'Lĩnh vực'| translate}}</span></a>
                             </li>
                         </ul>
@@ -215,7 +215,7 @@
                 <ul class="nav navbar-nav navbar-right btn-group">
                     <!--    <li class="active center"  ng-controller="socketIoController"> <a ng-if="isConnected==true">{{serverTime|date:'HH:mm:ss'}} </a><a ng-if="isConnected==false">Socket通信问题请联系IT</a></li>-->
                     <li> 
-                        <a ng-hide="!APEnable"
+                        <a
                         href="javascript:void(0)" ng-click="btCheckAuth('AP','#/FormSetting/formmain') ">
                             <span style="color: #ffef10" class="icon-bar glyphicon glyphicon-star"></span>
                             <span> {{'Phân quyền'| translate}} </span></a>
@@ -223,15 +223,17 @@
                     </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="icon-bar glyphicon glyphicon-user">{{authentication.username}}</span>
+                            <span class="icon-bar glyphicon glyphicon-user"></span>{{authentication.nickname}}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
 
                             <li>
-                                <a ng-click="Logout()" style="cursor: pointer">{{authentication.nickname}} {{ 'Signout'
+                                <a ng-click="Logout()" style="cursor: pointer">{{authentication.username}} {{ 'Signout'
                                     | translate }}</a>
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('AP','/FormSetting/formmain')">
+                                    <span style="color: #8b7201" class="icon-bar glyphicon glyphicon-star"></span>
+                                    <span> {{'Phân quyền'| translate}} </span></a>
                                 <a href="#/main/userInfo">{{ 'ChangePassword' | translate }}</a>
-                                <a href="#/taskForm/ProxyUser">{{ 'Agentsettings' | translate }}</a>
                                 <div class="divider"></div>
                                 <a ng-click="switching('VN')" style="cursor: pointer">{{'VN'|translate}}</a>
                                 <a ng-click="switching('EN')" style="cursor: pointer">{{'EN'|translate}}</a>
