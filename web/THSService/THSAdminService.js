@@ -52,6 +52,19 @@ define([
                     params: { operation: 'FindByID' },
                     isArray : true
                 },
+                sendmail: {
+                    method: 'POST',
+                    params: { operation: 'MailSender' },
+                },
+                
+            })
+        }
+        THSAdminService.prototype.SendMail = function (query, callback) {
+            this.GetInfoBasic.sendmail(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
             })
         }
         THSAdminService.prototype.FindByID = function (query, callback) {

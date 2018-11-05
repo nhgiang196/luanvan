@@ -177,4 +177,8 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
             }
         }
     }]);
+
+
+
+
 });

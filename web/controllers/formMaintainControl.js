@@ -74,7 +74,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 })
             }
             $scope.addItem = function () {
-                if ($scope.gv !=null && $scope.tc !=null) {
+                if ($scope.gv != null && $scope.tc != null) {
 
                     var data = $scope.detaillist.filter(x => x.tcode === $scope.tc);
                     if ($scope.gv == Auth.username)
@@ -102,9 +102,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.deleteItem = function (mtcode) {
                 if ($scope.gv == Auth.username)
                     Notifications.addError({ 'status': 'error', 'message': "You can't revoke yourself" });
-                else if (mtcode=='AD' && Auth.username!='CB00001')
+                else if (mtcode == 'AD' && Auth.username != 'CB00001')
                     Notifications.addError({ 'status': 'error', 'message': "You can't revoke other admins " });
-                
+
                 else {
                     query = {
                         action: 'revoke',
@@ -121,5 +121,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
                 }
             };
+        }]);
+
+    myapp.controller("EmailSenderController", ['$q', 'Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService',
+        function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
+            
+            
         }]);
 });

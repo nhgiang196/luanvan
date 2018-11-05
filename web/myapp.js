@@ -684,6 +684,28 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
+            .when('/THS/DangKyLuanVan', angularAMD.route({
+                templateUrl: "forms/THS/dangkyluanvan/dklv.html",
+                controller: 'DangKyLuanVanController',
+                controllerUrl: 'controllers/THS/DangKyLuanVanController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            .when('/THS/EmailSender', angularAMD.route({
+                templateUrl: "forms/THS/EmailSender.html",
+                controller: 'EmailSenderController',
+                controllerUrl: 'controllers/formMaintainControl',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
     }]);
     return angularAMD.bootstrap(app);
 });

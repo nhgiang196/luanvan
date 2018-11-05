@@ -185,16 +185,15 @@
                     <!--LIMS Report bar-->
                     <li class="dropdown">
                         <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            {{ 'Report' | translate }}
+                            {{ 'Khác' | translate }}
                             <span class="caret"></span></a> <!-- nothing here -->
 
                         <ul class="dropdown-menu" role="menu">
 
                             <li>
-                                <a href="javascript:void(0)" ng-click="btCheckAuth('DC','/THS/HDDC')">
+                                <a href="javascript:void(0)" ng-click="btCheckAuth('AE','/THS/EmailSender')">
                                     <span style="color: #563d7c" class="glyphicon glyphicon-bookmark"></span>
-                                    <span> {{'Hội đồng đề cương'| translate}} </span></a>
-
+                                    <span> {{'Gửi mail thông báo'| translate}} </span></a>
                             </li>
 
 
@@ -214,13 +213,6 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right btn-group">
                     <!--    <li class="active center"  ng-controller="socketIoController"> <a ng-if="isConnected==true">{{serverTime|date:'HH:mm:ss'}} </a><a ng-if="isConnected==false">Socket通信问题请联系IT</a></li>-->
-                    <li> 
-                        <a
-                        href="javascript:void(0)" ng-click="btCheckAuth('AP','#/FormSetting/formmain') ">
-                            <span style="color: #ffef10" class="icon-bar glyphicon glyphicon-star"></span>
-                            <span> {{'Phân quyền'| translate}} </span></a>
-
-                    </li>
                     <li class="dropdown">
                         <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="icon-bar glyphicon glyphicon-user"></span>{{authentication.nickname}}

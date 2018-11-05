@@ -1,0 +1,99 @@
+<style>
+    .modal-lg {
+        width: 900px;
+    }
+
+    .form-table {
+        width: 100%;
+        display: inline-block;
+        padding: 15px 0px;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px
+    }
+
+    li {
+        list-style-type: none;
+    }
+
+    li ul {
+        display: none;
+        border: 1px solid #000000;
+        margin-left: -3px;
+    }
+</style>
+<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+    <legend>
+        <h3>{{'Gửi mail'|translate}}</h3>
+    </legend>
+    <div class="col-sm-12 form-group">
+        <div class="form-group search-table">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'NGƯỜI GỞI'|translate}}</label>
+                <div class="col-sm-3">
+                    <label>
+                        (<input name="onlyOwner" type="checkbox" ng-model="typeEmailCheck"> {{'Để tôi tự nhập email
+                        người
+                        gởi'|translate}}
+                    </label>)
+
+                </div>
+
+                <div class="col-sm-5">
+                    <input class="form-control" ng-model="toemails" ng-hide="!typeEmailCheck">
+                </div>
+            </div>
+            <div class="form-group" ng-hide="typeEmailCheck">
+                <div class="col-sm-2"></div>
+                <label class="col-sm-1 control-label">{{'Bộ môn'|translate}}</label>
+                <div class="col-sm-3">
+                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
+                        <option value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
+                            {{value.Specification}}
+                        </option>
+
+                    </select>
+                </div>
+                <label class="col-sm-1 control-label">{{'Chỉ định sinh viên'|translate}}</label>
+                <div class="col-sm-3">
+                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
+                        <option value="">{{'Show All' | translate}}</option>
+                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
+                            {{value.Specification}}
+                        </option>
+
+                    </select>
+                </div>
+                <div class="col-sm-2">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'TIÊU ĐỀ'|translate}}</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'NỘI DUNG'|translate}}</label>
+
+                <div class="col-sm-8">
+                    <textarea type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
+                        </textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
