@@ -49,20 +49,20 @@
                 <div class="col-sm-2"></div>
                 <label class="col-sm-1 control-label">{{'Bộ môn'|translate}}</label>
                 <div class="col-sm-3">
-                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
-                        <option value="">{{'Show All' | translate}}</option>
-                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
-                            {{value.Specification}}
+                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="tobm" ng-change="tobm_change(tobm)" >
+                        <option value="">{{'Gửi đến tất cả' | translate}}</option>
+                        <option ng-repeat="value in lsbm" value="{{value.bm}}">
+                            {{value.tenbm}}
                         </option>
 
                     </select>
                 </div>
                 <label class="col-sm-1 control-label">{{'Chỉ định sinh viên'|translate}}</label>
                 <div class="col-sm-3">
-                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
-                        <option value="">{{'Show All' | translate}}</option>
-                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
-                            {{value.Specification}}
+                    <select style="width:100%" ui-select2 name="toemail" ng-model="toemail">
+                        <option value="">{{'Gửi đến tất cả' | translate}}</option>
+                        <option ng-repeat="value in lshv" value="{{value.hv}}">
+                            {{value.hvhoten}}
                         </option>
 
                     </select>
@@ -75,14 +75,14 @@
                 <label class="col-sm-2 control-label">{{'TIÊU ĐỀ'|translate}}</label>
 
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
+                    <input type="text" class="form-control" name="VoucherNumber" ng-model="subject">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">{{'NỘI DUNG'|translate}}</label>
 
                 <div class="col-sm-8">
-                    <textarea type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
+                    <textarea type="text" class="form-control" name="VoucherNumber" ng-model="body">
                         </textarea>
                 </div>
             </div>
@@ -90,7 +90,7 @@
             <div class="form-group">
                 <div class="col-sm-10"></div>
                 <div class="col-sm-1">
-                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
+                    <button type="button" class="btn btn-primary" ng-click="SendMail()">{{'Gửi mail'|translate}}
                     </button>
                 </div>
             </div>
