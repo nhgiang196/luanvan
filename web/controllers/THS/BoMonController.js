@@ -321,7 +321,12 @@ define([
                     note.bm = $scope.recod.id;
                     note.tenbm = $scope.recod.ten || '';
                     if ($scope.status == 'M')
-                    note.action = 'update';
+                    {
+                        note.action = 'update';
+                        note.bmnew = note.bm;
+                        note.bm = $scope.gridApi.selection.getSelectedRows()[0].bm;
+                    }
+                    
                     else note.action = 'create';
                     return note;
                 }

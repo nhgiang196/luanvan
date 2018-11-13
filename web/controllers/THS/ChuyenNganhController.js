@@ -17,6 +17,35 @@ define([
                 //   totalItems: 0,
                 //   sort: null
                 // };
+                $q.all([loadBoMon()]).then(function (result) { }, function (error) {
+                    Notifications.addError({
+                        'status': 'Failed',
+                        'message': 'Loading failed: ' + error
+                    });
+                });
+                /**
+                 * Load Combobox
+                 * */
+    
+                function loadBoMon() {
+                    var deferred = $q.defer();
+                    var query = {
+                        Table: 'BoMon',
+                        lang: lang,
+                    };
+                    if (Auth.nickname = 'Administrator')
+                        query.bm = '';
+                    else query.bm = Auth.bm;
+                    THSAdminService.GetBasic(query, function (data) {
+                        console.log(data)
+                        $scope.lsbm = data;
+                        deferred.resolve(data);
+                    }, function (error) {
+                        deferred.resolve(error);
+                    })
+                }
+
+
                 $scope.StatusList = [
                     {
                         id: "1",
@@ -280,7 +309,11 @@ define([
                     note.bm = $scope.recod.bm || '';
                     note.cnten = $scope.recod.cnten || '';
                     if ($scope.status == 'M')
+                    {
                         note.action = 'update';
+                        note.cnnew = note.cn;
+                        note.cn = $scope.gridApi.selection.getSelectedRows()[0].cn;
+                    }
                     else note.action = 'create';
                     return note;
                 }

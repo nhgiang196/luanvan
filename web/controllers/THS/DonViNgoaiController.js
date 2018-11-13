@@ -297,7 +297,11 @@ define([
                     note.dvsdt = $scope.recod.dvsdt || '';
                     note.dveil = $scope.recod.dveil || '';
                     if ($scope.status == 'M')
+                    {
                         note.action = 'update';
+                        note.dvnew = note.dv;
+                        note.dv = $scope.gridApi.selection.getSelectedRows()[0].dv;
+                    }
                     else note.action = 'create';
                     return note;
                 }

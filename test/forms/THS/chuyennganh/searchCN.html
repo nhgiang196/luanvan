@@ -83,15 +83,22 @@
                     <form class="form-horizontal " role="form" name="formCompany" novalidate>
                         <H4 style="background-color: #ececec; padding:3px">{{'chuyennganhInformation'|translate}}</H4>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
+                            <label class="col-sm-2 control-label">*{{'cn'|translate}}</label>
                             <div class="col-sm-4">
-                                <input class="form-control" id="key" type="text" ng-model="recod.cm" required />
+                                <input class="form-control" type="text" ng-model="recod.cn" required />
                             </div>
-                            <label class="col-sm-2 control-label">*{{'cmten'|translate}}</label>
+                            <label class="col-sm-2 control-label">*{{'cnten'|translate}}</label>
                             <div class="col-sm-4">
-                                <input class="form-control" type="text" ng-model="recod.cmten" required />
+                                <input class="form-control" type="text" ng-model="recod.cnten" required />
                             </div>
-                        </div>                      
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">*{{'bm'|translate}}</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.tenbm for s in lsbm"></select>
+                            </div>
+
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">

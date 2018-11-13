@@ -298,7 +298,11 @@ define([
                     note.nktungay = $scope.recod.nktungay || '';
                     note.nkdenngay = $scope.recod.nkdenngay || '';
                     if ($scope.status == 'M')
+                    {
                         note.action = 'update';
+                        note.nknew = note.nk;
+                        note.nk = $scope.gridApi.selection.getSelectedRows()[0].nk;
+                    }
                     else note.action = 'create';
                     return note;
                 }

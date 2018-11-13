@@ -301,7 +301,11 @@ define([
                     note.cm = $scope.recod.cm;
                     note.cmten = $scope.recod.cmten || '';
                     if ($scope.status == 'M')
+                    {
                         note.action = 'update';
+                        note.cmnew = note.cm;
+                        note.cm = $scope.gridApi.selection.getSelectedRows()[0].cm;
+                    }
                     else note.action = 'create';
                     return note;
                 }
