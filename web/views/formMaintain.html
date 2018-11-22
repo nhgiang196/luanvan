@@ -69,7 +69,7 @@
                             </option>
                         </select>
                     </div>
-                    <label class="col-sm-1 control-label">{{'tcodes'|translate}}</label>
+                    <label class="col-sm-1 control-label">{{'tcode'|translate}}</label>
                     <div class="col-sm-3">
                         <select ui-select-2 style="width:100%" id="tc" ng-model="tc" required>
                             <option ng-repeat="value in lstc" value="{{value.tcode}}">
@@ -103,10 +103,10 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th width="20%">tcode</th>
-            <th width="30%">tcname</th>
-            <th width="30%">usergrant</th>
-            <th width="10%">grantvoke</th>
+            <th width="20%">{{'tcode'|translate}}</th>
+            <th width="30%">{{'tcname'|translate}}</th>
+            <th width="30%">{{'usergrant'|translate}}</th>
+            <th width="10%">{{'grantvoke'|translate}}</th>
             <th width="10%"></th>
         </tr>
     </thead>

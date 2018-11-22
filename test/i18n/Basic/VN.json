@@ -518,5 +518,20 @@
     "tcode": "Mã phân quyền",
     "grantvoke": "Quyền cấp",
     "usergrant": "Người cấp",
-    "tcname": "Tên quyền"
+    "tcname": "Tên quyền",
+    "hocvienQuery": "Truy vấn Học viên",
+    "giangvienQuery": "Truy vấn Giảng viên",
+    "bomonQuery": "Truy vấn Bộ môn",
+    "nienkhoaQuery": "Truy vấn Niên khóa",
+    "donvingoaiQuery": "Truy vấn Đơn vị ngoài",
+    "detailuanvanQuery": "Truy vấn Đề tài luận văn",
+    "chuyennganhQuery": "Truy vấn Chuyên ngành",
+    "chuyenmonQuery": "Truy vấn Chuyên môn",
+    "hddcQuery": "Truy vấn Hội đồng đề cương",
+    "hdlvQuery": "Truy vấn Hội đồng luận văn",
+    "tungay": "Từ ngày",
+    "denngay": "Đến ngày",
+    "phanquyenQuery": "Truy vấn phân quyền",
+    "grant" : "Cấp quyền"
+
 }
