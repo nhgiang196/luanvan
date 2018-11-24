@@ -278,7 +278,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering : true,
+                enableFiltering: true,
                 showGridFooter: false,
                 enableGridMenu: true,
                 exporterMenuPdf: false,
@@ -318,7 +318,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-                    $scope.check.value1=true;
+                    $scope.check.value1 = true;
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');
@@ -329,7 +329,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
                     $scope.status = 'M'; //Set update Status
-                    $scope.check.value1=false;
+                    $scope.check.value1 = false;
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
                             if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
@@ -382,22 +382,57 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 },
                 order: 3
             },
-                // {
-                //     title: $translate.instant('PrintReport'),
-                //     action: function () {
-                //         var resultRows = $scope.gridApi.selection.getSelectedRows();
-                //         if (resultRows.length == 1) {
-                //             var href = '#/waste/Voucher/print/' + resultRows[0].lv;
-                //             window.open(href);
-                //         } else {
-                //             Notifications.addError({
-                //                 'status': 'error',
-                //                 'message': $translate.instant('Select_ONE_MSG')
-                //             });
-                //         }
-                //     },
-                //     order: 4
-                // }
+            {
+                title: $translate.instant('Tạo phiếu chấm điểm'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    if (resultRows.length == 1) {
+                        var href = '#/THS/DeTaiLuanVan/PhieuChamDiem' + resultRows[0].lv;
+                        window.open(href);
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+                    }
+                },
+                order: 4
+            },
+            {
+                title: $translate.instant('Tạo phiếu câu hỏi'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    if (resultRows.length == 1) {
+                        var href = '#/THS/DeTaiLuanVan/PhieuCauHoi/' + resultRows[0].lv;
+                        window.open(href);
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+                    }
+                },
+                order: 5
+            },
+            {
+                title: $translate.instant('Tạo đề nghị chỉnh sửa luận văn'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    if (resultRows.length == 1) {
+                        if (confirm($translate.instant('Xác nhận đề nghị chỉnh sửa') + ':' + resultRows[0].lv)) {
+                            //function chỉnh sửa
+                        }
+                        var href = '#/THS/DeTaiLuanVan/DeNghiChinhSua/' + resultRows[0].lv;
+                        window.open(href);
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+                    }
+                },
+                order: 6
+            },
             ];
             function deleteById(entity) {
                 var data = {
@@ -484,9 +519,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 $scope.recod.nk = data[0].nk;
             }
             $scope.changeCheckValue = function () {
-                $scope.lshv = full_lshv.filter(x => $scope.check.value1? x.lv ==null:true
+                $scope.lshv = full_lshv.filter(x => $scope.check.value1 ? x.lv == null : true
                     // &&  $scope.check.value2? x.bm==Auth.bm:x.bm!=Auth.bm
-                    );
+                );
             }
             $scope.reset = function () {
                 $scope.recod = {};

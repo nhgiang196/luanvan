@@ -256,17 +256,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/Contractor/StatisticReport', angularAMD.route({
-                templateUrl: "forms/ConQua/Statistic.html",
-                controller: 'ContractorStatisticController',
-                controllerUrl: 'controllers/EHS/ContractorStatisticController',
-                caseInsensitiveMatch: true,
-                resolve: {
-                    User: function (AuthenticationLoader) {
-                        return AuthenticationLoader();
-                    }
-                }
-            }))
+
             //目前没用到
             .when('/Contractor/Report', angularAMD.route({
                 templateUrl: "forms/ConQua/Report.html",
@@ -596,6 +586,39 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
+            .when('/THS/DeTaiLuanVan/DeNghiChinhSua/:lv', angularAMD.route({
+                templateUrl: "forms/THS/DeTaiLuanVan/print_bbchinhsua.html",
+                controller: 'DeNghiChinhSuaController',
+                controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            .when('/THS/DeTaiLuanVan/PhieuCauHoi/:lv', angularAMD.route({
+                templateUrl: "forms/THS/DeTaiLuanVan/print_phieucauhoi.html",
+                controller: 'PhieuCauHoiController',
+                controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            .when('/THS/DeTaiLuanVan/PhieuChamDiem/:lv', angularAMD.route({
+                templateUrl: "forms/THS/DeTaiLuanVan/print_phieucham.html",
+                controller: 'PhieuChamDiemController',
+                controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
             .when('/THS/HDDC', angularAMD.route({
                 templateUrl: "forms/THS/HDDC/searchDC.html",
                 controller: 'HDDCController',
@@ -695,10 +718,10 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/THS/EmailSender', angularAMD.route({
-                templateUrl: "forms/THS/EmailSender.html",
-                controller: 'EmailSenderController',
-                controllerUrl: 'controllers/formMaintainControl',
+            .when('/THS/Report/StatisticReport', angularAMD.route({
+                templateUrl: "forms/THS/Statistic.html",
+                controller: 'ReportController',
+                controllerUrl: 'controllers/ReportController',
                 caseInsensitiveMatch: true,
                 resolve: {
                     User: function (AuthenticationLoader) {
@@ -706,6 +729,19 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
+
+            .when('/THS/EmailSender', angularAMD.route({
+                templateUrl: "forms/THS/EmailSender.html",
+                controller: 'EmailSenderController',
+                controllerUrl: 'controllers/ReportController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            
     }]);
     return angularAMD.bootstrap(app);
 });
