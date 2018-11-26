@@ -387,7 +387,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
                     if (resultRows.length == 1) {
-                        var href = '#/THS/DeTaiLuanVan/PhieuChamDiem' + resultRows[0].lv;
+                        var href = '#/THS/DeTaiLuanVan/PhieuChamDiem/' + resultRows[0].lv;
                         window.open(href);
                     } else {
                         Notifications.addError({

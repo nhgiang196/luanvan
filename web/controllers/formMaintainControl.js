@@ -26,7 +26,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 $scope.detaillist = [];
                 query = {};
                 query.table = 'PhanQuyen';
-                query.user = $scope.gv;
+                query.value = $scope.gv;
                 THSAdminService.FindByID(query, function (data) {
                     $scope.detaillist = data;
                 }, function (error) {

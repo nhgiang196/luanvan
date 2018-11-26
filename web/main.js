@@ -31,8 +31,8 @@
             'xlsxfull':'vendor/ui-grid/xlsx.core.min',
             'datetimepicker':'vendor/datetimepicker/jquery.datetimepicker',
             'io-barcode':'vendor/angular-io-barcode-master/build/angular-io-barcode'
+            
         },
-        //加载非规范的模块
         shim: {
             'angular' : { deps: [ 'jquery' ], exports: 'angular' },
             'angular-route': { deps: [ 'angular' ] },
@@ -67,7 +67,6 @@
   //  require(['jquery_validation_cn','jquery_validation'], function() {
   //  });
 
-    //app myapp 为js 的路径
     require(['angular-file-upload-shim','bpmn', 'angular','taffydb','uiselect2','select2','angular-resource',
         'angular-file-upload', 'bootstrap','angular-filter','higthchart','higthchartexport','moment','ui-grid','datetimepicker',
         'angular-translate','angular-translate-loader-static-files','angular-translate-loader-partial', 'angularAMD','io-barcode',

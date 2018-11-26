@@ -1,16 +1,14 @@
 {
     "development": {
         "port": "1234",
-        "bpmrest":"http://10.20.46.23:9999/default/bpm-rest-api/",
         "form":"http://localhost:1234/forms/",
         "bpmhost":"localhost",
         "bpmprot":"9999",
-        "bpmurl":"http://10.20.46.23:9999/",
         "hrrest":"http://localhost:9005/",
         "myrest":"http://localhost:9005/",
         "hrhost":"10.20.46.23",
         "hrport":"9005",
-        "datasource":"10.20.46.23",
+        "datasource":"",
         "dbuser":"sa",
         "dbpassword":"@Sql2016",
         "database":"Beling"

@@ -1,62 +1,288 @@
-<div>
-    <p>BỘ GIÁO DỤC VÀ ĐÀO TẠO CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
-    <p><strong>TRƯỜNG ĐẠI HỌC NHA TRANG Độc lập - Tự do- Hạnh phúc</strong></p>
-    <p>----------------- ---------------</p>
-    <p><strong>PHIẾU CHẤM ĐIỂM LUẬN VĂN THẠC SĨ </strong></p>
-    <p>Học viên:................................................................................Mã
-        số:................................</p>
-    <p>Tên đề tài:………………………………………………………………………………..</p>
-    <p>…………………………………………………………………………………………..</p>
-    <p>Chuyên ngành:……………………...………………………; Mã số: …………………..</p>
-    <p>Hội đồng đánh giá luận văn thạc sĩ được thành lập theo Quyết định số: ……..…/QĐ-ĐHNT ngày ……./…... /……… của Hiệu
-        trưởng Trường ĐH Nha Trang.</p>
-    <p>Ngày bảo vệ: ……./….../………,</p>
-    <p>Kết quả:</p>
+<style>
+    #page-contain {
+        font-size: 13pt;
+        padding-left: 5pt;
+        padding-top: 3pt;
+        padding-bottom: 3pt;
+        padding-left: 3pt;
+        font-family: 'Times New Roman', Times, serif;
+        margin: 15px;
+    }
+
+    @page {
+        size: A4;
+        /* margin: 0; */
+        /* size: auto; */
+        margin-top: 0mm;
+        margin-left: 0mm;
+        margin-right: 0mm;
+        margin-bottom: 0mm;
+    }
+
+
+    /* Print styling */
+
+    @media print {
+        table {
+            page-break-inside: auto
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+        }
+
+        [class*="col-sm-"] {
+            float: left;
+        }
+
+        [class*="col-xs-"] {
+            float: left;
+        }
+
+        .col-sm-12,
+        .col-xs-12 {
+            width: 100% !important;
+        }
+
+        .col-sm-11,
+        .col-xs-11 {
+            width: 91.66666667% !important;
+        }
+
+        .col-sm-10,
+        .col-xs-10 {
+            width: 83.33333333% !important;
+        }
+
+        .col-sm-9,
+        .col-xs-9 {
+            width: 75% !important;
+        }
+
+        .col-sm-8,
+        .col-xs-8 {
+            width: 66.66666667% !important;
+        }
+
+        .col-sm-7,
+        .col-xs-7 {
+            width: 58.33333333% !important;
+        }
+
+        .col-sm-6,
+        .col-xs-6 {
+            width: 50% !important;
+        }
+
+        .col-sm-5,
+        .col-xs-5 {
+            width: 41.66666667% !important;
+        }
+
+        .col-sm-4,
+        .col-xs-4 {
+            width: 33.33333333% !important;
+        }
+
+        .col-sm-3,
+        .col-xs-3 {
+            width: 25% !important;
+        }
+
+        .col-sm-2,
+        .col-xs-2 {
+            width: 16.66666667% !important;
+        }
+
+        .col-sm-1,
+        .col-xs-1 {
+            width: 8.33333333% !important;
+        }
+
+        .col-sm-1,
+        .col-sm-2,
+        .col-sm-3,
+        .col-sm-4,
+        .col-sm-5,
+        .col-sm-6,
+        .col-sm-7,
+        .col-sm-8,
+        .col-sm-9,
+        .col-sm-10,
+        .col-sm-11,
+        .col-sm-12,
+        .col-xs-1,
+        .col-xs-2,
+        .col-xs-3,
+        .col-xs-4,
+        .col-xs-5,
+        .col-xs-6,
+        .col-xs-7,
+        .col-xs-8,
+        .col-xs-9,
+        .col-xs-10,
+        .col-xs-11,
+        .col-xs-12 {
+            float: left !important;
+        }
+
+        body {
+            margin: 0;
+            padding: 0 !important;
+            min-width: 768px;
+        }
+
+        .container {
+            width: auto;
+            min-width: 750px;
+        }
+
+        /* body {
+            font-size: 10px;
+        } */
+
+        a[href]:after {
+            content: none;
+        }
+
+        .noprint,
+        div.alert,
+        header,
+        .group-media,
+        .btn,
+        .footer,
+        form,
+        #comments,
+        .nav,
+        ul.links.list-inline,
+        ul.action-links {
+            display: none !important;
+        }
+
+        .footer-page {
+            position: fixed;
+        }
+
+
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .border {
+        border-collapse: black;
+        border-style: solid;
+        border-width: 0.5px;
+
+    }
+
+    hr {
+        border: 0.5px solid black;
+    }
+
+    #bottom-footer {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+</style>
+
+<div id="page-contain">
+    <div class="row">
+        <div class="col-sm-5">
+            <strong>BỘ GIÁO DỤC VÀ ĐÀO TẠO <br>
+                TRƯỜNG ĐẠI HỌC CẦN THƠ</strong>
+        </div>
+        <div class="col-sm-7" style="text-align:center;">
+            CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            <br>Độc lập - Tự do- Hạnh phúc<br>
+            -------------------------------<br>
+
+        </div>
+    </div>
+    <p style="text-align:center;">
+        <strong>PHIẾU CHẤM ĐIỂM LUẬN VĂN THẠC SĨ </strong>
+    </p>
+
+
+    Học viên:{{dtlist.hvhoten}} &emsp; Mã số:{{dtlist.hv}}<br>
+    Tên đề tài: {{dtlist.lvten}} <br>
+    Chuyên ngành: {{dtlist.cnten}} &emsp; Mã số: {{dtlist.lv}} <br>
+    Hội đồng đánh giá luận văn thạc sĩ được thành lập theo Quyết định số: {{dtlist.hd}}/QĐ-ĐHCT ngày {{dtlist.hdngay}}
+    của Hiệu
+    trưởng Trường ĐH CẦN THƠ.<br>
+    Ngày bảo vệ: {{dtlist.hdtgbv}} <br>
+    Kết quả:<br>
     <div>
-        <table border="1" width="620" cellspacing="0" cellpadding="0">
+        <table style="table-layout: auto;" border="1" width="100%" cellspacing="0" cellpadding="5px">
             <tbody>
                 <tr>
                     <td width="79">
-                        <p><strong>TT</strong></p>
+                        <strong>TT</strong><br>
                     </td>
                     <td width="148">
-                        <p><strong>Tiêu chí đánh giá</strong></p>
+                        <strong>Tiêu chí đánh giá</strong><br>
                     </td>
                     <td width="117">
-                        <p><strong>Tỉ trọng</strong></p>
+                        <strong>Tỉ trọng</strong><br>
                     </td>
                     <td width="141">
-                        <p><strong>Điểm</strong></p>
+                        <strong>Điểm</strong><br>
                     </td>
                     <td width="135">
-                        <p><strong>Điểm đánh giá</strong></p>
+                        <strong>Điểm đánh giá</strong><br>
                     </td>
                 </tr>
                 <tr>
                     <td width="79">
-                        <p>1.</p>
+                        1.<br>
                     </td>
                     <td width="148">
-                        <p>Luận văn</p>
+                        Luận văn<br>
                     </td>
                     <td width="117">
-                        <p>50 %</p>
+                        50 %<br>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                 </tr>
                 <tr>
                     <td width="79">
-                        <p>2.</p>
+                        2.<br>
                     </td>
                     <td width="148">
-                        <p>Bảo vệ luận văn</p>
+                        Bảo vệ luận văn<br>
                     </td>
                     <td width="117">
-                        <p>50 %</p>
+                        50 %<br>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <p><em> Khánh Hòa, ngày tháng năm 2014</em></p>
-    <p><strong> NGƯỜI CHẤM</strong></p>
+    <div class="col-sm-7">
+    </div>
+    <div class="col-sm-5" style="text-align: center; padding-top:10pt;">
+        <em> Cần Thơ, {{today}}</em><br>
+        <strong> NGƯỜI CHẤM</strong><br>
+    </div>
+
 </div>

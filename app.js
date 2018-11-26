@@ -7,7 +7,7 @@ var socketio = require('socket.io');
 var log4js = require('log4js');
 log4js.configure('log4js.json');
 var logger = log4js.getLogger("app");
-logger.setLevel('TRACE');//开发调式时TRACE
+logger.setLevel('TRACE');
 logger.info('-nodejs opening---');
 /*log4js end*/
 
@@ -272,17 +272,17 @@ var GateService = require('./appservice/GateGuestService')(app, request, config,
 // var BPMService = require('./appservice/bpm')(app, request, config, express);//
 var UploadService = require('./appservice/uploadservice')(app, request, config, express);//
 var memberSignService = require('./appservice/memberSign')(app, request, basicService, config);
-app.all('/bpm/api/*', function (req, res) {
-    var x = request(config.bpmurl + req.url.replace('/bpm/api/', ''));
-    x.pipe(res).on('error', function (e) {
-        logger.error({ title: 'bpm pipe res' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: e });
-        throw e;
-    });
-    req.pipe(x).on('error', function (err) {
-        logger.error({ title: 'bpm pipe' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: err });
-        throw err;
-    });
-});
+// app.all('/bpm/api/*', function (req, res) {
+//     var x = request(config.bpmurl + req.url.replace('/bpm/api/', ''));
+//     x.pipe(res).on('error', function (e) {
+//         logger.error({ title: 'bpm pipe res' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: e });
+//         throw e;
+//     });
+//     req.pipe(x).on('error', function (err) {
+//         logger.error({ title: 'bpm pipe' + config.bpmurl + req.url.replace('/bpm/api/', ''), message: err });
+//         throw err;
+//     });
+// });
 app.all('/ehs/gate/*', function (req, res) {
     var x = request(config.hrrest + req.url.replace('/ehs/gate/', 'api/Gate/'));
     console.log(config.hrrest + req.url.replace('/ehs/gate/', 'api/Gate/'));

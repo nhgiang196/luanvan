@@ -99,21 +99,21 @@ app.delete('/api/cmis/deletefile',express.bodyParser(),function(req,res){
     }
 
 })
- app.get('/api/cmis/testfiledb',function(req,res){
-     sworm.db(conn).then(function (db) {
-         db.query('select top 10 * from FileStore order by Stamp desc', {})
-             .then(function (result) {
-               res.send(200,result);
-         })
-          .catch(function (error) {
-               log.error(error);
-               res.send(500,error);
-           })
-           .finally(function () {
-                    db.close();
-            });
-     })
- })
+//  app.get('/api/cmis/testfiledb',function(req,res){
+//      sworm.db(conn).then(function (db) {
+//          db.query('select top 10 * from FileStore order by Stamp desc', {})
+//              .then(function (result) {
+//                res.send(200,result);
+//          })
+//           .catch(function (error) {
+//                log.error(error);
+//                res.send(500,error);
+//            })
+//            .finally(function () {
+//                     db.close();
+//             });
+//      })
+//  })
   app.get('/api/cmis/downfile', function (req, res) {
       console.log(req.query.filename)
       console.log(req.query.Name)
@@ -145,27 +145,27 @@ app.delete('/api/cmis/deletefile',express.bodyParser(),function(req,res){
          res.send(500,"3232");
      }
  })
-function  SaveFileDB(projects,callback){
-        var ret = {};
-        sworm.db(conn).then(function (db) {
-            var  FileStore=   db.model({table: 'FileStore', id:['DocId']});
-            console.log(projects);
-            var p = FileStore(projects);
-            p.save().then(function () {
-                ret.IsSuccess = true;
-                ret.Msg       = "";
-            })
-            .catch(function (error) {
-                    log.error(error);
-                    ret.IsSuccess = false;
-                    ret.Msg       = error;
-            })
-            .finally(function () {
-                    db.close();
-                    callback(ret);
-            });
-        });
-    }
+// function  SaveFileDB(projects,callback){
+//         var ret = {};
+//         sworm.db(conn).then(function (db) {
+//             var  FileStore=   db.model({table: 'FileStore', id:['DocId']});
+//             console.log(projects);
+//             var p = FileStore(projects);
+//             p.save().then(function () {
+//                 ret.IsSuccess = true;
+//                 ret.Msg       = "";
+//             })
+//             .catch(function (error) {
+//                     log.error(error);
+//                     ret.IsSuccess = false;
+//                     ret.Msg       = error;
+//             })
+//             .finally(function () {
+//                     db.close();
+//                     callback(ret);
+//             });
+//         });
+//     }
 
 function DeleteFileDB(docid,callback){
     var ret = {};
