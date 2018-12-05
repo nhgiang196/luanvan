@@ -265,7 +265,7 @@ define([
                 function changestatusbyId(id) {
                     THSAdminService.cudBoMon({ action: 'changestatus', bm: id }, function (res) {
                         if (res.Success)
-                        $('#myModal').modal('hide');
+                            $('#myModal').modal('hide');
                         Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Save_Success_MSG') + + res.Message });
                         $timeout(function () { $scope.Search() }, 1000);
                     }, function (error) {
@@ -320,13 +320,12 @@ define([
                     var note = {};
                     note.bm = $scope.recod.id;
                     note.tenbm = $scope.recod.ten || '';
-                    if ($scope.status == 'M')
-                    {
+                    if ($scope.status == 'M') {
                         note.action = 'update';
                         note.bmnew = note.bm;
                         note.bm = $scope.gridApi.selection.getSelectedRows()[0].bm;
                     }
-                    
+
                     else note.action = 'create';
                     return note;
                 }
@@ -393,3 +392,4 @@ define([
             }
         ]);
     });
+

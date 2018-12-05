@@ -56,7 +56,20 @@ define([
                     method: 'POST',
                     params: { operation: 'MailSender' },
                 },
+                exec: {
+                    method: 'GET',
+                    params: { operation: 'ADC' },
+                },
+             
                 
+            })
+        }
+        THSAdminService.prototype.ADC = function (query, callback) {
+            this.GetInfoBasic.exec(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
             })
         }
         THSAdminService.prototype.SendMail = function (query, callback) {
