@@ -2,7 +2,9 @@
     .modal-lg {
         width: 900px;
     }
-
+    label .col-sm-2{
+        padding-top:50px;
+    }
     .form-table {
         width: 100%;
         display: inline-block;
@@ -26,91 +28,65 @@
 </style>
 <form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
     <legend>
-        <h3>{{'VoucherQuery'|translate}}</h3>
+        <h3>{{'ĐĂNG KÝ LUẬN VĂN'|translate}}</h3>
     </legend>
-    <div class="col-sm-12 form-group">
-        <div class="form-group search-table">
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'dateFrom'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" name="dateFrom" ng-change="setdateTo()" ng-model="dateFrom" date-picker/>
-                </div>
-                <label class="col-sm-2 control-label">{{'dateTo'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" name="dateTo" ng-model="dateTo" date-picker/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'ProcessComp'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <select class="form-control" name="ProcessComp" ng-model="process_comp" ng-options="d.CompID as d.CompName for d in company | filter:{Type:'P',Status:'1'}"
-                        required ng-disabled="IsReady">
-                        <option value="">{{'Show All' | translate}}</option>
-                    </select>
-                </div>
-                <label class="col-sm-2 control-label">{{'DepartProcess'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <select style="width:100%" ui-select2 name="DepartProcess" ng-model="depart_process">
-                        <option value="">{{'Show All' | translate}}</option>
-                        <option ng-repeat="value in departments" value="{{value.CostCenter}}">
-                            {{value.Specification}}
-                        </option>
-
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'VoucherNumber'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" name="VoucherNumber" ng-model="voucher_number">
-                </div>
-
-                <label class="col-sm-2 control-label">{{'DepartReq'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <select style="width:100%" ui-select2 name="DepartReq" ng-model="DepartReq">
-                        <option value="">{{'Show All' | translate}}</option>
-                        <option ng-repeat="value in cdepartments" value="{{value.CostCenter}}">
-                            {{value.Specification}}
-                        </option>
-
-                    </select>
-
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
-
-                <div class="col-sm-3">
-                    <select class="form-control" name="status" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
-                        <option value="">{{'Show All' | translate}}</option>
-                        Flowchart </select>
-                </div>
-                <div class="col-sm-2">
-                    <label></label>
-                </div>
-                <div class="col-sm-3">
-                    <label>
-                        <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                    </label></div>
-                <div class="col-sm-1">
-                    <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
-                    </button>
-                </div>
+    <form class="form-horizontal" role="form" name="formCompany" novalidate>
+        <H4 style="background-color: #ececec; padding:3px">{{'Thông tin đề tài luận văn'|translate}}</H4>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">*{{'lvten'|translate}}</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" ng-model="recod.lvten" required />
             </div>
         </div>
-    </div>
-    <div style="width: 100%;">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
+            <div class="col-sm-4">
+                <select class="form-control" ng-model="recod.cm" ng-options="s.cm as s.cm+'-'+s.cmten for s in lscm"></select>
+            </div>
+            
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">*{{'lvtomtat'|translate}}</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" type="text" ng-model="recod.lvtomtat" required />
+                </div>
+            </div>
+            
+        </div>
+
+            <H4 style="background-color: #ececec; padding: 5px">{{'Thông tin đăng ký'|translate}}</H4>
+            <div class="form-group">
+                    <label style="color:red;" class="col-sm-2 control-label">*{{'Giảng viên HD mong muốn'|translate}}</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" ng-model="recod.cm" ng-options="s.gv as s.gv+'-'+s.gvhoten for s in lsgv"></select>
+                    </div>
+                    
+                <label class="col-sm-2 control-label">*{{'cn'|translate}}</label>
+                <div class="col-sm-4">
+                    <select class="form-control" id="cn" ng-change="changeValueCN(recod.cn)"  ng-model="recod.cn" ng-options="s.cn as s.cnten for s in lscn"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6"></div>
+                <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
+                <div class="col-sm-4">
+                    <input class="form-control key" type="text" ng-model="recod.nk"  required />
+                </div>
+            </div>
+        </form>
+        </div>
+
+        <div class="modal-footer">
+                <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có dấu *'|translate}}</label>
+            <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
+                {{'Đăng ký'|translate}}
+            </button>
+        </div>
+    </form>
+
+    <!-- <div style="width: 100%;">
         <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination ui-grid-resize-columns ui-grid-core
             ui-grid-exporter></div>
-    </div>
-    <create_voucher></create_voucher>
+    </div> -->
 </form>

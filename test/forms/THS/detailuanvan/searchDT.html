@@ -54,7 +54,8 @@
            float: left;
        }
     </style>
-<form  ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form"
+    style="padding-top:30px">
     <legend>
         <h3>{{'detailuanvanQuery'|translate}}</h3>
     </legend>
@@ -94,7 +95,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
                 <div class="col-sm-3">
-                    <select class="form-control" name="s_status" ng-change="Search()"ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
+                    <select class="form-control" name="s_status" ng-change="Search()" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
                         <option value="">{{'Show All' | translate}}</option>
                     </select>
                 </div>
@@ -257,7 +258,8 @@
                         </button>
                         <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
                     </div>
-    
+                </form>
+                
     </div>
     <!-- /.modal-content -->
     </div>

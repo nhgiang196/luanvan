@@ -443,5 +443,6 @@
   "dateFrom": "From date",
   "waste_name_existed":"Waste Item existed in list",
   "positive_quantity_weight":"Quantity and Weight must be >0",
-  "Modified_to_X":"Deleted voucher can't be modified"
+  "Modified_to_X":"Deleted voucher can't be modified",
+  "Giảng viên": "Lectures"
 }
