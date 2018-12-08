@@ -65,7 +65,7 @@
                 </div>
                 <label class="col-sm-2 control-label">{{'bm'|translate}}</label>
                 <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="bm" />
+                    <input class="form-control" type="text" ng-model="bm" ng-disabled="!isAdmin" />
                 </div>
             </div>
             <div class="form-group">
@@ -185,7 +185,7 @@
                         </div>
                         <label class="col-sm-2 control-label">*{{'bm'|translate}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.tenbm for s in lsbm"></select>
+                            <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm"></select>
                         </div>
 
                     </div>

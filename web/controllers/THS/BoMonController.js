@@ -45,8 +45,8 @@ define([
                         //   '<a href="#/waste/BoMon/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
                     },
                     {
-                        field: "tenbm",
-                        displayName: $translate.instant("tenbm"),
+                        field: "bmten",
+                        displayName: $translate.instant("bmten"),
                         minWidth: 150,
                         cellTooltip: true,
                         visible: true
@@ -80,7 +80,7 @@ define([
                 */
                 function LoadDetails(entity) {
                     $scope.recod.id = entity.bm;
-                    $scope.recod.ten = entity.tenbm;
+                    $scope.recod.ten = entity.bmten;
                 }
                 $scope.gridOptions = {
                     columnDefs: col,
@@ -319,7 +319,7 @@ define([
                 function saveInitData() {
                     var note = {};
                     note.bm = $scope.recod.id;
-                    note.tenbm = $scope.recod.ten || '';
+                    note.bmten = $scope.recod.ten || '';
                     if ($scope.status == 'M') {
                         note.action = 'update';
                         note.bmnew = note.bm;

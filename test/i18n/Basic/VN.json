@@ -61,7 +61,7 @@
     "Status1": "Hiện có sẵn",
     "Status0": "Tắt",
     "bm": "Bộ môn",
-    "tenbm": "Tên bộ môn",
+    "bmten": "Tên bộ môn",
     "status": "Trạng thái",
     "cn": "Chuyên ngành",
     "cnten": "Tên chuyên ngành",
@@ -147,6 +147,30 @@
     "phanquyenQuery": "Truy vấn phân quyền",
     "grant" : "Cấp quyền",
     "Update": "Chỉnh sửa",
-    "Show All": "Hiển thị tất cả"
+    "Show All": "Hiển thị tất cả",
+    "StatusN":"Được thêm mới",
+    "StatusM":"Đã chỉnh sửa",
+    "StatusX":"Đã xóa",
+    "giangvienInformation" : "Thông tin giảng viên",
+    "cmgv": "Chuyên môn giảng viên",
+    "saveSubmit": "Lưu và gửi",
+    "hocvienInformation":"Thông tin học viên",
+    "bomonInformation":"Thông tin bộ môn",
+    "nienkhoaInformation":"Thông tin niên khóa",
+    "donvingoaiInformation": "Thông tin đơn vị",
+    "detailuanvanInformation": "Thông tin đề tài luận văn",
+    "chuyennganhInformation": "Thông tin chuyên ngành",
+    "chuyenmonInformation" : "Thông tin chuyên môn",
+    "hddcInformation" : "Thông tin hội đồng bảo vệ đề cương",
+    "chitiethddc" : "Thành viên hội đồng bảo vệ đề cương",
+    "lv_hddc": "Thông tin bảo vệ đề cương đề tài",
+    "chitiethdlv" : "Thành viên hội đồng luận văn",
+    "lv_hdlv" : "Thong tin bảo về đề tài luận văn",
+    "hdlvInformation" : "Thông tin hội đồng bảo vệ luận văn",
+    "dcQuery": "Truy vấn thông tin hội đồng đề cương",
+    "lvQuery":"Truy vấn thông tin hội đồng luận văn"
+
+
+
 
 }

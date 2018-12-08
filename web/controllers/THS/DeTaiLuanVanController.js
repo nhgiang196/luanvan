@@ -132,11 +132,13 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 minWidth: 80,
                 displayName: $translate.instant('lv'),
                 cellTooltip: true,
+                enableFiltering: false,
                 visible: true,
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
             },
             {
                 field: 'status',
+                enableFiltering: false,
                 displayName: $translate.instant("Status"),
                 minWidth: 160,
                 cellTooltip: true,
@@ -145,24 +147,28 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'qd',
+                enableFiltering: false,
                 minWidth: 80,
                 displayName: $translate.instant('qd'),
                 cellTooltip: true
             },
             {
                 field: 'hvhoten',
+                enableFiltering: false,
                 minWidth: 150,
                 displayName: $translate.instant('hvhoten'),
                 cellTooltip: true
             },
             {
                 field: 'cnten',
+                enableFiltering: false,
                 minWidth: 100,
                 displayName: $translate.instant('cnten'),
                 cellTooltip: true
             },
             {
                 field: 'lvten',
+                enableFiltering: false,
                 displayName: $translate.instant('lvten'),
                 minWidth: 150,
                 cellTooltip: true,
@@ -170,6 +176,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             },
             {
                 field: 'cmten',
+                enableFiltering: false,
                 displayName: $translate.instant('cmten'),
                 minWidth: 120,
                 cellTooltip: true,
@@ -286,7 +293,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 data: [],
                 enableColumnResizing: true,
                 enableSorting: true,
-                enableFiltering: true,
+                enableFiltering: false,
                 showGridFooter: false,
                 enableGridMenu: true,
                 exporterMenuPdf: false,

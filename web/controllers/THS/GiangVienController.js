@@ -3,6 +3,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, GiangVienService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             $scope.flowkey = "MHV";
+            var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            $scope.isAdmin = isAdmin;
+            $scope.bm = Auth.bm;
             $scope.recod = {};
             $scope.onlyOwner = true;
             $scope.status = '';
@@ -12,7 +15,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 totalItems: 0,
                 sort: null
             };
-
 
             $scope.detaillist = [];
             $(".key").prop('disabled', true);

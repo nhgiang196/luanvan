@@ -95,13 +95,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">*{{'bm'|translate}}</label>
                             <div class="col-sm-4">
-                                <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.tenbm for s in lsbm"></select>
+                                <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm"></select>
                             </div>
 
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">
+                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid||recod.bm.length>10">
                         {{'saveSubmit'|translate}}
                     </button>
                     <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

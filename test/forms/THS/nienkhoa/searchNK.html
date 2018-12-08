@@ -110,7 +110,7 @@ s<style>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid">
+                    <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid||recod.nk.length>10">
                         {{'saveSubmit'|translate}}
                     </button>
                     <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

@@ -88,7 +88,7 @@
                                 <input class="form-control"  type="text" name="comp_name" ng-model="recod.id"
                                     required />
                             </div>
-                            <label class="col-sm-2 control-label">*{{'tenbm'|translate}}</label>
+                            <label class="col-sm-2 control-label">*{{'bmten'|translate}}</label>
                             <div class="col-sm-4">
                                 <input class="form-control" type="text" name="comp_code" ng-model="recod.ten"
                                     required />
@@ -119,7 +119,7 @@
               
             </div>        
             <div class="modal-footer">
-                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid" >
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formCompany.$invalid||recod.id.length>10" >
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

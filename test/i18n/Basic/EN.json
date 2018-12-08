@@ -444,5 +444,29 @@
   "waste_name_existed":"Waste Item existed in list",
   "positive_quantity_weight":"Quantity and Weight must be >0",
   "Modified_to_X":"Deleted voucher can't be modified",
-  "Giảng viên": "Lectures"
+  "Giảng viên": "Lectures",
+  "QUẢN LÝ DANH MỤC": "ADMINISTRATOR",
+  "Quản lý danh mục": "Administrator",
+  "Học viên": "Students",
+  "Niên khóa" : "Courses",
+  "Đơn vị ngoài": "Collegue",
+  "Bộ môn": "Department",
+  "Đăng ký luận văn (chỉ dành cho học viên)": "Essay Requistion (only for students)",
+  "Quản lý đề tài luận văn": "Essay information management",
+  "Quản lý đề tài": "Essay information management",
+  "Chuyên ngành":"Major",
+  "Lĩnh vực chuyên môn":"Field of study",
+  "QUẢN LÝ ĐĂNG KÝ LUẬN VĂN":"MANAGEMENT OF ESSAYS INFORMATION AND REQUISTION",
+  "QUẢN LÝ THỰC HIỆN LUẬN VĂN":"COMMITES AND ESSAYS",
+  "Hội đồng bảo vệ đề cương": "Examining Committee of draft",
+  "Hội đồng bảo vệ luận văn": "Examining Committee of final",
+  "Đăng ký luận văn":"Essay Requistion",
+  "Hội đồng": "Examining",
+  "Luận văn": "Essays",
+  "Khác": "Others",
+  "Gửi mail thông báo":"Send mails",
+  "Thông tin cá nhân và mật khẩu":"Personal details & passwords",
+  "Phân quyền": "Responsibilities"
+  
+
 }
