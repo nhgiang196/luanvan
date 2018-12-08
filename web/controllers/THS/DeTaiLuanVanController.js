@@ -318,7 +318,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-                    $scope.check.value1 = true;
+                    $scope.check = {value1: true};
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');

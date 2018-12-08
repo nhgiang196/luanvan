@@ -59,6 +59,7 @@ define([
                 exec: {
                     method: 'GET',
                     params: { operation: 'ADC' },
+                    isArray : true
                 },
              
                 

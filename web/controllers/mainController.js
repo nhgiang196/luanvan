@@ -125,9 +125,9 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
                     })
                 }
                 $scope.btCheckAuth = function (key, url) {
-                    console.log('maincontroller\btCheckAuth:'+User);
-                    console.log('maincontroller\btCheckAuth:'+key);
-                    console.log('maincontroller\btCheckAuth:'+url);
+                    console.log('maincontroller\btCheckAuth:' + User);
+                    console.log('maincontroller\btCheckAuth:' + key);
+                    console.log('maincontroller\btCheckAuth:' + url);
                     EngineApi.getTcodeLink().get({
                         "userid": User,
                         "tcode": key
@@ -147,36 +147,49 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
             })
         }
     ]);
-    myapp.controller("UserInfoController", ['$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User',
-        function ($scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User) {
-        $scope.sumbit = function () {
-            if ($scope.oldP && $scope.newPassword && User) {
-                var UpdatePassword = $resource("/ths/THSAdminController/ChangePassword", {}, {
-                    update: {
-                        method: 'POST'
-                    }
-                });
-                UpdatePassword.update({
-                    "username": User,
-                    "pass": $scope.oldP,
-                    "newpass": $scope.newPassword
-                }).$promise.then(function (data) {
-                    console.log(data.message);
-                    if (data.Data != null && data.Data!='')
-                        alert("Password reset complete");
-                    else
-                        alert("You enter the wrong password");
-                }, function (errResponse) {
-                    console.log(errResponse);
-                    Notifications.addError({
-                        'status': 'error',
-                        'message': errResponse.data.Message
-                    });
-                });
-
+    myapp.controller("UserInfoController", ['Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService',
+        function (Auth, $scope, ttp, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
+            $scope.isGV = true;
+            $scope.info = {};
+            var q = { st: '' };
+            if (Auth.username.indexOf('MS') >= 0) {
+                $scope.isGV = false;
+                q.st = "select * from HocVien where hv='" + Auth.username + "'";
             }
-        }
-    }]);
+            else q.st = "select * from GiangVien where gv='" + Auth.username + "'";
+            q.st = "select * from GiangVien where gv='" + Auth.username + "'";
+            THSAdminService.ADC(q, function (data) {
+                console.log(data);
+                $scope.info = data[0];
+            });
+            $scope.sumbit = function () {
+                if ($scope.oldP && $scope.newPassword && User) {
+                    var UpdatePassword = $resource("/ths/THSAdminController/ChangePassword", {}, {
+                        update: {
+                            method: 'POST'
+                        }
+                    });
+                    UpdatePassword.update({
+                        "username": User,
+                        "pass": $scope.oldP,
+                        "newpass": $scope.newPassword
+                    }).$promise.then(function (data) {
+                        console.log(data.message);
+                        if (data.Data != null && data.Data != '')
+                            alert("Password reset complete");
+                        else
+                            alert("You enter the wrong password");
+                    }, function (errResponse) {
+                        console.log(errResponse);
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': errResponse.data.Message
+                        });
+                    });
+
+                }
+            }
+        }]);
 
 
 
