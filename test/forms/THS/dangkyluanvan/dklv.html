@@ -26,60 +26,56 @@
         margin-left: -3px;
     }
 </style>
-<form class="form-horizontal" role="form" novalidate name="form" style="padding-top:30px">
+<form class="form-horizontal" role="form" novalidate name="formDKVL" style="padding-top:30px">
     <legend>
         <h3>{{'ĐĂNG KÝ LUẬN VĂN'|translate}}</h3>
     </legend>
 
-    <form class="form-horizontal" role="form" name="formCompany" novalidate>
-        <H4 style="background-color: #ececec; padding:3px">{{'Thông tin đề tài luận văn'|translate}}</H4>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">*{{'lvten'|translate}}</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" ng-model="recod.lvten" required />
-            </div>
+    <H4 style="background-color: #ececec; padding: 5px">{{'Thông tin đăng ký'|translate}}</H4>
+    <div class="form-group">
+
+
+        <label class="col-sm-2 control-label">*{{'cn'|translate}}</label>
+        <div class="col-sm-4">
+            <select required class="form-control" id="cn" ng-change="changeValueCN(recod.cn)" ng-model="recod.cn"
+                ng-options="s.cn as s.cnten for s in lscn"></select>
         </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
-            <div class="col-sm-4">
-                <select class="form-control" ng-model="recod.cm" ng-options="s.cm as s.cm+'-'+s.cmten for s in lscm"></select>
+        <div class="col-sm-6"></div>
+        <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
+        <div class="col-sm-4">
+            <input class="form-control key" type="text" ng-model="recod.nk" required />
+        </div>
+    </div>
+    <H4 style="background-color: #ececec; padding:3px">{{'Thông tin đề tài luận văn'|translate}}</H4>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'lvten'|translate}}</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" ng-model="recod.lvten" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'cm'|translate}}</label>
+        <div class="col-sm-4">
+            <select required class="form-control" ng-disabled="recod.cn=='' ||recod.cn==null" ng-change="changeValueCM(recod.cm)"
+                ng-model="recod.cm" ng-options="s.cm as s.cm+'-'+s.cmten for s in lscm"></select>
+        </div>
+        <label style="color:red;" class="col-sm-2 control-label">*{{'Giảng viên HD mong muốn'|translate}}</label>
+        <div class="col-sm-4">
+            <select required class="form-control" ng-model="recod.gv" ng-options="s.gv as s.gv+'-'+s.gvhoten for s in lsgv"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">*{{'lvtomtat'|translate}}</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" type="text" ng-model="recod.lvtomtat" required />
             </div>
             
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">*{{'lvtomtat'|translate}}</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" type="text" ng-model="recod.lvtomtat" required />
-                </div>
-            </div>
             
         </div>
-
-            <H4 style="background-color: #ececec; padding: 5px">{{'Thông tin đăng ký'|translate}}</H4>
-            <div class="form-group">
-                    <label style="color:red;" class="col-sm-2 control-label">*{{'Giảng viên HD mong muốn'|translate}}</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" ng-model="recod.cm" ng-options="s.gv as s.gv+'-'+s.gvhoten for s in lsgv"></select>
-                    </div>
-                    
-                <label class="col-sm-2 control-label">*{{'cn'|translate}}</label>
-                <div class="col-sm-4">
-                    <select class="form-control" id="cn" ng-change="changeValueCN(recod.cn)"  ng-model="recod.cn" ng-options="s.cn as s.cnten for s in lscn"></select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-6"></div>
-                <label class="col-sm-2 control-label">*{{'nk'|translate}}</label>
-                <div class="col-sm-4">
-                    <input class="form-control key" type="text" ng-model="recod.nk"  required />
-                </div>
-            </div>
-        </form>
-        </div>
-
+    </div>
         <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có dấu *'|translate}}</label>
-            <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
+            <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="formDKVL.$invalid">
                 {{'Đăng ký'|translate}}
             </button>
         </div>

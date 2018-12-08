@@ -59,7 +59,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'GiangVien',
                     lang: lang,
                 };
-                if (Auth.nickname = 'Administrator')
+                if (Auth.nickname == 'Administrator')
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {
@@ -76,7 +76,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     Table: 'DeTaiLuanVan',
                     lang: lang,
                 };
-                if (Auth.nickname = 'Administrator')
+                if (Auth.nickname == 'Administrator')
                     query.bm = '';
                 else query.bm = Auth.bm;
                 THSAdminService.GetBasic(query, function (data) {

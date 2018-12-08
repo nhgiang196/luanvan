@@ -43,11 +43,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var deferred = $q.defer();
                 var query = {
                     table: 'Tcode',
-                    user: Auth.username,
+                    value: Auth.username,
                 };
-                if (isAdmin)
-                    query.bm = '';
-                else query.bm = Auth.bm;
                 THSAdminService.FindByID(query, function (data) {
                     console.log(data)
                     $scope.lstc = data;

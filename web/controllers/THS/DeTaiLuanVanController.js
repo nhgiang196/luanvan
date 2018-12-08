@@ -3,8 +3,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, DeTaiLuanVanService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
-            $scope.flowkey = "MLV";
+            $scope.isAdmin = isAdmin;
+            $scope.flowkey = "MDT";
+            $scope.check = { value1: true };
             $scope.recod = {};
+            $scope.bm = Auth.bm;
             $scope.onlyOwner = true;
             $scope.isError = false;
             $scope.status = '';
@@ -25,18 +28,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.lshv = [];
             $scope.lscm = [];
             $scope.lscn = [];
-            $scope.statuslist = [{
-                id: 'N',
-                name: $translate.instant('StatusN')
-            },
-            {
-                id: 'M',
-                name: $translate.instant('StatusM')
-            },
-            {
-                id: 'X',
-                name: $translate.instant('StatusX')
-            },
+            $scope.statuslist = [
+                {
+                    id: 'N',
+                    name: $translate.instant('Chờ bổ sung quyết định')
+                },
+                {
+                    id: 'M',
+                    name: $translate.instant('Chờ bảo vệ')
+                },
+                {
+                    id: 'X',
+                    name: $translate.instant('Đã hủy')
+                },
+                {
+                    id: 'E',
+                    name: $translate.instant('Hoàn thành')
+                },
             ];
             $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(), loadGiangVien()]).then(function (result) { }, function (error) {
                 Notifications.addError({
@@ -130,7 +138,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             {
                 field: 'status',
                 displayName: $translate.instant("Status"),
-                minWidth: 110,
+                minWidth: 160,
                 cellTooltip: true,
                 visible: true,
                 cellTemplate: '<span >{{grid.appScope.getStatus(row.entity.status)}}</span>'
@@ -318,7 +326,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-                    $scope.check = {value1: true};
+
+
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');
@@ -332,7 +341,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.check.value1 = false;
                     if (resultRows.length == 1) {
                         if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin") || Auth.nickname.includes("TBM")) {
                                 // $(".keyM").prop('disabled', true);
                                 loadDetails(resultRows[0].lv);
                                 $('#myModal').modal('show');
@@ -579,14 +588,18 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.qd = $scope.recod.qd || '';
                 note.cn = $scope.recod.cn || '';
                 note.hv = $scope.recod.hv || '';
-                note.lvloai = $scope.recod.lvloai || '';
+                if ($scope.status='N') 
+                    note.lvloai = Auth.username.substring(0, 2);
                 note.lvtomtat = $scope.recod.lvtomtat || '';
                 note.nk = $scope.recod.nk || '';
                 note.lvten = $scope.recod.lvten || '';
                 note.lvngaynop = $scope.recod.lvngaynop || '';
                 note.lvluutru = $scope.recod.lvluutru || '';
                 note.createby = Auth.username;
+                
                 note.HuongDans = $scope.detaillist;
+                if (note.HuongDans.length>0 && note.qd!='' && note.hv!='') note.status='M';
+                else note.status='N';
                 return note;
             }
             /**

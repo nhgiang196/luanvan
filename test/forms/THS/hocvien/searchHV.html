@@ -61,7 +61,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">{{'hv'|translate}}</label>
                 <div class="col-sm-3">
-                    <input  class="form-control" type="text" ng-model="hv" />
+                    <input class="form-control" type="text" ng-model="hv" />
                 </div>
                 <label class="col-sm-2 control-label">{{'cn'|translate}}</label>
                 <div class="col-sm-3">
@@ -125,21 +125,14 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'hvgioitinh'|translate}}</label>
                         <div class="col-sm-4">
-                            <input class="form-control " type="text" ng-model="recod.hvgioitinh" required />
+                            <select class="form-control " type="text" ng-model="recod.hvgioitinh" required>
+                                <option value="Nam">Nam</option>
+                                <option value="Nữ">Nữ</option>
+                            </select>
                         </div>
                         <label class="col-sm-2 control-label">*{{'hvngaysinh'|translate}}</label>
                         <div class="col-sm-4">
                             <input date-picker class="form-control" type="text" ng-model="recod.hvngaysinh" required />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'hvngaydkdt'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input date-picker class="form-control " type="text" ng-model="recod.hvngaydkdt" required />
-                        </div>
-                        <label class="col-sm-2 control-label">*{{'hvngaydkbv'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input date-picker class="form-control" type="text" ng-model="recod.hvngaydkbv" required />
                         </div>
                     </div>
                     <div class="form-group">

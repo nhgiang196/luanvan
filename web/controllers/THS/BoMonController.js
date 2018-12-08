@@ -247,9 +247,9 @@ define([
                 */
                 $scope.Search = function () {
                     // var query = SearchList();
-                    var query = {};
+                    var query = {st:"SELECT * FROM BoMon"};
                     query.table = "BoMon";
-                    THSAdminService.GetAll(
+                    THSAdminService.ADC(
                         query,
                         function (res) {
                             $scope.gridOptions.data = res;
