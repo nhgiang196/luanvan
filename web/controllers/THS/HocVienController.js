@@ -13,7 +13,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 sort: null
             };
 
-            
+
             $scope.detaillist = [];
             $(".key").prop('disabled', true);
             $scope.recod = {};
@@ -23,19 +23,19 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.lscn = [];
             $scope.lsnk = [];
             $scope.statuslist = [{
-                    id: 'N',
-                    name: $translate.instant('StatusN')
-                },
-                {
-                    id: 'M',
-                    name: $translate.instant('StatusM')
-                },
-                {
-                    id: 'X',
-                    name: $translate.instant('StatusX')
-                },
+                id: 'N',
+                name: $translate.instant('StatusN')
+            },
+            {
+                id: 'M',
+                name: $translate.instant('StatusM')
+            },
+            {
+                id: 'X',
+                name: $translate.instant('StatusX')
+            },
             ];
-            $q.all([loadChuyenNganh(),loadNienKhoa()]).then(function (result) {}, function (error) {
+            $q.all([loadChuyenNganh(), loadNienKhoa()]).then(function (result) { }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -84,100 +84,97 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
 
             var col = [{
-                    field: 'hv',
-                    minWidth: 80,
-                    displayName: $translate.instant('hv'),
-                    cellTooltip: true,
-                    visible: true,
-                    filter: {
-                        condition: function (searchTerm, cellValue) {
-                            return cellValue.match(/a/);
-                        }
-                    }
-                    // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
-                },
-                {
-                    field: 'status',
-                    displayName: $translate.instant("Status"),
-                    minWidth: 110,
-                    cellTooltip: true,
-                    visible: true,
-                    cellTemplate: '<span >{{grid.appScope.getStatus(row.entity.status)}}</span>'
-                },
-                {
-                    field: 'hvhoten',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvhoten'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvgioitinh',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvgioitinh'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvngaysinh',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvngaysinh'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvngaydkdt',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvngaydkdt'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvngaydkbv',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvngaydkbv'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvquequan',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvquequan'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hvsodienthoai',
-                    minWidth: 100,
-                    displayName: $translate.instant('hvsodienthoai'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'hveil',
-                    minWidth: 100,
-                    displayName: $translate.instant('hveil'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'createby',
-                    minWidth: 80,
-                    displayName: $translate.instant('createby'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'ctime',
-                    minWidth: 120,
-                    displayName: $translate.instant('ctime'),
-                    cellTooltip: true,
-                    // cellTemplate: '<span >{{grid.appScope.getDate(row.entity.ctime)}}</span>'
-                },
-                {
-                    field: 'modifyby',
-                    minWidth: 80,
-                    displayName: $translate.instant('modifyby'),
-                    cellTooltip: true
-                },
-                {
-                    field: 'mtime',
-                    minWidth: 120,
-                    displayName: $translate.instant('mtime'),
-                    cellTooltip: true,
-                    // cellTemplate: '<span >{{grid.appScope.getDate(row.entity.mtime)}}</span>'
-                },
+                field: 'hv',
+                minWidth: 80,
+                displayName: $translate.instant('hv'),
+                cellTooltip: true,
+                visible: true,
+                // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
+                cellTemplate: '<a href="javascript:void(0)" ng-click="grid.appScope.UpdateFunction(row.entity.hv)">{{row.entity.hv}}</a>'
+            },
+            {
+                field: 'status',
+                displayName: $translate.instant("Status"),
+                minWidth: 110,
+                cellTooltip: true,
+                visible: true,
+                cellTemplate: '<span >{{grid.appScope.getStatus(row.entity.status)}}</span>'
+
+            },
+            {
+                field: 'hvhoten',
+                minWidth: 100,
+                displayName: $translate.instant('hvhoten'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvgioitinh',
+                minWidth: 100,
+                displayName: $translate.instant('hvgioitinh'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvngaysinh',
+                minWidth: 100,
+                displayName: $translate.instant('hvngaysinh'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvngaydkdt',
+                minWidth: 100,
+                displayName: $translate.instant('hvngaydkdt'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvngaydkbv',
+                minWidth: 100,
+                displayName: $translate.instant('hvngaydkbv'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvquequan',
+                minWidth: 100,
+                displayName: $translate.instant('hvquequan'),
+                cellTooltip: true
+            },
+            {
+                field: 'hvsodienthoai',
+                minWidth: 100,
+                displayName: $translate.instant('hvsodienthoai'),
+                cellTooltip: true
+            },
+            {
+                field: 'hveil',
+                minWidth: 100,
+                displayName: $translate.instant('hveil'),
+                cellTooltip: true
+            },
+            {
+                field: 'createby',
+                minWidth: 80,
+                displayName: $translate.instant('createby'),
+                cellTooltip: true
+            },
+            {
+                field: 'ctime',
+                minWidth: 120,
+                displayName: $translate.instant('ctime'),
+                cellTooltip: true,
+                // cellTemplate: '<span >{{grid.appScope.getDate(row.entity.ctime)}}</span>'
+            },
+            {
+                field: 'modifyby',
+                minWidth: 80,
+                displayName: $translate.instant('modifyby'),
+                cellTooltip: true
+            },
+            {
+                field: 'mtime',
+                minWidth: 120,
+                displayName: $translate.instant('mtime'),
+                cellTooltip: true,
+                // cellTemplate: '<span >{{grid.appScope.getDate(row.entity.mtime)}}</span>'
+            },
             ];
             $scope.getStatus = function (Status) {
                 var statLen = $filter('filter')($scope.statuslist, {
@@ -200,11 +197,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.detaillist = [];
                     data.Details.forEach(element => {
                         var x = {};
-                            x.cn = element.cn;
-                            x.cnten = element.cn+'-'+element.cnten;
-                            x.bm = element.bm;
-                            x.nk = element.nk;
-                            $scope.detaillist.push(x);
+                        x.cn = element.cn;
+                        x.cnten = element.cn + '-' + element.cnten;
+                        x.bm = element.bm;
+                        x.nk = element.nk;
+                        $scope.detaillist.push(x);
                     })
                 }, function (error) {
                     Notifications.addError({
@@ -255,70 +252,45 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }
             };
             var gridMenu = [{
-                    title: $translate.instant('Create'),
-                    action: function () {
-                        $scope.reset();
-                        $scope.status = 'N';
-                        $('#myModal').modal('show');
-                    },
-                    order: 1
-                }, {
-                    title: $translate.instant('Update'),
-                    action: function () {
-                        var resultRows = $scope.gridApi.selection.getSelectedRows();
-                        $scope.status = 'M'; //Set update Status
-                        if (resultRows.length == 1) {
-                            if (resultRows[0].Status != 'X') {
-                                if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
-                                    // $(".keyM").prop('disabled', true);
-                                    loadDetails(resultRows[0].hv);
-                                    $('#myModal').modal('show');
-                                } else {
-                                    Notifications.addError({
-                                        'status': 'error',
-                                        'message': $translate.instant('ModifyNotBelongUserID')
-                                    })
-                                }
-                            } else {
-                                Notifications.addError({
-                                    'status': 'error',
-                                    'message': $translate.instant('Modified_to_X')
-                                });
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Select_ONE_MSG')
-                            });
-                        }
-                    },
-                    order: 2
+                title: $translate.instant('Create'),
+                action: function () {
+                    $scope.reset();
+                    $scope.status = 'N';
+                    $('#myModal').modal('show');
                 },
-                {
-                    title: $translate.instant('Delete'),
-                    action: function () {
-                        var resultRows = $scope.gridApi.selection.getSelectedRows();
-                        // if (resultRows[0].UserID == Auth.username) {
-                        if (resultRows.length == 1) {
-                            if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].hv)) {
-                                deleteById(resultRows[0]);
+                order: 1
+            }, {
+                title: $translate.instant('Update'),
+                action: function () {
+                    $scope.UpdateFunction('');
+                },
+                order: 2
+            },
+            {
+                title: $translate.instant('Delete'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    // if (resultRows[0].UserID == Auth.username) {
+                    if (resultRows.length == 1) {
+                        if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].hv)) {
+                            deleteById(resultRows[0]);
 
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Select_ONE_MSG')
-                            });
                         }
-                        // } else {
-                        //     Notifications.addError({
-                        //         'status': 'error',
-                        //         'message': $translate.instant('ModifyNotBelongUserID')
-                        //     })
-                        // }
-                    },
-                    order: 3
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+                    }
+                    // } else {
+                    //     Notifications.addError({
+                    //         'status': 'error',
+                    //         'message': $translate.instant('ModifyNotBelongUserID')
+                    //     })
+                    // }
                 },
+                order: 3
+            },
                 // {
                 //     title: $translate.instant('PrintReport'),
                 //     action: function () {
@@ -336,7 +308,42 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 //     order: 4
                 // }
             ];
+            $scope.UpdateFunction = function (data) {
+                var resultRows = $scope.gridApi.selection.getSelectedRows();
+                $scope.status = 'M'; //Set update Status
+                if (data != '') {
+                    $scope.keyM=true;
+                    loadDetails(data);
+                    $('#myModal').modal('show');
+                    return;
+                }
+                else if (resultRows.length == 1) {
+                    if (resultRows[0].Status != 'X') {
+                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                            loadDetails(resultRows[0].hv);
+                            $scope.keyM=false;
+                            $('#myModal').modal('show');
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Modified_to_X')
+                        });
+                    }
+                } else {
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('Select_ONE_MSG')
+                    });
+                }
 
+
+            }
             function deleteById(entity) {
                 var data = {
                     hv: entity.hv,
@@ -401,7 +408,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
-                $(".keyM").prop('disabled', false);
+                $scope.keyM = false;
                 $('#myModal').modal('hide');
             }
             $scope.addItem = function () {
@@ -414,7 +421,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         var myitem = {}
                         myitem.hv = '';
                         myitem.cn = $scope.items.cn;
-                        myitem.bm = $scope.lscn.filter(x=>x.cn==myitem.cn)[0].bm;
+                        myitem.bm = $scope.lscn.filter(x => x.cn == myitem.cn)[0].bm;
                         myitem.nk = $scope.items.nk;
                         myitem.cnten = $('#cn option:selected').text();
                         myitem.nkten = $('#nk option:selected').text();
@@ -471,17 +478,17 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             function updateByID(data) {
                 HocVienService.Update(data, function (res) {
-                        if (res.Success) {
-                            $('#myModal').modal('hide');
-                            Notifications.addMessage({
-                                'status': 'information',
-                                'message': $translate.instant('Save_Success_MSG') + +res.Message
-                            });
-                            $timeout(function () {
-                                $scope.Search()
-                            }, 1000);
-                        }
-                    },
+                    if (res.Success) {
+                        $('#myModal').modal('hide');
+                        Notifications.addMessage({
+                            'status': 'information',
+                            'message': $translate.instant('Save_Success_MSG') + +res.Message
+                        });
+                        $timeout(function () {
+                            $scope.Search()
+                        }, 1000);
+                    }
+                },
                     function (error) {
                         Notifications.addError({
                             'status': 'error',

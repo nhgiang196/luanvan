@@ -24,10 +24,10 @@
            }
     </style>
 <form></form>
-<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate name="form"
+<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate
     style="padding-top:30px">
     <legend>
-        <h3>{{'giangvienQuery'|translate}}</h3>
+        <h3>{{'lvQuery'|translate}}</h3>
     </legend>
     <div class="col-sm-12 form-group">
         <div class="form-group search-table">
@@ -263,7 +263,9 @@
                                 {{item.ykien}}
                             </td>
                             <td width="10%">
-                                <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                                <a ng-click="deleteItem($index)" ng-hide="keyM"  class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                                <a ng-click="print(item.lv)" ng-hide="!keyM" class="btn-xs btn btn-info">{{'Print'|translate}}</a>
+                                
                             </td>
                         </tr>
                     </table>
@@ -272,7 +274,7 @@
             <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có
                     dấu *'|translate}}</label>
-                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="main_form.$invalid||detaillist.length<1">
+                <button type="button" id="btnSubmit" ng-hide="keyM" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="main_form.$invalid||detaillist.length<1">
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

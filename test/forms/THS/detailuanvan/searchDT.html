@@ -120,7 +120,7 @@
     </div>
 </form>
 <!-- MODAL  -->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" 
     data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -252,7 +252,7 @@
                                 {{item.vaitrohuongdan}}
                             </td>
                             <td width="10%">
-                                <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                                <a ng-click="deleteItem($index)" ng-hide="keyM" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
                             </td>
                         </tr>
                     </table>
@@ -260,7 +260,7 @@
             <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các
                     trường có dấu *'|translate}}</label>
-                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
+                <button type="button" id="btnSubmit" ng-hide="keyM" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="">
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

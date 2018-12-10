@@ -95,7 +95,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 minWidth: 80,
                 displayName: $translate.instant('dc'),
                 cellTooltip: true,
-                visible: true
+                visible: true,
+                cellTemplate: '<a href="javascript:void(0)" ng-click="grid.appScope.UpdateFunction(row.entity.dc)">{{row.entity.dc}}</a>'
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
             },
             {
@@ -189,10 +190,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }, function (data) {
                     $scope.recod = data.Header[0];
                     $scope.cthd[0] = data.CTHDDC[0] || {};
-                    $scope.cthd[3] = data.CTHDDC[1]|| {};
-                    $scope.cthd[4] = data.CTHDDC[2]|| {};
-                    $scope.cthd[2] = data.CTHDDC[3]|| {};
-                    $scope.cthd[1] = data.CTHDDC[4]|| {};
+                    $scope.cthd[3] = data.CTHDDC[1] || {};
+                    $scope.cthd[4] = data.CTHDDC[2] || {};
+                    $scope.cthd[2] = data.CTHDDC[3] || {};
+                    $scope.cthd[1] = data.CTHDDC[4] || {};
                     $scope.detaillist = [];
                     data.HDDC.forEach(element => {
                         var x = {};
@@ -270,32 +271,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }, {
                 title: $translate.instant('Update'),
                 action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.status = 'M'; //Set update Status
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
-                                // $(".keyM").prop('disabled', true);
-                                loadDetails(resultRows[0].dc);
-                                $('#myModal').modal('show');
-                            } else {
-                                Notifications.addError({
-                                    'status': 'error',
-                                    'message': $translate.instant('ModifyNotBelongUserID')
-                                })
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
+                    $scope.UpdateFunction('');
                 },
                 order: 2
             },
@@ -362,6 +338,43 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     });
                 })
             }
+            $scope.UpdateFunction = function (data) {
+                var resultRows = $scope.gridApi.selection.getSelectedRows();
+                $scope.status = 'M'; //Set update Status
+                if (data != '') {
+                    $scope.keyM = true;
+                    loadDetails(data);
+                    $('#myModal').modal('show');
+                    return;
+                }
+                else
+                    if (resultRows.length == 1) {
+                        if (resultRows[0].Status != 'X') {
+                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                                // $(".keyM").prop('disabled', true);
+                                loadDetails(resultRows[0].dc);
+                                $('#myModal').modal('show');
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('ModifyNotBelongUserID')
+                                })
+                            }
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('Modified_to_X')
+                            });
+                        }
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+                    }
+
+
+            }
             /**
              *search list function
              */
@@ -401,6 +414,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
+                $scope.keyM = true;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -494,8 +508,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             function checkerror() {
                 var cthd = $scope.cthd;
-                for (var i = 0; i < cthd.length-1; i++) {
-                    for (var j = i+1; j < cthd.length; j++) {
+                for (var i = 0; i < cthd.length - 1; i++) {
+                    for (var j = i + 1; j < cthd.length; j++) {
                         if (cthd[i].gv == cthd[j].gv) {
                             Notifications.addError({
                                 'status': 'error',

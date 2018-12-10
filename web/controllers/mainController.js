@@ -149,19 +149,30 @@ define(['myapp', 'angular', 'bpmn'], function (myapp, angular, Bpmn) {
     ]);
     myapp.controller("UserInfoController", ['Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService',
         function (Auth, $scope, ttp, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
+            // var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            // $scope.isAdmin = isAdmin;
             $scope.isGV = true;
             $scope.info = {};
             var q = { st: '' };
             if (Auth.username.indexOf('MS') >= 0) {
                 $scope.isGV = false;
-                q.st = "select * from HocVien where hv='" + Auth.username + "'";
+                q.st = "select * from HocVien h LEFT JOIN HocCN hc ON h.hv=hc.hv \
+                LEFT JOIN ChuyenNganh cn ON cn.cn=hc.cn\
+                LEFT JOIN DeTaiLV dt ON dt.hv = dt.hv and cn.cn=dt.cn\
+            	LEFT JOIN HDLV hd ON hd.lv = dt.lv\
+				LEFT JOIN HuongDan a ON a.lv= dt.lv\
+				JOIn GiangVien gv ON gv.gv = a.gv\
+                where h.hv='" + Auth.username +  "'";
             }
-            else q.st = "select * from GiangVien where gv='" + Auth.username + "'";
-            q.st = "select * from GiangVien where gv='" + Auth.username + "'";
+            else q.st = "select * from GiangVien g LEFT JOIN CMGV \
+             c ON g.gv=c.gv LEFT JOIN LinhVucChuyenMon l ON l.cm=c.cm \
+             where g.gv='" + Auth.username + "'";
             THSAdminService.ADC(q, function (data) {
                 console.log(data);
                 $scope.info = data[0];
+                $scope.detail = data;
             });
+                    
             $scope.sumbit = function () {
                 if ($scope.oldP && $scope.newPassword && User) {
                     var UpdatePassword = $resource("/ths/THSAdminController/ChangePassword", {}, {

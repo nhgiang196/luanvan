@@ -465,39 +465,6 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/waste/Voucher/print/:code', angularAMD.route({
-                templateUrl: "forms/EHS/Voucher/detail.html",
-                controller: 'VoucherDetailController',
-                controllerUrl: 'controllers/EHS/Waste/VoucherDetailController',
-                caseInsensitiveMatch: true,
-                resolve: {
-                    User: function (AuthenticationLoader) {
-                        return AuthenticationLoader();
-                    }
-                }
-            }))
-            .when('/waste/WasteItem', angularAMD.route({
-                templateUrl: "forms/EHS/WasteItem/search.html",
-                controller: 'WasteItemController',
-                controllerUrl: 'controllers/EHS/Waste/WasteItemController',
-                caseInsensitiveMatch: true,
-                resolve: {
-                    User: function (AuthenticationLoader) {
-                        return AuthenticationLoader();
-                    }
-                }
-            }))
-            .when('/waste/Voucher', angularAMD.route({
-                templateUrl: "forms/EHS/Voucher/search.html",
-                controller: 'VoucherController',
-                controllerUrl: 'controllers/EHS/Waste/VoucherController',
-                caseInsensitiveMatch: true,
-                resolve: {
-                    User: function (AuthenticationLoader) {
-                        return AuthenticationLoader();
-                    }
-                }
-            }))
             .when('/THS/GiangVien', angularAMD.route({
                 templateUrl: "forms/THS/GiangVien/search.html",
                 controller: 'GiangVienController',
@@ -587,7 +554,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                 }
             }))
             .when('/THS/DeTaiLuanVan/DeNghiChinhSua/:lv', angularAMD.route({
-                templateUrl: "forms/THS/DeTaiLuanVan/print_bbchinhsua.html",
+                templateUrl: "forms/THS/printHDLV/print_bbchinhsua.html",
                 controller: 'DeNghiChinhSuaController',
                 controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
                 caseInsensitiveMatch: true,
@@ -611,6 +578,17 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
             .when('/THS/DeTaiLuanVan/PhieuChamDiem/:lv', angularAMD.route({
                 templateUrl: "forms/THS/DeTaiLuanVan/print_phieucham.html",
                 controller: 'PhieuChamDiemController',
+                controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            .when('/THS/HDLV/printHDLV/:lv', angularAMD.route({
+                templateUrl: "forms/THS/hdlv/print_HDLV.html",
+                controller: 'rpHDLVController',
                 controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',
                 caseInsensitiveMatch: true,
                 resolve: {

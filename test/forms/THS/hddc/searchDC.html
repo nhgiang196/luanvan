@@ -263,7 +263,7 @@
                                 {{item.ykien}}
                             </td>
                             <td width="10%">
-                                <a ng-click="deleteItem($index)" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                                <a ng-click="deleteItem($index)" ng-hide="keyM" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
                             </td>
                         </tr>
                     </table>
@@ -272,7 +272,7 @@
             <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có
                     dấu *'|translate}}</label>
-                <button type="button" id="btnSubmit" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="main_form.$invalid||detaillist.length<1">
+                <button type="button" id="btnSubmit" ng-hide="keyM" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="main_form.$invalid||detaillist.length<1">
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

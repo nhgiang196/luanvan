@@ -95,7 +95,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 minWidth: 80,
                 displayName: $translate.instant('hd'),
                 cellTooltip: true,
-                visible: true
+                visible: true,
+                cellTemplate: '<a href="javascript:void(0)" ng-click="grid.appScope.UpdateFunction(row.entity.hd)">{{row.entity.hd}}</a>'
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
             },
             {
@@ -188,11 +189,11 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     hd: id
                 }, function (data) {
                     $scope.recod = data.Header[0];
-                    $scope.cthd[0] = data.CTHDLV[0] || {};
-                    $scope.cthd[3] = data.CTHDLV[1]|| {};
-                    $scope.cthd[4] = data.CTHDLV[2]|| {};
-                    $scope.cthd[2] = data.CTHDLV[3]|| {};
-                    $scope.cthd[1] = data.CTHDLV[4]|| {};
+                    $scope.cthd[0].gv = data.CTHDLV[0].gv || ''; //chủ tịch
+                    $scope.cthd[3].gv = data.CTHDLV[1].gv || ''; //phản biện 1
+                    $scope.cthd[4].gv = data.CTHDLV[2].gv || ''; //phản biện 2
+                    $scope.cthd[2].gv = data.CTHDLV[3].gv || ''; //thư ký
+                    $scope.cthd[1].gv = data.CTHDLV[4].gv || ''; //ủy viên
                     $scope.detaillist = [];
                     data.HDLV.forEach(element => {
                         var x = {};
@@ -270,32 +271,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }, {
                 title: $translate.instant('Update'),
                 action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.status = 'M'; //Set update Status
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
-                                // $(".keyM").prop('disabled', true);
-                                loadDetails(resultRows[0].hd);
-                                $('#myModal').modal('show');
-                            } else {
-                                Notifications.addError({
-                                    'status': 'error',
-                                    'message': $translate.instant('ModifyNotBelongUserID')
-                                })
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
+                    $scope.UpdateFunction('');
                 },
                 order: 2
             },
@@ -361,7 +337,50 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         'message': $translate.instant('deleteError') + error
                     });
                 })
+            };
+            $scope.UpdateFunction = function (data) {
+                var resultRows = $scope.gridApi.selection.getSelectedRows();
+                $scope.status = 'M'; //Set update Status
+                if (data != '') {
+                    $scope.keyM = true;
+                    loadDetails(data);
+                    $('#myModal').modal('show');
+                    return;
+                }
+                else if (resultRows.length == 1) {
+                    if (resultRows[0].Status != 'X') {
+                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                            // $(".keyM").prop('disabled', true);
+                            loadDetails(resultRows[0].hd);
+                            $scope.keyM = false;
+                            $('#myModal').modal('show');
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Modified_to_X')
+                        });
+                    }
+                } else {
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('Select_ONE_MSG')
+                    });
+                }
+
+
             }
+            $scope.print = function (code) {
+
+                var href = '#/THS/HDLV/printHDLV/' + code;
+                window.open(href);
+            }
+
             /**
              *search list function
              */
@@ -401,6 +420,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
+                $scope.keyM = false;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -494,8 +514,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
              */
             function checkerror() {
                 var cthd = $scope.cthd;
-                for (var i = 0; i < cthd.length-1; i++) {
-                    for (var j = i+1; j < cthd.length; j++) {
+                for (var i = 0; i < cthd.length - 1; i++) {
+                    for (var j = i + 1; j < cthd.length; j++) {
                         if (cthd[i].gv == cthd[j].gv) {
                             Notifications.addError({
                                 'status': 'error',

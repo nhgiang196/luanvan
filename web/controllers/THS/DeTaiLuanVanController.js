@@ -134,6 +134,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 cellTooltip: true,
                 enableFiltering: false,
                 visible: true,
+                cellTemplate: '<a href="javascript:void(0)" ng-click="grid.appScope.UpdateFunction(row.entity.lv)">{{row.entity.lv}}</a>'
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
             },
             {
@@ -334,7 +335,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $scope.reset();
                     $scope.status = 'N';
 
-
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');
@@ -343,33 +343,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }, {
                 title: $translate.instant('Update'),
                 action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.status = 'M'; //Set update Status
-                    $scope.check.value1 = false;
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin") || Auth.nickname.includes("TBM")) {
-                                // $(".keyM").prop('disabled', true);
-                                loadDetails(resultRows[0].lv);
-                                $('#myModal').modal('show');
-                            } else {
-                                Notifications.addError({
-                                    'status': 'error',
-                                    'message': $translate.instant('ModifyNotBelongUserID')
-                                })
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
+                    $scope.UpdateFunction('');
                 },
                 order: 2
             },
@@ -467,6 +441,43 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     });
                 })
             }
+            $scope.UpdateFunction = function (data) {
+                var resultRows = $scope.gridApi.selection.getSelectedRows();
+                $scope.status = 'M'; //Set update Status
+                $scope.check.value1 = false;
+                if (data != '') {
+                    $scope.keyM = true;
+                    loadDetails(data);
+                    $('#myModal').modal('show');
+                    return;
+                }
+                else if (resultRows.length == 1) {
+                    if (resultRows[0].Status != 'X') {
+                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin") || Auth.nickname.includes("TBM")) {
+                            // $(".keyM").prop('disabled', true);
+                            loadDetails(resultRows[0].lv);
+                            $scope.keyM=false;
+                            $('#myModal').modal('show');
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Modified_to_X')
+                        });
+                    }
+                } else {
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('Select_ONE_MSG')
+                    });
+                }
+
+            }
             /**
              *search list function
              */
@@ -542,6 +553,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
+                $scope.keyM = false;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -595,7 +607,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.qd = $scope.recod.qd || '';
                 note.cn = $scope.recod.cn || '';
                 note.hv = $scope.recod.hv || '';
-                if ($scope.status='N') 
+                if ($scope.status == 'N')
                     note.lvloai = Auth.username.substring(0, 2);
                 note.lvtomtat = $scope.recod.lvtomtat || '';
                 note.nk = $scope.recod.nk || '';
@@ -603,10 +615,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.lvngaynop = $scope.recod.lvngaynop || '';
                 note.lvluutru = $scope.recod.lvluutru || '';
                 note.createby = Auth.username;
-                
+
                 note.HuongDans = $scope.detaillist;
-                if (note.HuongDans.length>0 && note.qd!='' && note.hv!='') note.status='M';
-                else note.status='N';
+                if (note.HuongDans.length > 0 && note.qd != '' && note.hv != '') note.status = 'M';
+                else note.status = 'N';
                 return note;
             }
             /**

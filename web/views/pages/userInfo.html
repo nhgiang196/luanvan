@@ -3,7 +3,96 @@
         <h3>{{ 'Thông tin cá nhân' | translate }}</h3>
     </legend>
 
+    <div ng-hide="!isGV">
+        <p><strong>GIẢNG VIÊN</strong></p>
+        <p>Mã số: {{info.gv}} </p>
+        <p>Họ và tên: {{info.gvhoten}}</p>
+        <p>Giới tính: {{info.gvgioitinh}}</p>
+        <p>Ngày sinh: {{info.gvngaysinh}}</p>
+        <p>Số điện thoại: {{info.gvsdt}}</p>
+        <p>Đơn vị: {{info.dv}}</p>
+        <p>Email: {{info.gveil}}</p>
+        <p>Quê quán: {{info.gvnoio}}</p>
+        <p>Chức danh: {{info.gvchucdanh}}</p>
+        <p>Năm công tác: {{info.gvnamcongtac}}</p>
+        <p>Quốc tịch: {{info.gvquoctich}}</p>
+        <p>Lĩnh vực chuyên môn
+            <div ng-repeat="row in detail">
+                - {{row['cmten']}}<br>
+            </div>    
+        </p>
+
+    </div>
+    <div ng-hide="isGV">
+        <p><strong>HỌC VIÊN:</strong></p>
+        <p>Mã số: {{info.hv}} </p>
+        <p>Họ và tên: {{info.hvhoten}} </p>
+        <p>Giới tính: {{info.hvgioitinh}} </p>
+        <p>Ngày sinh: {{info.hvngaysinh}} </p>
+        <p>Số điện thoại: {{info.hvsodienthoai}} </p>
+        <p>Email: {{info.hveil}} </p>
+        <p>Quê quán: {{info.hvquequan}} </p>
+        <p>Ngày đăng ký luận văn: {{info.hvngaydkdt}} </p>
+        <p>Ngày bảo vệ luận văn: {{info.hvngaydkbv}} </p>
+        <p>Danh sách đề tài đã đăng ký:</p>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>
+                        <p>STT</p>
+                    </td>
+                    <td>
+                        <p>Niên khóa</p>
+                    </td>
+                    <td>
+                        <p>Chuyên ngành</p>
+                    </td>
+                    <td>
+                        <p>Đề tài</p>
+                    </td>
+                    <td>
+                        <p>Giảng viên hướng dẫn</p>
+                    </td>
+                    <td>
+                        <p>Kết quả</p>
+                    </td>
+                    <td>
+                        <p>Điểm chấm</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody >
+                <tr ng-repeat="row in detail">
+                    <td>
+                        <p> {{$index +1}} </p>
+                    </td>
+                    <td>
+                        <p>{{row['nk']}} </p>
+                    </td>
+                    <td>
+                        <p>{{row['cnten']}} </p>
+                    </td>
+                    <td>
+                        <p>{{row['lvten']}} </p>
+                    </td>
+                    <td>
+                        <p> {{row['gvhoten']}} </p>
+                    </td>
+                    <td>
+                        <p> {{row['ketqua']}} </p>
+                    </td>
+                    <td>
+                        <p> {{row['diem']}} </p>
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </form>
+<form></form>
 <form class="form-horizontal" role="form" novalidate name="form">
     <legend>
         <h3>{{ 'ChangePassword' | translate }}</h3>

@@ -37,7 +37,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 name: $translate.instant('StatusX')
             },
             ];
-            $q.all([loadChuyenMon(),loadBoMon(),loadDonViNgoai()]).then(function (result) { }, function (error) {
+            $q.all([loadChuyenMon(), loadBoMon(), loadDonViNgoai()]).then(function (result) { }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -107,8 +107,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 minWidth: 80,
                 displayName: $translate.instant('gv'),
                 cellTooltip: true,
-                visible: true
+                visible: true,
                 // cellTemplate: '<a href="#/waste/Voucher/print/{{COL_FIELD}}" style="padding:5px;display:block; cursor:pointer" target="_blank">{{COL_FIELD}}</a>'
+                cellTemplate: '<a href="javascript:void(0)" ng-click="grid.appScope.UpdateFunction(row.entity.gv)">{{row.entity.gv}}</a>'
             },
             {
                 field: 'status',
@@ -122,6 +123,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 field: 'gvhoten',
                 minWidth: 100,
                 displayName: $translate.instant('gvhoten'),
+                cellTooltip: true
+            },
+            {
+                field: 'cv',
+                minWidth: 100,
+                displayName: $translate.instant('Chức vụ'),
                 cellTooltip: true
             },
             {
@@ -302,39 +309,16 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-                    $scope.recod.dv='TCT';
+
+                    $scope.recod.dv = 'TCT';
                     $('#myModal').modal('show');
                 },
                 order: 1
             }, {
                 title: $translate.instant('Update'),
                 action: function () {
-                    var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    $scope.status = 'M'; //Set update Status
-                    if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
-                            if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
-                                // $(".keyM").prop('disabled', true);
-                                loadDetails(resultRows[0].gv);
-                                $('#myModal').modal('show');
-                            } else {
-                                Notifications.addError({
-                                    'status': 'error',
-                                    'message': $translate.instant('ModifyNotBelongUserID')
-                                })
-                            }
-                        } else {
-                            Notifications.addError({
-                                'status': 'error',
-                                'message': $translate.instant('Modified_to_X')
-                            });
-                        }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
+                    $scope.UpdateFunction('');
+
                 },
                 order: 2
             },
@@ -380,7 +364,41 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 //     order: 4
                 // }
             ];
-
+            $scope.UpdateFunction = function (data) {
+                var resultRows = $scope.gridApi.selection.getSelectedRows();
+                $scope.status = 'M'; //Set update Status
+                if (data != '') {
+                    $scope.keyM = true;
+                    loadDetails(data);
+                    $('#myModal').modal('show');
+                    return;
+                }
+                else if (resultRows.length == 1) {
+                    if (resultRows[0].Status != 'X') {
+                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                            // $(".keyM").prop('disabled', true);
+                            loadDetails(resultRows[0].gv);
+                            $scope.keyM = false;
+                            $('#myModal').modal('show');
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Modified_to_X')
+                        });
+                    }
+                } else {
+                    Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('Select_ONE_MSG')
+                    });
+                }
+            }
             function deleteById(entity) {
                 var data = {
                     gv: entity.gv,
@@ -447,6 +465,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
+                $scope.keyM = false;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -487,6 +506,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.gvhinhanh = $scope.recod.gvhinhanh || '';
                 note.createby = Auth.username;
                 note.CMGVs = $scope.detaillist;
+
                 return note;
             }
             /**
