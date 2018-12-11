@@ -45,6 +45,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     id: 'E',
                     name: $translate.instant('Hoàn thành')
                 },
+                {
+                    id: 'R',
+                    name: $translate.instant('Trượt bảo vệ DC')
+                },
             ];
             $q.all([loadHocVien(), loadLinhVucChuyenMon(), loadChuyenNganh(), loadGiangVien()]).then(function (result) { }, function (error) {
                 Notifications.addError({
@@ -334,7 +338,6 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 action: function () {
                     $scope.reset();
                     $scope.status = 'N';
-
                     // $scope.company = full_lsCompany.filter(x => x.Status == 1); //gnote xử lý theo trạng thái đã hủy
                     $scope.lshv = full_lshv.filter(x => x.lv == null);
                     $('#myModal').modal('show');

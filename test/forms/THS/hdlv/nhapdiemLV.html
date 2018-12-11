@@ -1,86 +1,94 @@
 <style>
-    .modal-lg {
-            width: 900px;
+        input ng-disabled="duyet" ,textarea ng-disabled="duyet" {
+            margin:4pt;
         }
-        .form-table {
-            width: 100%;
-            display: inline-block;
-            padding: 15px 0px;
-            margin-bottom: 15px;
-        }
-        .form-group {
-            margin-bottom: 5px
-        }
-        li {
-            list-style-type: none;
-        }
-        li ul {
-            display: none;
-            border: 1px solid #000000;
-            margin-left: -3px;
-        }
-        table {
-               width: 100%;
-           }
-    </style>
-<form></form>
-<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate
-    style="padding-top:30px">
-    <legend>
-        <h3>{{'Nhập điểm hội đồng luận văn'|translate}}</h3>
-    </legend>
-    <div class="col-sm-12 form-group">
-        <div class="form-group search-table">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'tungay'|translate}}</label>
-                <div class="col-sm-3">
-                    <input date-picker class="form-control" type="text" ng-model="tungay" />
-                </div>
-                <label class="col-sm-2 control-label">{{'denngay'|translate}}</label>
-                <div class="col-sm-3">
-                    <input date-picker class="form-control" type="text" ng-model="denngay" />
-                </div>
+        .modal-lg {
+                width: 900px;
+            }
+            .form-table {
+                width: 100%;
+                display: inline-block;
+                padding: 15px 0px;
+                margin-bottom: 15px;
+            }
+            .form-group {
+                margin-bottom: 5px
+            }
+            li {
+                list-style-type: none;
+            }
+            li ul {
+                display: none;
+                border: 1px solid #000000;
+                margin-left: -3px;
+            }
+            table {
+                   width: 100%;
+               }
+        </style>
+    <form></form>
+    <form  name="nhapdiemForm" class="form-horizontal" role="form" novalidate style="padding-top:30px">
+        <legend>
+            <h3>{{'Nhập điểm và duyệt - hội đồng bảo vệ luận văn'|translate}}</h3>
+        </legend>
+        <div class="row">
+    
+    
+            <div class="col-sm-4">
+                <label>Hội đồng </label>
+    
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'gv'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="gv" />
-                </div>
-                <label class="col-sm-2 control-label">{{'lv'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="lv" />
-                </div>
+    
+            <div class="col-sm-6 form-group">
+                <label> Đề tài luận văn</label>
+                <select  ng-change="lv_changed(lv)"  ui-select-2 style="width:80%;" ng-model="lv" required>
+                    <option ng-repeat="s in lslv" value="{{s.lv}}">{{s.lv}}-{{s.lvten}} </option>
+                </select>
+    
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">{{'hd'|translate}}</label>
-                <div class="col-sm-3">
-                    <input class="form-control" type="text" ng-model="hd" />
-                </div>
-                <label class="col-sm-2 control-label">{{'Status'|translate}}</label>
-                <div class="col-sm-3">
-                    <select class="form-control" name="s_status" ng-change="Search()" ng-model="s_status" ng-options="s.id as s.name for s in statuslist">
-                        <option value="">{{'Show All' | translate}}</option>
-                    </select>
+    
+        </div>
+        <div class="col-sm-12 form-group">
+    
+            <div class="form-group search-table">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'Chủ tịch hội đồng'|translate}}: {{ct[0].gvhoten}}</label>
+                    <div class="col-sm-3">
+                        <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[0].diem" placeholder="Điểm" />
+                        <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[0].danhgia" ></textarea ng-disabled="duyet">
+                    </div>
+                    <label class="col-sm-2 control-label">{{'Thư ký hội đồng'|translate}}: {{ct[2].gvhoten}}</label>
+                    <div class="col-sm-3">
+                        <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[2].diem" placeholder="Điểm" />
+                        <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[2].danhgia" ></textarea ng-disabled="duyet">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-5"></div>
-                    <div class="col-sm-2">
-                        <label></label>
-                    </div>
+                    <label class="col-sm-2 control-label">{{'Phản biện 1'|translate}}: {{ct[3].gvhoten}}</label>
                     <div class="col-sm-3">
-                        <!-- <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                    </label> -->
+                        <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[3].diem" placeholder="Điểm" />
+                        <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[3].danhgia" ></textarea ng-disabled="duyet">
                     </div>
-                    <div class="col-sm-1">
-                        <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
-                        </button>
+                    <label class="col-sm-2 control-label">{{'Phản biện 2'|translate}}: {{ct[4].gvhoten}}</label>
+                    <div class="col-sm-3">
+                        <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[4].diem" placeholder="Điểm" />
+                        <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[4].danhgia" ></textarea ng-disabled="duyet">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{'Ủy viên hội đồng'|translate}}: {{ct[1].gvhoten}}</label>
+                    <div class="col-sm-3">
+                        <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[1].diem" placeholder="Điểm" />
+                        <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[1].danhgia" ></textarea ng-disabled="duyet">
+                    </div>
+    
+                </div>
+                <div style="margin-left:60%;" class="col-sm-3">
+                    <button type="button" class="btn btn-danger" ng-hide="ct[0].gv!=username" ng-disabled="nhapdiemForm.$invalid||duyet"  ng-click="DuyetQuyTrinh()">{{'Duyệt'|translate}}</button>
+                    <button type="button" class="btn btn-primary" ng-hide="ct[2].gv!=username" ng-disabled="nhapdiemForm.$invalid||duyet"   ng-click="NhapDiem()">{{'Nhập điểm'|translate}}</button>
+                </div>
             </div>
+    
         </div>
-        <div style="width: 100%;">
-            <div id="Grid" ui-grid="gridOptions" class="grid" ui-grid-selection ui-grid-pagination
-                ui-grid-resize-columns ui-grid-core ui-grid-exporter></div>
-        </div>
-</form>
+    
+    </form>

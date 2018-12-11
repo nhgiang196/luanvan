@@ -43,10 +43,26 @@ define([
                     },
                     // isArray: true
                 },
+                updateresult:
+                {
+                    method: 'POST',
+                    params: {
+                        operation: 'UpdateResult'
+                    },
+                    // isArray: true
+                },
 
             })
         }
 
+        HDDCService.prototype.UpdateResult = function (query, callback) {
+            this.GetInfoBasic.updateresult(query).$promise.then(function (data) {
+                callback(data);
+            }, function (ex) {
+                console.log(ex);
+                callback(null, ex);
+            })
+        }
         HDDCService.prototype.Search = function (query, callback) {
             this.GetInfoBasic.search(query).$promise.then(function (data) {
                 callback(data);

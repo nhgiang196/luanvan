@@ -2,6 +2,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller('HDDCController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'THSAdminService', 'HDDCService', '$translate', '$q', '$scope', '$routeParams',
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, HDDCService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
+            var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            $scope.isAdmin = isAdmin;
             $scope.flowkey = "MDC";
             $scope.recod = {};
             $scope.onlyOwner = true;
@@ -42,6 +44,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
             {
                 id: 'X',
                 name: $translate.instant('StatusX')
+            },
+            {
+                id: 'K',
+                name: $translate.instant('StatusK')
             },
             ];
             $q.all([loadGiangVien(), loadLuanVan()]).then(function (result) { }, function (error) {
@@ -111,6 +117,18 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 field: 'dcten',
                 minWidth: 100,
                 displayName: $translate.instant('dcten'),
+                cellTooltip: true
+            },
+            {
+                field: 'exw',
+                minWidth: 80,
+                displayName: $translate.instant('exw'),
+                cellTooltip: true
+            },
+            {
+                field: 'exchair',
+                minWidth: 80,
+                displayName: $translate.instant('exchair'),
                 cellTooltip: true
             },
             {
@@ -200,11 +218,14 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         x.lv = element.lv;
                         x.lvten = element.lv + '-' + element.lvten;
                         x.diem = element.diem;
+
                         x.lanbaove = element.lanbaove;
                         x.sophieudat = element.sophieudat;
                         x.ketqua = element.ketqua;
                         x.sophieudat = element.sophieudat;
                         x.ykien = element.ykien;
+                        x.thoidiembvdc = element.thoidiembvdc;
+                        if (x.diem != null && x.diem != '') $scope.keyM = true;
                         $scope.detaillist.push(x);
                     })
                 }, function (error) {
@@ -303,17 +324,26 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 title: $translate.instant('nhapdiem'),
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    // if (resultRows[0].UserID == Auth.username) {
+
                     if (resultRows.length == 1) {
-                        var href = '#/THS/HDDC/NhapDiem/' + resultRows[0].dc;
-                        window.open(href);
+                        if (resultRows[0].Status != 'X' ||
+                        resultRows[0].exchair == Auth.username || resultRows[0].exw == Auth.username||resultRows[0].createby == Auth.username ) {
+                            var href = '#/THS/HDDC/NhapDiem/' + resultRows[0].dc;
+                            window.open(href);
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
+                        }
+
                     }
-                    // } else {
-                    //     Notifications.addError({
-                    //         'status': 'error',
-                    //         'message': $translate.instant('ModifyNotBelongUserID')
-                    //     })
-                    // }
+                    else
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('Select_ONE_MSG')
+                        });
+
                 },
                 order: 3
             },
@@ -367,7 +397,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }
                 else
                     if (resultRows.length == 1) {
-                        if (resultRows[0].Status != 'X') {
+                        if (isAdmin||resultRows[0].Status != 'X' || resultRows[0].Status != 'K' ||
+                        resultRows[0].exchair == Auth.username || resultRows[0].exw == Auth.username||resultRows[0].createby == Auth.username ) {
                             if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
                                 // $(".keyM").prop('disabled', true);
                                 loadDetails(resultRows[0].dc);
@@ -405,7 +436,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';
-                query.owner = $scope.onlyOwner? Auth.username : '';
+                query.owner = $scope.onlyOwner ? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 return query;

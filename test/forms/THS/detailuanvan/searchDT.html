@@ -104,7 +104,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDT'|translate}}
+                            <input ng-change="Search()" name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDT'|translate}}
                         </label>
                 </div>
                 <div class="col-sm-1">
@@ -178,7 +178,6 @@
                                         ng-change="changeCheckValue()">{{'Chưa làm luận văn'|translate}}
                                 </label>
                             </div>
-
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">*{{'hvhoten'|translate}}</label>

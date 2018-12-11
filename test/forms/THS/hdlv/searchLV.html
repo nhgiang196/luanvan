@@ -67,8 +67,8 @@
                         <label></label>
                     </div>
                     <div class="col-sm-3">
-                        <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerLV'|translate}}
+                        <label> 
+                            <input ng-change="Search()" name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerLV'|translate}}
                         </label>
                     </div>
                     <div class="col-sm-1">
@@ -84,7 +84,7 @@
         </div>
 </form>
 <!-- MODAL  -->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel"` 
     data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -135,7 +135,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[0].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -143,7 +143,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[1].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -153,7 +153,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[2].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true " value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -161,7 +161,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[3].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -171,7 +171,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[4].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -189,7 +189,12 @@
                                 </option>
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'hdthoigian'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input date-picker time="true" class="form-control" type="text" ng-model="items.thoidiembv"
+                                required />
+                        </div>
+                        <!-- <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
                         <div class="col-sm-4">
                             <input class="form-control" type="text" ng-model="items.diem" min="0" max="10" required />
                         </div>
@@ -219,7 +224,7 @@
                         <div class="col-sm-4">
                             <textarea class="form-control" type="text" ng-model="items.ykien" required />
                             </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-group">
                         <div class="col-sm-6"></div>
@@ -237,8 +242,9 @@
                                 <th width="10%">diem</th>
                                 <th width="10%">lanbaove</th>
                                 <th width="10%">sophieudat</th>
-                                <th width="15%">ketqua</th>
-                                <th width="25%">ykien</th>
+                                <th width="10%">ketqua</th>
+                                <th width="10%">thoidiembv</th>
+                                <th width="20%">ykien</th>
                                 <th width="10%"></th>
                             </tr>
                         </thead>
@@ -255,10 +261,13 @@
                             <td title="sophieudat" width="10%">
                                 {{item.sophieudat}}
                             </td>
-                            <td title="ketqua" width="15%">
+                            <td title="ketqua" width="10%">
                                 {{item.ketqua}}
                             </td>
-                            <td title="ykien" width="25%">
+                            <td title="thoidiembv" width="10%">
+                                {{item.thoidiembv}}
+                            </td>
+                            <td title="ykien" width="20%">
                                 {{item.ykien}}
                             </td>
                             <td width="10%">

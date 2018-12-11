@@ -2,6 +2,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller('HDLVController', ['$filter', 'Notifications', 'Auth', 'EngineApi', 'THSAdminService', 'HDLVService', '$translate', '$q', '$scope', '$routeParams',
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, HDLVService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
+            var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            $scope.isAdmin = isAdmin;
             $scope.flowkey = "Mhd";
             $scope.recod = {};
             $scope.onlyOwner = true;
@@ -43,6 +45,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 id: 'X',
                 name: $translate.instant('StatusX')
             },
+            {
+                id: 'K',
+                name: $translate.instant('StatusK')
+            }
             ];
             $q.all([loadGiangVien(), loadLuanVan()]).then(function (result) { }, function (error) {
                 Notifications.addError({
@@ -111,6 +117,18 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 field: 'hdten',
                 minWidth: 100,
                 displayName: $translate.instant('hdten'),
+                cellTooltip: true
+            },
+            {
+                field: 'exw',
+                minWidth: 80,
+                displayName: $translate.instant('exw'),
+                cellTooltip: true
+            },
+            {
+                field: 'exchair',
+                minWidth: 80,
+                displayName: $translate.instant('exchair'),
                 cellTooltip: true
             },
             {
@@ -205,7 +223,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         x.ketqua = element.ketqua;
                         x.sophieudat = element.sophieudat;
                         x.ykien = element.ykien;
+                        x.thoidiembv = element.thoidiembv;
+                        if (x.diem != null && x.diem != '') $scope.keyM = true;
                         $scope.detaillist.push(x);
+                        console.log(x);
                     })
                 }, function (error) {
                     Notifications.addError({
@@ -303,17 +324,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 title: $translate.instant('nhapdiem'),
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    // if (resultRows[0].UserID == Auth.username) {
-                    if (resultRows.length == 1) {
-                        var href = '#/THS/HDLV/NhapDiem/' + resultRows[0].hd;
-                        window.open(href);
+                    if (resultRows[0].Status != 'X' ||
+                    resultRows[0].exchair == Auth.username || resultRows[0].exw == Auth.username||resultRows[0].createby == Auth.username) {
+                        if (resultRows.length == 1) {
+                            var href = '#/THS/HDLV/NhapDiem/' + resultRows[0].hd;
+                            window.open(href);
+                        }
+                        else
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('Select_ONE_MSG')
+                            });
+                    } else {
+                        Notifications.addError({
+                            'status': 'error',
+                            'message': $translate.instant('ModifyNotBelongUserID')
+                        })
                     }
-                    // } else {
-                    //     Notifications.addError({
-                    //         'status': 'error',
-                    //         'message': $translate.instant('ModifyNotBelongUserID')
-                    //     })
-                    // }
                 },
                 order: 3
             },
@@ -367,7 +394,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 }
                 else if (resultRows.length == 1) {
                     if (resultRows[0].Status != 'X') {
-                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
+                        if (resultRows[0].Status != 'X' || resultRows[0].Status != 'K' ||
+                        resultRows[0].exchair == Auth.username || resultRows[0].exw == Auth.username||resultRows[0].createby == Auth.username) {
                             // $(".keyM").prop('disabled', true);
                             loadDetails(resultRows[0].hd);
                             $scope.keyM = false;
@@ -411,7 +439,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';
-                query.owner = $scope.onlyOwner? Auth.username : '';
+                query.owner = $scope.onlyOwner ? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 return query;
@@ -452,14 +480,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     } else {
                         var myitem = {}
                         myitem.hd = '';
+                        myitem.thoidiembv = $scope.items.thoidiembv;
                         myitem.cm = $scope.items.cm;
                         myitem.lv = $scope.items.lv;
                         myitem.lvten = $('#lv option:selected').text();
-                        myitem.diem = $scope.items.diem;
-                        myitem.lanbaove = $scope.items.lanbaove;
-                        myitem.sophieudat = $scope.items.sophieudat;
-                        myitem.ketqua = $scope.items.ketqua;
-                        myitem.ykien = $scope.items.ykien;
+                        // myitem.diem = $scope.items.diem;
+                        // myitem.lanbaove = $scope.items.lanbaove;
+                        // myitem.sophieudat = $scope.items.sophieudat;
+                        // myitem.ketqua = $scope.items.ketqua;
+                        // myitem.ykien = $scope.items.ykien;
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
                     }
@@ -479,6 +508,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 note.hdthoigian = $scope.recod.hdthoigian || '';
                 note.createby = Auth.username;
                 note.CTHDLVs = $scope.cthd;
+
                 note.HDLVs = $scope.detaillist;
                 return note;
             }

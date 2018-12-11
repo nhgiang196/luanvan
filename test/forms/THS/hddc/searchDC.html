@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-sm-3">
                         <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDC'|translate}}
+                            <input ng-change="Search()" name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDC'|translate}}
                         </label>
                     </div>
                     <div class="col-sm-1">
@@ -85,7 +85,7 @@
         </div>
 </form>
 <!-- MODAL  -->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-backdrop="static"
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" 
     data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -122,11 +122,11 @@
                         <div class="col-sm-4">
                             <input class="form-control " type="text" ng-model="recod.dcdiadiem" required />
                         </div>
-                        <!-- <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
                         <div class="col-sm-4">
                             <input date-picker time="true" class="form-control" type="text" ng-model="recod.dcthoigian"
                                 required />
-                        </div> -->
+                        </div>
                     </div>
 
                     <H4 style="background-color: #ececec; padding: 5px">{{'chitiethddc'|translate}}</H4>
@@ -136,7 +136,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[0].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                    {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -144,7 +144,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[1].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -154,7 +154,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[2].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true " value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -162,7 +162,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[3].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
@@ -172,7 +172,7 @@
                         <div class="col-sm-4">
                             <select ui-select-2 style="width:100%" ng-model="cthd[4].gv" required>
                                 <option ng-repeat="value in lsgv | filter:{gvchucdanh:'!THS'}:true" value="{{value.gv}}">
-                                    {{value.gv}}-{{value.gvhoten}}
+                                        {{value.gv}}-{{value.gvchucdanh}}-{{value.gvhoten}}
                                 </option>
                             </select>
                         </div>
