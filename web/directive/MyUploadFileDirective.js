@@ -8,7 +8,6 @@ define(['app'], function (app) {
             controller: function ($scope, $document, $upload) {
                 function uploadFiles($files, callback) {
                     var filedata = [];
-                    //only 单个上传
                         var $file = $files[0];
                         console.log($file);
                         $scope.upload = $upload.upload({
@@ -47,7 +46,6 @@ define(['app'], function (app) {
                 $scope.onFileSelect = function ($files,size) {
 
                     console.log($files);
-                    //检查上传文件  文件大小限制为5M
                     if(true){
                         var $checkfile = $files[0];
                         console.log("=========================");
@@ -75,7 +73,6 @@ define(['app'], function (app) {
 
                 $scope.removeFile = function (index) {
                     var file = $scope.filedata[index];
-                    console.log("删除文件Index=" + index + ",FileName=" + file.OldName);
                     var  data="DocId="+file.DocId;
                     $http.delete('/api/cmis/deletefile?' + data)
                         .success(function (data, status, headers) {
@@ -87,7 +84,6 @@ define(['app'], function (app) {
                         });
 
                 }
-                //格式化显示文件名
                 $scope.formatFileName = function (_fileName) {
                     if (_fileName.length > 20) {
                         return _fileName.substring(0, 9) + "..." + _fileName.substring(_fileName.length - 9);

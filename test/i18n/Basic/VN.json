@@ -41,7 +41,7 @@
     "OutNumber": "Số lượng xuất ra",
     "OutTime": "Thời gian xuất",
     "PassWord": "Mật khẩu",
-    "Print": "In ra",
+    "Print": "In phiếu",
     "Remark": "Ghi chú",
     "Report": "Báo cáo",
     "Save": "Lưu",
@@ -129,7 +129,7 @@
     "nktungay": "Từ ngày",
     "nkdenngay": "Đến ngày",
     "tcode": "Mã phân quyền",
-    "grantvoke": "Quyền cấp",
+    "grantvoke": "Quyền cấp cho người khác",
     "usergrant": "Người cấp",
     "tcname": "Tên quyền",
     "hocvienQuery": "Truy vấn Học viên",
@@ -168,7 +168,12 @@
     "lv_hdlv" : "Thong tin bảo về đề tài luận văn",
     "hdlvInformation" : "Thông tin hội đồng bảo vệ luận văn",
     "dcQuery": "Truy vấn thông tin hội đồng đề cương",
-    "lvQuery":"Truy vấn thông tin hội đồng luận văn"
+    "lvQuery":"Truy vấn thông tin hội đồng luận văn",
+    "UserName": "Mã tài khoản",
+    "nhapdiem" : "Nhập điểm và xét duyệt",
+    "onlyOwnerDC": "Chỉ HDBVDC có liên quan đến tôi",
+    "onlyOwnerLV": "Chỉ HDBVLV có liên quan đến tôi",
+    "onlyOwnerDT": "Chỉ đề tài luận văn có liên quan đến tôi"
 
 
 

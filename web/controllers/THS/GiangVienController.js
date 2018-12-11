@@ -5,7 +5,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.flowkey = "MHV";
             var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
             $scope.isAdmin = isAdmin;
-            $scope.bm = Auth.bm;
+            $scope.bm = isAdmin? '' : Auth.bm ;
             $scope.recod = {};
             $scope.onlyOwner = true;
             $scope.status = '';

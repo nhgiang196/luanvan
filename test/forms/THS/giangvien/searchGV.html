@@ -66,7 +66,9 @@
                 <label class="col-sm-2 control-label">{{'bm'|translate}}</label>
                 <div class="col-sm-3">
                     <!-- <input class="form-control" type="text" ng-model="bm" /> -->
-                    <select class="form-control" ng-change="Search()" ng-model="bm" ng-disabled="!isAdmin"  ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm"></select>
+                    <select class="form-control" ng-change="Search()" ng-model="bm" ng-disabled="!isAdmin" ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm">
+                        <option value="">{{'Show All' | translate}}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -111,8 +113,7 @@
     </div>
 </form>
 <!-- MODAL  -->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel"
-    data-keyboard="false">
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myLargeModalLabel" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form class="form-horizontal ng-pristine ng-invalid ng-invalid-required" role="form" name="form" novalidate>
@@ -133,19 +134,19 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">*{{'gvgioitinh'|translate}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control " type="text" ng-model="recod.gvgioitinh" required >
+                            <select class="form-control " type="text" ng-model="recod.gvgioitinh" required>
                                 <option value="Nam">Nam</option>
                                 <option value="Nữ">Nữ</option>
                             </select>
                         </div>
                         <label class="col-sm-2 control-label">*{{'gvchucdanh'|translate}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control " type="text" ng-model="recod.gvchucdanh" required >
-                            <option value="THS">Thạc sĩ</option>
-                            <option value="TS">Tiến sĩ</option>
-                            <option value="PGS">Phó giáo sư - tiến sĩ</option>
-                            <option value="GS">Giáo sư - tiến sĩ</option>
-                        </select>
+                            <select class="form-control " type="text" ng-model="recod.gvchucdanh" required>
+                                <option value="THS">Thạc sĩ</option>
+                                <option value="TS">Tiến sĩ</option>
+                                <option value="PGS">Phó giáo sư - tiến sĩ</option>
+                                <option value="GS">Giáo sư - tiến sĩ</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -186,7 +187,8 @@
                         </div>
                         <label class="col-sm-2 control-label">*{{'bm'|translate}}</label>
                         <div class="col-sm-4">
-                            <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm"></select>
+                            <select class="form-control" ng-model="recod.bm" ng-options="s.bm as s.bm+'-'+s.bmten for s in lsbm">
+                            </select>
                         </div>
 
                     </div>
@@ -206,7 +208,7 @@
                         </div>
                         <div class="col-sm-2"></div>
                         <div class="col-sm-4">
-                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
+                            <button ng-hide="keyM" type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
                                 {{'Add'|translate}}
                             </button>
                         </div>
@@ -236,7 +238,8 @@
             <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có
                     dấu *'|translate}}</label>
-                <button type="button" id="btnSubmit" class="btn btn-primary" ng-hide="keyM" ng-click="saveSubmit()" ng-disabled="">
+                <button type="button" id="btnSubmit" class="btn btn-primary" ng-hide="keyM" ng-click="saveSubmit()"
+                    ng-disabled="">
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>

@@ -63,10 +63,10 @@ define(['myapp', 'angular'], function (myapp, angular) {
         }
     ])
 
-    // $(document).ready(function () {
-    //     setTimeout(function () {
-    //         window.print();
-    //     }, 500);
-    // })
+    $(document).ready(function () {
+        setTimeout(function () {
+            window.print();
+        }, 1000);
+    })
 
 })

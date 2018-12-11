@@ -297,6 +297,24 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     //     })
                     // }
                 },
+                order: 4
+            },
+            {
+                title: $translate.instant('nhapdiem'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    // if (resultRows[0].UserID == Auth.username) {
+                    if (resultRows.length == 1) {
+                        var href = '#/THS/HDLV/NhapDiem/' + resultRows[0].hd;
+                        window.open(href);
+                    }
+                    // } else {
+                    //     Notifications.addError({
+                    //         'status': 'error',
+                    //         'message': $translate.instant('ModifyNotBelongUserID')
+                    //     })
+                    // }
+                },
                 order: 3
             },
                 // {
@@ -393,6 +411,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';
+                query.owner = $scope.onlyOwner? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 return query;

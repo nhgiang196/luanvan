@@ -1,10 +1,14 @@
 <style>
+    p {
+        margin: 0 !important;
+    }
+
     #page-contain {
         font-size: 13pt;
-        padding-left: 5pt;
+        /* padding-left: 5pt;
         padding-top: 3pt;
         padding-bottom: 3pt;
-        padding-left: 3pt;
+        padding-left: 3pt; */
         font-family: 'Times New Roman', Times, serif;
         margin: 15px;
     }
@@ -13,10 +17,10 @@
         size: A4;
         /* margin: 0; */
         /* size: auto; */
-        margin-top: 0mm;
-        margin-left: 0mm;
-        margin-right: 0mm;
-        margin-bottom: 0mm;
+        margin-top: 5mm;
+        margin-left: 5mm;
+        margin-right: 5mm;
+        margin-bottom: 5mm;
     }
 
 
@@ -209,7 +213,6 @@
             CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
             <br>Độc lập - Tự do- Hạnh phúc<br>
             -------------------------------<br>
-
         </div>
     </div>
     <p style="text-align:center;">
@@ -225,53 +228,119 @@
     Ngày bảo vệ: {{dtlist.hdtgbv}} <br>
     Kết quả:<br>
     <div>
-        <table style="table-layout: auto;" border="1" width="100%" cellspacing="0" cellpadding="5px">
+
+        <table class="table table-bordered" width="666">
             <tbody>
                 <tr>
-                    <td width="79">
-                        <strong>TT</strong><br>
+                    <td width="42">
+                        <p><strong>TT</strong></p>
                     </td>
-                    <td width="148">
-                        <strong>Tiêu chí đánh giá</strong><br>
+                    <td width="420">
+                        <p><strong>Tiêu chí chấm điểm</strong></p>
                     </td>
-                    <td width="117">
-                        <strong>Tỉ trọng</strong><br>
+                    <td width="108">
+                        <p><strong>Điểm tối đa</strong></p>
                     </td>
-                    <td width="141">
-                        <strong>Điểm</strong><br>
-                    </td>
-                    <td width="135">
-                        <strong>Điểm đánh giá</strong><br>
+                    <td width="96">
+                        <p><strong>Kết quả</strong></p>
                     </td>
                 </tr>
                 <tr>
-                    <td width="79">
-                        1.<br>
+                    <td width="42">
+                        <p><strong>1</strong></p>
                     </td>
-                    <td width="148">
-                        Luận văn<br>
+                    <td width="420">
+                        <p><strong>Nội dung luận văn</strong></p>
+                        <p>-      Tính khoa học của đề tài.</p>
+                        <p>-      Nội dung của đề tài phù hợp với mục tiêu, phạm vi và tên đề tài.</p>
+                        <p>-      Bố cục luận văn hợp lý, đầy đủ nội dung yêu cầu của một luận văn Thạc sĩ.</p>
                     </td>
-                    <td width="117">
-                        50 %<br>
+                    <td width="108">
+                        <p><strong>5,0 đ</strong></p>
+                        <p>1,0 đ</p>
+                        <p>2,0 đ</p>
+                        <br>
+                        <p>2,0 đ</p>
+
                     </td>
-                    <td>
-                    </td>
-                    <td>
+                    <td width="96">
+
                     </td>
                 </tr>
                 <tr>
-                    <td width="79">
-                        2.<br>
+                    <td width="42">
+                        <p><strong>2</strong></p>
                     </td>
-                    <td width="148">
-                        Bảo vệ luận văn<br>
+                    <td width="420">
+                        <p><strong>Hình thức luận văn</strong></p>
+                        <p>-      Hình thức trình bày (in ấn, format, hình ảnh..)</p>
+                        <p>-      Cách hành văn.</p>
+                        <p>-      Đúng chính tả.</p>
                     </td>
-                    <td width="117">
-                        50 %<br>
+                    <td width="108">
+                        <p><strong>2,0 đ</strong></p>
+                        <p>0,5 đ</p>
+                        <p>1,0 đ</p>
+                        <p>0,5 đ</p>
                     </td>
-                    <td>
+                    <td width="96">
                     </td>
-                    <td>
+                </tr>
+                <tr>
+                    <td width="42">
+                        <p><strong>3</strong></p>
+                    </td>
+                    <td width="420">
+                        <p><strong>Báo cáo tr</strong><strong>ước Hội đồng</strong></p>
+                        <p>-      Bài báo cáo (hình thức, cấu trúc..)</p>
+                        <p>-      Tác phong trình bày (tự tin, rõ ràng, mạch lạc..)</p>
+                        <p>-      Trả lời câu hỏi của Hội đồng.</p>
+                    </td>
+                    <td width="108">
+                        <p><strong>2,0 đ</strong></p>
+                        <p>0,5 đ</p>
+                        <p>0,5 đ</p>
+                        <p>1,0 đ</p>
+                    </td>
+                    <td width="96">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td width="42">
+                        <p><strong>4</strong></p>
+                    </td>
+                    <td width="420">
+                        <p><strong>Điểm thành tích nghiên cứu khoa học</strong></p>
+                        <p>-      Có ít nhất 01 bài báo cáo tại Hội nghị chuyên ngành hoặc có bài đăng trên tạp chí
+                            chuyên ngành mà HV đứng ở vị trí thứ 1.</p>
+                        <p>-      Có ít nhất 01 bài báo cáo tại Hội nghị chuyên ngành hoặc có bài đăng trên tạp chí
+                            chuyên ngành  mà HV đứng ở vị trí thứ 2 hoặc thứ 3.</p>
+                    </td>
+                    <td width="108">
+                        <p><strong>1,0đ</strong></p>
+                        <p>1,0đ</p>
+
+                        <p>0, 5đ</p>
+                        
+                    </td>
+                    <td width="96">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td width="42">
+
+                    </td>
+                    <td width="420">
+                        <p><strong>Tổng </strong></p>
+                        <p><strong>(ghi điểm A, B+, B, C, C+.... qua cột kết quả)   </strong></p>
+                    </td>
+                    <td width="108">
+                        <p><strong>10,0 điểm</strong></p>
+                    </td>
+                    <td width="96">
+
                     </td>
                 </tr>
             </tbody>
@@ -279,7 +348,7 @@
     </div>
     <div class="col-sm-7">
     </div>
-    <div class="col-sm-5" style="text-align: center; padding-top:10pt;">
+    <div class="col-sm-5" style="text-align: center; ">
         <em> Cần Thơ, {{today}}</em><br>
         <strong> NGƯỜI CHẤM</strong><br>
     </div>

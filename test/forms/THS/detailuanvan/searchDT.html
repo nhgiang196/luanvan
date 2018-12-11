@@ -103,9 +103,9 @@
                     <label></label>
                 </div>
                 <div class="col-sm-3">
-                    <!-- <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                        </label> -->
+                    <label>
+                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDT'|translate}}
+                        </label>
                 </div>
                 <div class="col-sm-1">
                     <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
@@ -226,7 +226,7 @@
                             </div>
                             <div class="col-sm-2"></div>
                             <div class="col-sm-4">
-                                <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()"
+                                <button ng-hide="keyM" type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()"
                                     ng-disabled="formDetail.$invalid">
                                     {{'Add'|translate}}
                                 </button>

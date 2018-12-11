@@ -494,6 +494,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.hv = $scope.hv || '';
                 query.bm = $scope.bm || '';
                 query.status = $scope.s_status || '';
+                query.owner = $scope.onlyOwner? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 // if ($scope.onlyOwner == true)

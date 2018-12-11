@@ -597,6 +597,28 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
+            .when('/THS/HDLV/NhapDiem/:hd', angularAMD.route({
+                templateUrl: "forms/THS/hdlv/nhapdiemLV.html",
+                controller: 'nhapdiemLVController',
+                controllerUrl: 'controllers/ReportController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
+            .when('/THS/HDDC/NhapDiem/:hd', angularAMD.route({
+                templateUrl: "forms/THS/hddc/nhapdiemDC.html",
+                controller: 'nhapdiemDCController',
+                controllerUrl: 'controllers/ReportController',
+                caseInsensitiveMatch: true,
+                resolve: {
+                    User: function (AuthenticationLoader) {
+                        return AuthenticationLoader();
+                    }
+                }
+            }))
             .when('/THS/HDDC', angularAMD.route({
                 templateUrl: "forms/THS/HDDC/searchDC.html",
                 controller: 'HDDCController',

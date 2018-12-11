@@ -31,7 +31,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             }
             $scope.SendMail = function () {
                 if ($scope.subject == null || $scope.body == null || $scope.subject == '' || $scope.body == '') {
-                    alert($transla`te`.instant('Bạn chưa nhập tiêu đề và nội dung!'));
+                    alert($translate.instant('Bạn chưa nhập tiêu đề và nội dung!'));
                     return;
                 }
                 query = {
@@ -41,8 +41,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     subject: $scope.subject,
                     body: $scope.body
                 }
-                THSAdminService.SendMail(query, function () {
-                    Notifications.addMessage({ 'status': 'information', 'message': $translate.instant('Gửi mail thành công!') });
+                THSAdminService.SendMail(query, function (res) {
+                    if (res.Success) {
+                        $scope.subject = '';
+                        $scope.body = '';
+                        Notifications.addMessage({
+                            'status': 'information',
+                            'message': 'Gửi mail thành công'
+                        });
+                    }
                 }, function (err) {
                     Notifications.addError({
                         'status': 'error', 'message': err.message
@@ -54,6 +61,27 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
 
         }]);
+    myapp.controller("nhapdiemLVController", ['$q', 'Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService',
+        function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
+            
+
+        }]);
+    myapp.controller("nhapdiemDCController", ['$q', 'Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService',
+        function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService) {
+
+
+
+            THSAdminService.ADC({
+                st:"select * from HDDC dc JOIN DeTaiLV lv ON lv.lv=dc.lv where dc='"+$routeParams.hd+" '"
+            },function(data){
+
+                console.log(data);
+            })
+        }]);
+
+
+
+
 
 
 });

@@ -297,6 +297,24 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     //     })
                     // }
                 },
+                order: 4
+            },
+            {
+                title: $translate.instant('nhapdiem'),
+                action: function () {
+                    var resultRows = $scope.gridApi.selection.getSelectedRows();
+                    // if (resultRows[0].UserID == Auth.username) {
+                    if (resultRows.length == 1) {
+                        var href = '#/THS/HDDC/NhapDiem/' + resultRows[0].dc;
+                        window.open(href);
+                    }
+                    // } else {
+                    //     Notifications.addError({
+                    //         'status': 'error',
+                    //         'message': $translate.instant('ModifyNotBelongUserID')
+                    //     })
+                    // }
+                },
                 order: 3
             },
                 // {
@@ -387,6 +405,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.tungay = $scope.bm || '';
                 query.denngay = $scope.cm || '';
                 query.status = $scope.s_status || '';
+                query.owner = $scope.onlyOwner? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 return query;
@@ -414,7 +433,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
             $scope.reset = function () {
                 $scope.recod = {};
                 $scope.detaillist = [];
-                $scope.keyM = true;
+                $scope.keyM = false;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
             }
@@ -427,14 +446,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     } else {
                         var myitem = {}
                         myitem.dc = '';
+                        myitem.thoidiembvdc = $scope.items.thoidiembvdc;
                         myitem.cm = $scope.items.cm;
                         myitem.lv = $scope.items.lv;
                         myitem.lvten = $('#lv option:selected').text();
-                        myitem.diem = $scope.items.diem;
-                        myitem.lanbaove = $scope.items.lanbaove;
-                        myitem.sophieudat = $scope.items.sophieudat;
-                        myitem.ketqua = $scope.items.ketqua;
-                        myitem.ykien = $scope.items.ykien;
+                        // myitem.diem = $scope.items.diem;
+                        // myitem.lanbaove = $scope.items.lanbaove;
+                        // myitem.sophieudat = $scope.items.sophieudat;
+                        // myitem.ketqua = $scope.items.ketqua;
+                        // myitem.ykien = $scope.items.ykien;
                         $scope.detaillist.push(myitem);
                         $scope.items = {};
                     }

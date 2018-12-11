@@ -1,0 +1,427 @@
+<style>
+    #page-contain {
+        font-size: 13pt;
+        padding-left: 5pt;
+        padding-top: 10pt;
+        padding-bottom: 10pt;
+        padding-left: 3pt;
+        font-family: 'Times New Roman', Times, serif;
+        margin: 15px;
+    }
+
+    @page {
+        size: A4;
+        /* margin: 0; */
+        /* size: auto; */
+        margin-top: 0mm;
+        margin-left: 11.5mm;
+        margin-right: 10.5mm;
+        margin-bottom: 0mm;
+    }
+
+
+    /* Print styling */
+
+    @media print {
+
+
+        .page-break {
+            display: block;
+            page-break-before: always;
+        }
+
+        table {
+            page-break-inside: auto;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            /* margin: 0;
+            padding-top: 0; */
+        }
+
+        [class*="col-sm-"] {
+            float: left;
+        }
+
+        [class*="col-xs-"] {
+            float: left;
+        }
+
+        .col-sm-12,
+        .col-xs-12 {
+            width: 100% !important;
+        }
+
+        .col-sm-11,
+        .col-xs-11 {
+            width: 91.66666667% !important;
+        }
+
+        .col-sm-10,
+        .col-xs-10 {
+            width: 83.33333333% !important;
+        }
+
+        .col-sm-9,
+        .col-xs-9 {
+            width: 75% !important;
+        }
+
+        .col-sm-8,
+        .col-xs-8 {
+            width: 66.66666667% !important;
+        }
+
+        .col-sm-7,
+        .col-xs-7 {
+            width: 58.33333333% !important;
+        }
+
+        .col-sm-6,
+        .col-xs-6 {
+            width: 50% !important;
+        }
+
+        .col-sm-5,
+        .col-xs-5 {
+            width: 41.66666667% !important;
+        }
+
+        .col-sm-4,
+        .col-xs-4 {
+            width: 33.33333333% !important;
+        }
+
+        .col-sm-3,
+        .col-xs-3 {
+            width: 25% !important;
+        }
+
+        .col-sm-2,
+        .col-xs-2 {
+            width: 16.66666667% !important;
+        }
+
+        .col-sm-1,
+        .col-xs-1 {
+            width: 8.33333333% !important;
+        }
+
+        .col-sm-1,
+        .col-sm-2,
+        .col-sm-3,
+        .col-sm-4,
+        .col-sm-5,
+        .col-sm-6,
+        .col-sm-7,
+        .col-sm-8,
+        .col-sm-9,
+        .col-sm-10,
+        .col-sm-11,
+        .col-sm-12,
+        .col-xs-1,
+        .col-xs-2,
+        .col-xs-3,
+        .col-xs-4,
+        .col-xs-5,
+        .col-xs-6,
+        .col-xs-7,
+        .col-xs-8,
+        .col-xs-9,
+        .col-xs-10,
+        .col-xs-11,
+        .col-xs-12 {
+            float: left !important;
+        }
+
+        body {
+            margin: 0;
+            padding: 0 !important;
+            min-width: 768px;
+        }
+
+        .container {
+            width: auto;
+            min-width: 750px;
+        }
+
+        /* body {
+            font-size: 10px;
+        } */
+
+        a[href]:after {
+            content: none;
+        }
+
+        .noprint,
+        div.alert,
+        header,
+        .group-media,
+        .btn,
+        .footer,
+        form,
+        #comments,
+        .nav,
+        ul.links.list-inline,
+        ul.action-links {
+            display: none !important;
+        }
+
+        .footer-page {
+            position: fixed;
+        }
+
+
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .border {
+        border-collapse: black;
+        border-style: solid;
+        border-width: 0.5px;
+
+    }
+
+    hr {
+        border: 0.5px solid black;
+    }
+
+    #bottom-footer {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+</style>
+
+<div id="#page-contain">
+    <div class="row">
+        <div class="col-sm-5">
+            <strong>BỘ GIÁO DỤC VÀ ĐÀO TẠO <br>
+                TRƯỜNG ĐẠI HỌC CẦN THƠ</strong>
+        </div>
+        <div class="col-sm-7" style="text-align:center;">
+            CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            <br>Độc lập - Tự do- Hạnh phúc<br>
+            -------------------------------<br>
+
+        </div>
+    </div>
+    <p style="text-align:center;">
+        <strong>PHIẾU CHẤM ĐIỂM LUẬN VĂN THẠC SĨ </strong>
+    </p>
+    <p>Tên đề tài:{{h.lvten}} </p>
+    <p>Ngành/Chuyên ngành:{{h.cnten}} ; Mã số:{{h.lv}} </p>
+    <p>Người thực hiện:{{h.hvhoten}} </p>
+    <p>Điểm: </p>
+    <p>Số phiếu: phiếu</p>
+    <p>Tổng số phiếu: 5 phiếu </p>
+    <p>Tổng số điểm: Điểm trung bình: {{h.diem}} </p>
+    <p>Kết luận: Điểm của luận văn này là: {{h.diem }} </p>
+    <div class="row" style="text-align: center;padding-top:10pt;">
+        <div class="col-sm-6">
+            <strong>THƯ KÝ BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[2].gvhoten}}
+        </div>
+        <div class="col-sm-6">
+            <!-- <em> Cần Thơ, {{today}}</em><br> -->
+            <strong> TRƯỞNG BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[0].gvhoten}}
+        </div>
+        <p style="padding-top:150pt;"><strong>XÁC NHẬN CỦA KHOA/VIỆN QUẢN LÝ NGÀNH</strong></p>
+    </div>
+
+    
+
+
+
+
+
+</div>
+
+
+<div class="page-break" id="#page-contain" style="padding-top:40pt;">
+    <div class="row">
+        <div class="col-sm-5">
+            <strong>BỘ GIÁO DỤC VÀ ĐÀO TẠO <br>
+                TRƯỜNG ĐẠI HỌC CẦN THƠ</strong>
+        </div>
+        <div class="col-sm-7" style="text-align:center;">
+            CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            <br>Độc lập - Tự do- Hạnh phúc<br>
+            -------------------------------<br>
+
+        </div>
+    </div>
+    <p style="text-align:center;"><strong>DANH SÁCH HỘI ĐỒNG ĐÁNH GIÁ LUẬN VĂN THẠC SĨ </strong></p>
+
+    <p>Tên đề tài:{{h.lvten}} </p>
+    <p>Ngành/Chuyên ngành:{{h.cnten}} ; Mã số:{{h.lv}} </p>
+    <p>Học viên: {{h.hvhoten}}; Khóa học:{{h.nk}} </p>
+    <p>Hội đồng đánh giá luận văn thạc sĩ được thành lập theo Quyết định số {{h.hd}}/QĐ-ĐHCT ngày {{dtlist.hdngay}} của
+        Hiệu trưởng Trường Đại học Cần Thơ</p>
+    <p>Họp vào {{h.hdthoigian}}   tại Trường Đại học Cần Thơ</p>
+    <div>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <p><strong> TT</strong></p>
+                    </td>
+                    <td>
+                        <p><strong>HỌ VÀ TÊN</strong></p>
+                    </td>
+                    <td>
+                        <p><strong>CHỨC TRÁCH</strong></p>
+                    </td>
+                    <td>
+                        <p><strong>KÝ TÊN</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>1</p>
+                        <p>2</p>
+                        <p>3</p>
+                        <p>4</p>
+                        <p>5</p>
+                    </td>
+                    <td>
+                        <p>{{d[0].gvhoten}} </p>
+                        <p>{{d[2].gvhoten}} </p>
+                        <p>{{d[3].gvhoten}} </p>
+                        <p>{{d[4].gvhoten}} </p>
+                        <p>{{d[1].gvhoten}} </p>
+                    </td>
+                    <td>
+                        <p>Chủ tịch HĐ</p>
+                        <p>Thư ký HĐ</p>
+                        <p>Phản biện 1</p>
+                        <p>Phản biện 2 </p>
+                        <p>Uỷ viên HĐ</p>
+                    </td>
+                    <td>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                        <p></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p> </p>
+    <div class="row" style="text-align: center;padding-top:10pt;">
+            <div class="col-sm-6">
+                <strong>THƯ KÝ BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[2].gvhoten}}
+            </div>
+            <div class="col-sm-6">
+                <!-- <em> Cần Thơ, {{today}}</em><br> -->
+                <strong> TRƯỞNG BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[0].gvhoten}}
+            </div>
+            <p style="padding-top:150pt;"><strong>XÁC NHẬN CỦA KHOA/VIỆN QUẢN LÝ NGÀNH</strong></p>
+        </div>
+    
+</div>
+
+
+
+<div class="page-break" id="#page-contain" style="padding-top:40pt;">
+    <div class="row">
+        <div class="col-sm-5">
+            <strong>BỘ GIÁO DỤC VÀ ĐÀO TẠO <br>
+                TRƯỜNG ĐẠI HỌC CẦN THƠ</strong>
+        </div>
+        <div class="col-sm-7" style="text-align:center;">
+            CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+            <br>Độc lập - Tự do- Hạnh phúc<br>
+            -------------------------------<br>
+
+        </div>
+    </div>
+    <p style="text-align:center;"><strong>BIÊN BẢN HỌP HỘI ĐỒNG ĐÁNH GIÁ LUẬN VĂN THẠC SĨ</strong></p>
+    <p>Thực hiện Quyết định số: {{h.hd}}/QĐ-ĐHCT ngày {{h.hdngay}} của Hiệu trưởng Trường Đại học Cần Thơ về việc thành lập Hội đồng đánh giá luận văn thạc sĩ của học viên:</p>
+    <p>Về đề tài: {{h.lvten}} </p>
+    <p>Ngành/Chuyên ngành: {{h.cnten}}  ;  Mã số: {{h.lv}} ,</p>
+    <p>Hội đồng gồm 05 thành viên:</p>
+    <table>
+            <tr>
+                <td>
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                </td>
+                <td>
+                    <p>{{d[0].gvhoten}} </p>
+                    <p>{{d[2].gvhoten}} </p>
+                    <p>{{d[3].gvhoten}} </p>
+                    <p>{{d[4].gvhoten}} </p>
+                    <p>{{d[1].gvhoten}} </p>
+                </td>
+                <td>
+                    <p>Chủ tịch HĐ</p>
+                    <p>Thư ký HĐ</p>
+                    <p>Phản biện 1</p>
+                    <p>Phản biện 2 </p>
+                    <p>Uỷ viên HĐ</p>
+                </td>
+                <td>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </td>
+            </tr>
+    </table>
+    <p>đã thống nhất: Cho phép học viên {{h.hvhoten}} được bảo vệ luận văn trước Hội đồng đánh giá luận văn thạc sĩ</p>
+    <p></p>Đối chiếu với Quy chế đào tạo trình độ thạc sĩ của Trường Đại học Cần Thơ, Hội đồng đủ điều kiện để họp
+        đánh giá luận văn thạc sĩ</p>
+    <p><strong>NỘI DUNG LÀM VIỆC</strong></p>
+    <p>1. Trưởng Khoa/Viện đại diện cơ sở đào tạo đọc quyết định thành lập Hội đồng đánh giá luận văn thạc
+        sĩ của Hiệu trưởng Trường Đại học Cần Thơ<br>
+    2. {{d[0].gvhoten}} ,Chủ tịch Hội đồng, điều khiển phiên họp<br>
+    3. {{d[2].gvhoten}}, Thư ký HĐ, đọc lí lịch khoa học của học viên<br>
+    4. {{h.hvhoten}}, Học viên trình bày luận văn trước Hội đồng<br>
+    5. {{d[3].gvhoten}}, Phản biện 1, đọc bản nhận xét luận văn (có văn bản kèm theo)<br>
+    6. {{d[4].gvhoten}},
+        Phản biện 2, đọc bản nhận xét luận văn (có văn bản kèm theo)<br>
+    7. Các thành viên HĐ và những người tham dự nêu câu
+        hỏi (có
+        bản câu hỏ i và trả lời của học viên kèm theo)<br>
+    8. Hội đồng họp kín và cho điểm<br>
+    - Hội đồng đã bầu Ban kiểm phiếu gồm:<br>
+    1. Trưởng ban kiểm phiếu: {{d[0].gvhoten}} <br>
+    2. Thư ký: {{d[2].gvhoten}}<br>
+    - Kết quả kiểm phiếu như sau: <br>
+    Tổng số điểm:    <br>
+    Điểm trung bình: <br>
+    - Kết luận của Hội đồng (đạt/không đạt yêu cầu): {{h.ketqua}}  <br>
+    9. Chủ tịch  Hội đồng công bố kết quả, yêu cầu học viên sửa chữa luận văn theo yêu cầu của Hội đồng (nếu có) </p>
+    <p>Buổi họp đã kết thúc vào {{h.hdngayketthuc}} </p>
+    <div class="row" style="text-align: center;padding-top:10pt;">
+            <div class="col-sm-6">
+                <br><strong>THƯ KÝ BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[2].gvhoten}}
+            </div>
+            <div class="col-sm-6">
+                <em> Cần Thơ, {{today}}</em><br>
+                <strong> TRƯỞNG BAN KIỂM PHIẾU</strong><br><br><br><br><br><br>{{d[0].gvhoten}}
+            </div>
+            <p style="padding-top:100pt;"><strong>XÁC NHẬN CỦA KHOA/VIỆN QUẢN LÝ NGÀNH</strong></p>
+        </div>
+    
+
+</div>

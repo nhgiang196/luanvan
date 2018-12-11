@@ -24,8 +24,7 @@
            }
     </style>
 <form></form>
-<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate
-    style="padding-top:30px">
+<form ng-keypress="($event.charCode==13)? Search(): return" class="form-horizontal" role="form" novalidate style="padding-top:30px">
     <legend>
         <h3>{{'lvQuery'|translate}}</h3>
     </legend>
@@ -68,9 +67,9 @@
                         <label></label>
                     </div>
                     <div class="col-sm-3">
-                        <!-- <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                    </label> -->
+                        <label>
+                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerLV'|translate}}
+                        </label>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
@@ -225,7 +224,7 @@
                     <div class="form-group">
                         <div class="col-sm-6"></div>
                         <div class="col-sm-4">
-                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
+                            <button ng-hide="keyM" type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
                                 {{'Add'|translate}}
                             </button>
                         </div>

@@ -68,9 +68,9 @@
                         <label></label>
                     </div>
                     <div class="col-sm-3">
-                        <!-- <label>
-                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwner'|translate}}
-                    </label> -->
+                        <label>
+                            <input name="onlyOwner" type="checkbox" ng-model="onlyOwner"> {{'onlyOwnerDC'|translate}}
+                        </label>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="btn btn-primary" ng-click="Search()">{{'Search'|translate}}
@@ -122,11 +122,11 @@
                         <div class="col-sm-4">
                             <input class="form-control " type="text" ng-model="recod.dcdiadiem" required />
                         </div>
-                        <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
+                        <!-- <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
                         <div class="col-sm-4">
                             <input date-picker time="true" class="form-control" type="text" ng-model="recod.dcthoigian"
                                 required />
-                        </div>
+                        </div> -->
                     </div>
 
                     <H4 style="background-color: #ececec; padding: 5px">{{'chitiethddc'|translate}}</H4>
@@ -182,15 +182,20 @@
                 <form class="form-horizontal" role="form" name="formDetail" novalidate>
                     <H4 style="background-color: #ececec; padding: 5px">{{'lv_hddc'|translate}}</H4>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">*{{'lv'|translate}}</label>
+                        <label ng-hide="keyM" class="col-sm-2 control-label">*{{'lv'|translate}}</label>
                         <div class="col-sm-4">
-                            <select ui-select-2 style="width:100%" id="lv" ng-model="items.lv" required>
+                            <select ng-hide="keyM" ui-select-2 style="width:100%" id="lv" ng-model="items.lv" required>
                                 <option ng-repeat="value in lsdt" value="{{value.lv}}">
                                     {{value.lv}}-{{value.lvten}}
                                 </option>
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
+                        <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
+                        <div class="col-sm-4">
+                            <input date-picker time="true" class="form-control" type="text" ng-model="items.thoidiembvdc"
+                                required />
+                        </div>
+                        <!-- <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
                         <div class="col-sm-4">
                             <input class="form-control" type="text" ng-model="items.diem" min="0" max="10" required />
                         </div>
@@ -220,59 +225,62 @@
                         <div class="col-sm-4">
                             <textarea class="form-control" type="text" ng-model="items.ykien" required />
                             </div>
-                    </div>
+                    </div> -->
 
-                    <div class="form-group">
-                        <div class="col-sm-6"></div>
-                        <div class="col-sm-4">
-                            <button type="button" id="btnAdd" class="btn btn-primary" ng-click="addItem()" ng-disabled="formDetail.$invalid">
-                                {{'Add'|translate}}
-                            </button>
+                        <div class="form-group">
+                            <div class="col-sm-6"></div>
+                            <div class="col-sm-4">
+                                <button type="button" ng-hide="keyM" id="btnAdd" class="btn btn-primary" ng-click="addItem()"
+                                    ng-disabled="formDetail.$invalid">
+                                    {{'Add'|translate}}
+                                </button>
+                            </div>
                         </div>
-                    </div>
                 </form>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th width="20%">lvten</th>
-                                <th width="10%">diem</th>
-                                <th width="10%">lanbaove</th>
-                                <th width="10%">sophieudat</th>
-                                <th width="15%">ketqua</th>
-                                <th width="25%">ykien</th>
-                                <th width="10%"></th>
-                            </tr>
-                        </thead>
-                        <tr ng-repeat="item in detaillist">
-                            <td title="lvten" width="20%">
-                                {{item.lvten}}
-                            </td>
-                            <td title="diem" width="10%">
-                                {{item.diem}}
-                            </td>
-                            <td title="lanbaove" width="10%">
-                                {{item.lanbaove}}
-                            </td>
-                            <td title="sophieudat" width="10%">
-                                {{item.sophieudat}}
-                            </td>
-                            <td title="ketqua" width="15%">
-                                {{item.ketqua}}
-                            </td>
-                            <td title="ykien" width="25%">
-                                {{item.ykien}}
-                            </td>
-                            <td width="10%">
-                                <a ng-click="deleteItem($index)" ng-hide="keyM" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
-                            </td>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="20%">lvten</th>
+                            <th width="10%">diem</th>
+                            <th width="10%">lanbaove</th>
+                            <th width="10%">sophieudat</th>
+                            <th width="15%">ketqua</th>
+                            <th width="25%">ykien</th>
+                            <th width="10%"></th>
                         </tr>
-                    </table>
-                
+                    </thead>
+                    <tr ng-repeat="item in detaillist">
+                        <td title="lvten" width="20%">
+                            {{item.lvten}}
+                        </td>
+                        <td title="diem" width="10%">
+                            {{item.diem}}
+                        </td>
+                        <td title="lanbaove" width="10%">
+                            {{item.lanbaove}}
+                        </td>
+                        <td title="sophieudat" width="10%">
+                            {{item.sophieudat}}
+                        </td>
+                        <td title="ketqua" width="15%">
+                            {{item.ketqua}}
+                        </td>
+                        <td title="ykien" width="25%">
+                            {{item.ykien}}
+                        </td>
+                        <td width="10%">
+                            <a ng-click="deleteItem($index)" ng-hide="keyM" class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
+                            <a ng-click="print(item.lv)" ng-hide="!keyM" class="btn-xs btn btn-info">{{'Print'|translate}}</a>
+                        </td>
+                    </tr>
+                </table>
+
             </div>
             <div class="modal-footer">
                 <label class="col-sm-5" style="text-align: left;color: #FF0000;">{{'Vui lòng điền tất cả các trường có
                     dấu *'|translate}}</label>
-                <button type="button" id="btnSubmit" ng-hide="keyM" class="btn btn-primary" ng-click="saveSubmit()" ng-disabled="main_form.$invalid||detaillist.length<1">
+                <button type="button" id="btnSubmit" ng-hide="keyM" class="btn btn-primary" ng-click="saveSubmit()"
+                    ng-disabled="main_form.$invalid||detaillist.length<1">
                     {{'saveSubmit'|translate}}
                 </button>
                 <button type="button" class="btn btn-default" ng-click="reset()">{{'Close'|translate}}</button>
