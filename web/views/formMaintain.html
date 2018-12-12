@@ -64,6 +64,9 @@
                     <label class="col-sm-1 control-label">{{'Người dùng'|translate}}</label>
                     <div class="col-sm-3">
                         <select ui-select-2 style="width:100%" id="gv" ng-model="gv" ng-change="gv_change()" required>
+                            <option  value="">
+                                {{'Tất cả giảng viên'}}
+                            </option>
                             <option ng-repeat="value in lsgv" value="{{value.gv}}">
                                 {{value.gv}}-{{value.gvhoten}}
                             </option>

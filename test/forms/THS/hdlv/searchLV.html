@@ -238,13 +238,13 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="20%">lvten</th>
-                                <th width="10%">diem</th>
-                                <th width="10%">lanbaove</th>
-                                <th width="10%">sophieudat</th>
-                                <th width="10%">ketqua</th>
-                                <th width="10%">thoidiembv</th>
-                                <th width="20%">ykien</th>
+                                <th width="20%">{{'lvten'|translate}}</th>
+                                <th width="10%">{{'diem'|translate}}</th>
+                                <th width="10%">{{'lanbaove'|translate}}</th>
+                                <th width="10%">{{'sophieudat'|translate}}</th>
+                                <th width="10%">{{'ketqua'|translate}}</th>
+                                <th width="10%">{{'thoidiembv'|translate}}</th>
+                                <th width="20%">{{'ykien'|translate}}</th>
                                 <th width="10%"></th>
                             </tr>
                         </thead>
@@ -272,7 +272,7 @@
                             </td>
                             <td width="10%">
                                 <a ng-click="deleteItem($index)" ng-hide="keyM"  class="btn-xs btn btn-danger">{{'Delete'|translate}}</a>
-                                <a ng-click="print(item.lv)" ng-hide="!keyM" class="btn-xs btn btn-info">{{'Print'|translate}}</a>
+                                <a ng-click="print(item.lv,recod.hd)" ng-hide="!keyM" class="btn-xs btn btn-info">{{'Print'|translate}}</a>
                                 
                             </td>
                         </tr>

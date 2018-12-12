@@ -71,8 +71,26 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 })
             }
             $scope.addItem = function () {
-                if ($scope.gv != null && $scope.tc != null) {
+                // if ($scope.gv != null && $scope.tc != null) {
+                if (!$scope.gv) {
+                    query = {
+                        action: 'grant',
+                        user: $scope.gv || '',
+                        tcode: $scope.tc,
+                        grantoption: $scope.grantoption || 'False',
+                        usergrant: Auth.username
+                    };
+                    THSAdminService.GrantVoke(query, function () {
+                        Notifications.addMessage({
+                            'status': 'information',
+                            'message': $translate.instant('grant_all_success')
+                        });
 
+                    }, function (err) {
+                        Notifications.addError({ 'status': 'error', 'message': "You do not have permission！" });
+                    })
+                }
+                else {
                     var data = $scope.detaillist.filter(x => x.tcode === $scope.tc);
                     if ($scope.gv == Auth.username)
                         Notifications.addError({ 'status': 'error', 'message': "You can't grant yourself" });
@@ -81,7 +99,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     } else {
                         query = {
                             action: 'grant',
-                            user: $scope.gv,
+                            user: $scope.gv || '',
                             tcode: $scope.tc,
                             grantoption: $scope.grantoption || 'False',
                             usergrant: Auth.username
@@ -93,7 +111,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         })
                     }
                 }
-                else Notifications.addError({ 'status': 'error', 'message': "Please choose user and tcode" });
+                // }
+                // else Notifications.addError({ 'status': 'error', 'message': "Please choose user and tcode" });
 
             };
             $scope.deleteItem = function (mtcode) {
@@ -120,5 +139,5 @@ define(['myapp', 'angular'], function (myapp, angular) {
             };
         }]);
 
-    
+
 });

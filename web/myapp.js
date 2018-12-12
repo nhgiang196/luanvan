@@ -586,7 +586,7 @@ define(['angularAMD', 'app', 'services/main', 'directive/main'], function (angul
                     }
                 }
             }))
-            .when('/THS/HDLV/printHDLV/:lv', angularAMD.route({
+            .when('/THS/HDLV/printHDLV/:lv/:hd', angularAMD.route({
                 templateUrl: "forms/THS/hdlv/print_HDLV.html",
                 controller: 'rpHDLVController',
                 controllerUrl: 'controllers/THS/rpDeTaiLuanVanController',

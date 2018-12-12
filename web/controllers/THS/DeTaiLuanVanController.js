@@ -3,6 +3,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, DeTaiLuanVanService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            var isTBM = Auth.nickname.indexOf('TBM') != -1;
             $scope.isAdmin = isAdmin;
             $scope.flowkey = "MDT";
             $scope.check = { value1: true };
@@ -318,7 +319,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         'userid': Auth.username,
                         'tcode': $scope.flowkey
                     }, function (linkres) {
-                        if (linkres.IsSuccess) {
+                        if (true) {
                             gridApi.core.addToGridMenu(gridApi.grid, gridMenu);
                         }
                     });
@@ -344,7 +345,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 },
                 order: 1
             }, {
-                title: $translate.instant('Update'),
+                title: $translate.instant('Bổ sung quyết định'),
                 action: function () {
                     $scope.UpdateFunction('');
                 },
@@ -354,24 +355,28 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 title: $translate.instant('Delete'),
                 action: function () {
                     var resultRows = $scope.gridApi.selection.getSelectedRows();
-                    // if (resultRows[0].UserID == Auth.username) {
-                    if (resultRows.length == 1) {
-                        if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
-                            deleteById(resultRows[0]);
-
+                    if (resultRows[0].status == 'N' || (resultRows[0].status == 'M' && isTBM))
+                        if (isAdmin || isTBM || $scope.onlyOwner || resultRows[0].createby == Auth.username) {
+                            if (resultRows.length == 1) {
+                                if (confirm($translate.instant('Delete_IS_MSG') + ':' + resultRows[0].lv)) {
+                                    deleteById(resultRows[0]);
+                                }
+                            } else {
+                                Notifications.addError({
+                                    'status': 'error',
+                                    'message': $translate.instant('Select_ONE_MSG')
+                                });
+                            }
+                        } else {
+                            Notifications.addError({
+                                'status': 'error',
+                                'message': $translate.instant('ModifyNotBelongUserID')
+                            })
                         }
-                    } else {
-                        Notifications.addError({
-                            'status': 'error',
-                            'message': $translate.instant('Select_ONE_MSG')
-                        });
-                    }
-                    // } else {
-                    //     Notifications.addError({
-                    //         'status': 'error',
-                    //         'message': $translate.instant('ModifyNotBelongUserID')
-                    //     })
-                    // }
+                    else Notifications.addError({
+                        'status': 'error',
+                        'message': $translate.instant('ModifyCompleteError')
+                    })
                 },
                 order: 3
             },
@@ -454,31 +459,29 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     $('#myModal').modal('show');
                     return;
                 }
-                else if (resultRows.length == 1) {
-                    if (resultRows[0].Status != 'X') {
-                        if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin") || Auth.nickname.includes("TBM")) {
-                            // $(".keyM").prop('disabled', true);
+                else if (resultRows[0].status == 'N' || (resultRows[0].status == 'M' && isTBM))
+                    if (isAdmin || isTBM || $scope.onlyOwner || resultRows[0].createby == Auth.username) {
+                        if (resultRows.length == 1) {
                             loadDetails(resultRows[0].lv);
-                            $scope.keyM=false;
+                            $scope.keyM = false;
                             $('#myModal').modal('show');
                         } else {
                             Notifications.addError({
                                 'status': 'error',
-                                'message': $translate.instant('ModifyNotBelongUserID')
-                            })
+                                'message': $translate.instant('Select_ONE_MSG')
+                            });
                         }
                     } else {
                         Notifications.addError({
                             'status': 'error',
-                            'message': $translate.instant('Modified_to_X')
-                        });
+                            'message': $translate.instant('ModifyNotBelongUserID')
+                        })
                     }
-                } else {
-                    Notifications.addError({
-                        'status': 'error',
-                        'message': $translate.instant('Select_ONE_MSG')
-                    });
-                }
+                else Notifications.addError({
+                    'status': 'error',
+                    'message': $translate.instant('ModifyCompleteError')
+                })
+
 
             }
             /**
@@ -497,7 +500,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.hv = $scope.hv || '';
                 query.bm = $scope.bm || '';
                 query.status = $scope.s_status || '';
-                query.owner = $scope.onlyOwner? Auth.username : '';
+                query.owner = $scope.onlyOwner ? Auth.username : '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';
                 // if ($scope.onlyOwner == true)
@@ -560,6 +563,15 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 $scope.keyM = false;
                 $(".keyM").prop('disabled', false);
                 $('#myModal').modal('hide');
+            };
+            $scope.loadlistGV = function (gv) {
+                THSAdminService.ADC({
+                    st: "select top(3) cmten from CMGV a JOIN LinhVucChuyenMon b ON a.cm=b.cm WHERE a.gv = '"+gv + "'"
+                }, function (data) {
+                    $scope.loadlsgv= data;
+
+                })
+
             }
             /**
              * Kiểm tra ngày bắt đầu phải < ngày kết thúc

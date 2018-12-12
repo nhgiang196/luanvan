@@ -44,7 +44,7 @@
             width: 210mm;
             height: 297mm;
             /* margin: 0;
-            padding-top: 0; */
+      padding-top: 0; */
         }
 
         [class*="col-sm-"] {
@@ -154,8 +154,8 @@
         }
 
         /* body {
-            font-size: 10px;
-        } */
+      font-size: 10px;
+    } */
 
         a[href]:after {
             content: none;
@@ -224,9 +224,7 @@
     </p>
     <p>Tên đề tài:{{h.lvten}} </p>
     <p>Ngành/Chuyên ngành:{{h.cnten}} ; Mã số:{{h.lv}} </p>
-    <p>Người thực hiện:{{h.hvhoten}} </p>
-    <p>Điểm: </p>
-    <p>Số phiếu: phiếu</p>
+    <p ng-repeat="item in d">Người thực hiện:{{item.gvhoten}}. Điểm: {{item.diem}} </p>
     <p>Tổng số phiếu: 5 phiếu </p>
     <p>Tổng số điểm: Điểm trung bình: {{h.diem}} </p>
     <p>Kết luận: Điểm của luận văn này là: {{h.diem }} </p>
@@ -289,10 +287,10 @@
                     </td>
                     <td>
                         <p>{{d[0].gvhoten}} </p>
-                        <p>{{d[2].gvhoten}} </p>
                         <p>{{d[3].gvhoten}} </p>
-                        <p>{{d[4].gvhoten}} </p>
                         <p>{{d[1].gvhoten}} </p>
+                        <p>{{d[2].gvhoten}} </p>
+                        <p>{{d[4].gvhoten}} </p>
                     </td>
                     <td>
                         <p>Chủ tịch HĐ</p>
@@ -358,10 +356,10 @@
             </td>
             <td>
                 <p>{{d[0].gvhoten}} </p>
-                <p>{{d[2].gvhoten}} </p>
                 <p>{{d[3].gvhoten}} </p>
-                <p>{{d[4].gvhoten}} </p>
                 <p>{{d[1].gvhoten}} </p>
+                <p>{{d[2].gvhoten}} </p>
+                <p>{{d[4].gvhoten}} </p>
             </td>
             <td>
                 <p>Chủ tịch HĐ</p>
@@ -386,22 +384,22 @@
     <p>1. Trưởng Khoa/Viện đại diện cơ sở đào tạo đọc quyết định thành lập Hội đồng đánh giá luận văn thạc
         sĩ của Hiệu trưởng Trường Đại học Cần Thơ<br>
         2. {{d[0].gvhoten}} ,Chủ tịch Hội đồng, điều khiển phiên họp<br>
-        3. {{d[2].gvhoten}}, Thư ký HĐ, đọc lí lịch khoa học của học viên<br>
+        3. {{d[3].gvhoten}}, Thư ký HĐ, đọc lí lịch khoa học của học viên<br>
         4. {{h.hvhoten}}, Học viên trình bày luận văn trước Hội đồng<br>
-        5. {{d[3].gvhoten}}, Phản biện 1, đọc bản nhận xét luận văn (có văn bản kèm theo)<br>
-        6. {{d[4].gvhoten}},
+        5. {{d[1].gvhoten}}, Phản biện 1, đọc bản nhận xét luận văn (có văn bản kèm theo)<br>
+        6. {{d[2].gvhoten}},
         Phản biện 2, đọc bản nhận xét luận văn (có văn bản kèm theo)<br>
         7. Các thành viên HĐ và những người tham dự nêu câu
         hỏi (có
-        bản câu hỏ i và trả lời của học viên kèm theo)<br>
+        bản câu hỏi và trả lời của học viên kèm theo)<br>
         8. Hội đồng họp kín và cho điểm<br>
         - Hội đồng đã bầu Ban kiểm phiếu gồm:<br>
         1. Trưởng ban kiểm phiếu: {{d[0].gvhoten}} <br>
-        2. Thư ký: {{d[2].gvhoten}}<br>
+        2. Thư ký: {{d[3].gvhoten}}<br>
         - Kết quả kiểm phiếu như sau: <br>
-        Tổng số điểm:    <br>
-        Điểm trung bình: <br>
-        - Kết luận của Hội đồng (đạt/không đạt yêu cầu): {{h.ketqua}} <br>
+        Tổng số điểm:  {{h.diem*5}} <br>
+        Điểm trung bình:{{h.diem}} <br>
+        - Kết luận của Hội đồng (đạt/không đạt yêu cầu): {{h.ketqua=='D'? "Đạt" : "Rớt"}} <br>
         9. Chủ tịch  Hội đồng công bố kết quả, yêu cầu học viên sửa chữa luận văn theo yêu cầu của Hội đồng (nếu có)
     </p>
     <p>Buổi họp đã kết thúc vào {{h.hdngayketthuc}} </p>

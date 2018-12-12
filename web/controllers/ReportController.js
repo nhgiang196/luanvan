@@ -61,12 +61,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
     myapp.controller("nhapdiemDCController", ['$q', 'Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService', 'HDDCService',
         function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService, HDDCService) {
 
-        reset();
-        $scope.username = Auth.username;
+            reset();
+            $scope.username = Auth.username;
             $q.all([loadLV()]);
             function loadLV() {
                 THSAdminService.ADC({
-                    st: "select * from HDDC hd JOIN DeTaiLV lv ON lv.lv=hd.lv where hd='" + $routeParams.hd + " '"
+                    st: "select * from HDDC dc JOIN DeTaiLV lv ON lv.lv=dc.lv where dc='" + $routeParams.hd + " '"
                 }, function (data) {
 
                     console.log(data);
@@ -96,17 +96,18 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
             }
             $scope.lv_changed = function (lv) {
-                if (lv==null || lv=='') return;
+                if (lv == null || lv == '') return;
                 THSAdminService.ADC({
-                    st: "select * from HDDC where hd='" + $routeParams.hd + "' and lv='" + lv + "' and  diem is not null"
+                    st: "select * from HDDC where dc='" + $routeParams.hd + "' and lv='" + lv + "' and  diem is not null"
                 }, function (data) {
                     if (data.length > 0)
                         $scope.duyet = true;
                 })
                 reset();
                 THSAdminService.ADC({
-                    st: "select  ct.gv, gvhoten, vaitro, diem, danhgia from CTHDDC ct JOIN GiangVien g ON g.gv = ct.gv LEFT JOIN DIEMLV d ON d.mahd=ct.hd AND d.gv=ct.gv  AND lv='" + lv + "' where hd='" + $routeParams.hd + "'"
-                }, function (data) {
+                    st: "select  ct.gv, gvhoten, vaitro, diem, danhgia from CTHDDC ct \
+                    JOIN GiangVien g ON g.gv = ct.gv LEFT JOIN DIEMLV d ON d.mahd=ct.dc \
+                    AND d.gv=ct.gv  AND lv='" + lv + "' where dc='" + $routeParams.hd + "' ORDER BY vaitro"                }, function (data) {
                     console.log(data);
                     if (data.length > 0) $scope.ct = data;
                     else {
@@ -124,7 +125,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     var result = {};
                     result.resdetail = [];
                     result.lv = $scope.lv;
-                    result.mahd = $scope.info.hd;
+                    result.mahd = $scope.info.dc;
                     $scope.ct.forEach(element => {
                         var x = {};
                         x.gv = element.gv;
@@ -177,12 +178,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
 
         }]);
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     myapp.controller("nhapdiemLVController", ['$q', 'Auth', '$scope', '$http', '$compile', '$routeParams', '$resource', '$location', 'Notifications', 'EngineApi', 'User', 'THSAdminService', 'HDDCService',
         function ($q, Auth, $scope, $http, $compile, $routeParams, $resource, $location, Notifications, EngineApi, User, THSAdminService, HDDCService) {
 
-        reset();
-        $scope.username = Auth.username;
+            reset();
+            $scope.username = Auth.username;
             $q.all([loadLV()]);
             function loadLV() {
                 THSAdminService.ADC({
@@ -216,7 +217,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
             }
             $scope.lv_changed = function (lv) {
-                if (lv==null || lv=='') return;
+                if (lv == null || lv == '') return;
                 THSAdminService.ADC({
                     st: "select * from HDLV where hd='" + $routeParams.hd + "' and lv='" + lv + "' and  diem is not null"
                 }, function (data) {
@@ -225,7 +226,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 })
                 reset();
                 THSAdminService.ADC({
-                    st: "select  ct.gv, gvhoten, vaitro, diem, danhgia from CTHDLV ct JOIN GiangVien g ON g.gv = ct.gv LEFT JOIN DIEMLV d ON d.mahd=ct.hd AND d.gv=ct.gv  AND lv='" + lv + "' where hd='" + $routeParams.hd + "'"
+                    st: "select  ct.gv, gvhoten, vaitro, diem, danhgia from CTHDLV ct \
+                    JOIN GiangVien g ON g.gv = ct.gv LEFT JOIN DIEMLV d ON d.mahd=ct.hd \
+                    AND d.gv=ct.gv  AND lv='" + lv + "' where hd='" + $routeParams.hd + "' ORDER BY vaitro"
                 }, function (data) {
                     console.log(data);
                     if (data.length > 0) $scope.ct = data;

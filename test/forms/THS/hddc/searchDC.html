@@ -190,9 +190,9 @@
                                 </option>
                             </select>
                         </div>
-                        <label class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
-                        <div class="col-sm-4">
-                            <input date-picker time="true" class="form-control" type="text" ng-model="items.thoidiembvdc"
+                        <label  ng-hide="keyM" class="col-sm-2 control-label">*{{'dcthoigian'|translate}}</label>
+                        <div ng-hide="keyM"  class="col-sm-4">
+                            <input date-picker  time="true" class="form-control" type="text" ng-model="items.thoidiembvdc"
                                 required />
                         </div>
                         <!-- <label class="col-sm-2 control-label">*{{'diem'|translate}}</label>
@@ -240,12 +240,12 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th width="20%">lvten</th>
-                            <th width="10%">diem</th>
-                            <th width="10%">lanbaove</th>
-                            <th width="10%">sophieudat</th>
-                            <th width="15%">ketqua</th>
-                            <th width="25%">ykien</th>
+                            <th width="20%">{{'lvten'|translate}}</th>
+                            <th width="10%">{{'diem'|translate}}</th>
+                            <th width="10%">{{'lanbaove'|translate}}</th>
+                            <th width="10%">{{'sophieudat'|translate}}</th>
+                            <th width="15%">{{'ketqua'|translate}}</th>
+                            <th width="25%">{{'ykien'|translate}}</th>
                             <th width="10%"></th>
                         </tr>
                     </thead>

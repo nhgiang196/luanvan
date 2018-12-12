@@ -178,5 +178,7 @@
     "saveGVerror": "Mỗi thành viên trong hội đồng chỉ có thể đảm nhận một vị trí (kiểm tra trùng thành viên)",
     "exchair": "Chủ tịch HD",
     "exw": "Thư ký HD",
-    "ModifyNotBelongUserID": "Bạn không đủ thẩm quyền để thực hiện"
+    "ModifyNotBelongUserID": "Bạn không đủ thẩm quyền để thực hiện.",
+    "ModifyCompleteError": "Không thể chỉnh sửa thông tin này.",
+    "thoidiembv" : "Thời điểm bảo vệ"
 }

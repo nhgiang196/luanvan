@@ -262,7 +262,8 @@ define(['myapp', 'angular'], function (myapp, angular) {
                         'userid': Auth.username,
                         'tcode': $scope.flowkey
                     }, function (linkres) {
-                        if (linkres.IsSuccess) {
+                        // if (linkres.IsSuccess) {
+                        if (true) {
                             gridApi.core.addToGridMenu(gridApi.grid, gridMenu);
                         }
                     });
@@ -421,9 +422,9 @@ define(['myapp', 'angular'], function (myapp, angular) {
 
 
             }
-            $scope.print = function (code) {
+            $scope.print = function (lv,hd) {
 
-                var href = '#/THS/HDLV/printHDLV/' + code;
+                var href = '#/THS/HDLV/printHDLV/' + lv+'/'+hd;
                 window.open(href);
             }
 

@@ -3,9 +3,12 @@ define(['myapp', 'angular'], function (myapp, angular) {
         function ($filter, Notifications, Auth, EngineApi, THSAdminService, HocVienService, $translate, $q, $scope, $routeParams) {
             var lang = window.localStorage.lang;
             $scope.flowkey = "MHV";
+            var isAdmin = Auth.nickname.indexOf('Administrator') != -1;
+            $scope.isAdmin = isAdmin;
             $scope.recod = {};
             $scope.onlyOwner = true;
             $scope.status = '';
+            $scope.bm = Auth.bm;
             var paginationOptions = {
                 pageNumber: 1,
                 pageSize: 50,
@@ -35,7 +38,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 name: $translate.instant('StatusX')
             },
             ];
-            $q.all([loadChuyenNganh(), loadNienKhoa()]).then(function (result) { }, function (error) {
+            $q.all([loadChuyenNganh(), loadBoMon(), loadNienKhoa()]).then(function (result) { }, function (error) {
                 Notifications.addError({
                     'status': 'Failed',
                     'message': 'Loading failed: ' + error
@@ -44,7 +47,23 @@ define(['myapp', 'angular'], function (myapp, angular) {
             /**
              * Load Combobox
              * */
-
+            function loadBoMon() {
+                var deferred = $q.defer();
+                var query = {
+                    Table: 'BoMon',
+                    lang: lang,
+                };
+                if (Auth.nickname == 'Administrator')
+                    query.bm = '';
+                else query.bm = Auth.bm;
+                THSAdminService.GetBasic(query, function (data) {
+                    console.log(data)
+                    $scope.lsbm = data;
+                    deferred.resolve(data);
+                }, function (error) {
+                    deferred.resolve(error);
+                })
+            }
             function loadNienKhoa() {
                 var deferred = $q.defer();
                 var query = {
@@ -312,7 +331,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 var resultRows = $scope.gridApi.selection.getSelectedRows();
                 $scope.status = 'M'; //Set update Status
                 if (data != '') {
-                    $scope.keyM=true;
+                    $scope.keyM = true;
                     loadDetails(data);
                     $('#myModal').modal('show');
                     return;
@@ -321,7 +340,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                     if (resultRows[0].Status != 'X') {
                         if (resultRows[0].createby == Auth.username || Auth.nickname.includes("Admin")) {
                             loadDetails(resultRows[0].hv);
-                            $scope.keyM=false;
+                            $scope.keyM = false;
                             $('#myModal').modal('show');
                         } else {
                             Notifications.addError({
@@ -378,6 +397,7 @@ define(['myapp', 'angular'], function (myapp, angular) {
                 query.hv = $scope.hv || '';
                 query.cn = $scope.cn || '';
                 query.nk = $scope.nk || '';
+                query.bm = $scope.bm || '';
                 query.status = $scope.s_status || '';
                 // query.pageIndex = paginationOptions.pageNumber || '';
                 // query.pageSize = paginationOptions.pageSize || '';

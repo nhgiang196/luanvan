@@ -57,26 +57,26 @@
                     <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[0].diem" placeholder="Điểm" />
                     <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[0].danhgia" ></textarea ng-disabled="duyet">
                 </div>
-                <label class="col-sm-2 control-label">{{'Thư ký hội đồng'|translate}}: {{ct[2].gvhoten}}</label>
+                <label class="col-sm-2 control-label">{{'Thư ký hội đồng'|translate}}: {{ct[3].gvhoten}}</label>
                 <div class="col-sm-3">
                     <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[2].diem" placeholder="Điểm" />
                     <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[2].danhgia" ></textarea ng-disabled="duyet">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{'Phản biện 1'|translate}}: {{ct[3].gvhoten}}</label>
+                <label class="col-sm-2 control-label">{{'Phản biện 1'|translate}}: {{ct[1].gvhoten}}</label>
                 <div class="col-sm-3">
                     <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[3].diem" placeholder="Điểm" />
                     <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[3].danhgia" ></textarea ng-disabled="duyet">
                 </div>
-                <label class="col-sm-2 control-label">{{'Phản biện 2'|translate}}: {{ct[4].gvhoten}}</label>
+                <label class="col-sm-2 control-label">{{'Phản biện 2'|translate}}: {{ct[2].gvhoten}}</label>
                 <div class="col-sm-3">
                     <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[4].diem" placeholder="Điểm" />
                     <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[4].danhgia" ></textarea ng-disabled="duyet">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{'Ủy viên hội đồng'|translate}}: {{ct[1].gvhoten}}</label>
+                <label class="col-sm-2 control-label">{{'Ủy viên hội đồng'|translate}}: {{ct[4].gvhoten}}</label>
                 <div class="col-sm-3">
                     <input ng-disabled="duyet" required class="form-control" type="text" ng-model="ct[1].diem" placeholder="Điểm" />
                     <textarea ng-disabled="duyet" class="form-control"  placeholder="Đánh giá"  type="text" ng-model="ct[1].danhgia" ></textarea ng-disabled="duyet">
@@ -85,7 +85,7 @@
             </div>
             <div style="margin-left:60%;" class="col-sm-3">
                 <button type="button" class="btn btn-danger" ng-hide="ct[0].gv!=username" ng-disabled="nhapdiemForm.$invalid||duyet"  ng-click="DuyetQuyTrinh()">{{'Duyệt'|translate}}</button>
-                <button type="button" class="btn btn-primary" ng-hide="ct[2].gv!=username" ng-disabled="nhapdiemForm.$invalid||duyet"   ng-click="NhapDiem()">{{'Nhập điểm'|translate}}</button>
+                <button type="button" class="btn btn-primary" ng-hide="ct[3].gv!=username" ng-disabled="nhapdiemForm.$invalid||duyet"   ng-click="NhapDiem()">{{'Nhập điểm'|translate}}</button>
             </div>
         </div>
 

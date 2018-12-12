@@ -212,16 +212,21 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">*{{'gvhoten'|translate}}</label>
                             <div class="col-sm-4">
-                                <select id="gvhoten" style="width:100%" ui-select2 ng-model="items.gv" required>
+                                <select id="gvhoten" ng-change="loadlistGV(items.gv)" style="width:100%" ui-select2 ng-model="items.gv" required>
                                     <option ng-repeat="value in lsgv" value="{{value.gv}}">
                                         {{value.gv}}-{{value.gvhoten}}
                                     </option>
                                 </select>
                             </div>
 
+
                         </div>
                         <div class="form-group">
                             <div class="col-sm-6">
+                                <span ng-hide="loadlsgv[0].cmten==null">Chuyên môn: {{loadlsgv[0].cmten}}  </span>
+                                <span ng-hide="loadlsgv[1].cmten==null">,{{loadlsgv[1].cmten}}  </span>
+                                <span ng-hide="loadlsgv[2].cmten==null">,{{loadlsgv[2].cmten}}  </span>
+                                  
                             </div>
                             <div class="col-sm-2"></div>
                             <div class="col-sm-4">
@@ -235,9 +240,9 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="40%">gvhoten</th>
-                                <th width="20%">gvchucdanh</th>
-                                <th width="30%">vaitro</th>
+                                <th width="40%">{{'gvhoten'|translate}}</th>
+                                <th width="20%">{{'gvchucdanh'|translate}}</th>
+                                <th width="30%">{{'vaitro'|translate}}</th>
                             </tr>
                         </thead>
                         <tr ng-repeat="item in detaillist">
